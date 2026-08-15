@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Triangle Agency // Investigation & Anomaly Management</title>
-  <meta name="description" content="Triangle Agency คือบริษัทที่คอยจัดการสิ่งผิดปกติ (Anomaly) และควบคุมดูแลเสถียรภาพความเป็นจริง">
+  <title>Triangle Agency // Corporate Portal & Anomaly Management</title>
+  <meta name="description" content="Triangle Agency คือองค์กรที่ควบคุมดูแลสิ่งผิดปกติ (Anomaly) รักษาเสถียรภาพความเป็นจริง และพัฒนามาตรฐานความปลอดภัยระดับสากล">
   
   <!-- Google Fonts: Inter, Poppins, Space Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,23 +13,28 @@
   
   <style>
     :root {
-      /* Dark & Mysterious Theme Palette */
-      --bg-base: #060312;          /* พื้นหลังมืดสนิท */
-      --bg-surface: #0e0722;       /* พื้นหลังกล่องการ์ด */
-      --bg-surface-elevated: #160c38;
-      --bg-navbar: rgba(10, 5, 28, 0.92);
+      /* Corporate Dark Theme Palette */
+      --bg-base: #060312;
+      --bg-surface: #0c0620;
+      --bg-surface-elevated: #130a30;
+      --bg-navbar: rgba(8, 4, 24, 0.94);
       
-      --border-dark: #261758;      /* เส้นขอบสีม่วงเข้ม */
+      --border-dark: #23154f;
+      --border-medium: #3a257a;
       --border-light: rgba(255, 255, 255, 0.12);
       
-      --text-main: #f8f9fe;        /* ตัวอักษรสีขาวสว่าง */
-      --text-muted: #9ba3cb;       /* ตัวอักษรสีเทาควัน */
+      --text-main: #f8f9fe;
+      --text-muted: #9ba3cb;
+      --text-dim: #687099;
       
-      --accent-red: #ff2238;       /* Agency Red */
+      --accent-red: #ff2238;
       --accent-red-glow: rgba(255, 34, 56, 0.45);
-      --accent-blue: #0055ff;      /* Anomaly Blue */
-      --accent-yellow: #f0ab00;    /* Reality Yellow */
-      --accent-green: #00e676;     /* Success Green */
+      --accent-blue: #0055ff;
+      --accent-blue-glow: rgba(0, 85, 255, 0.4);
+      --accent-yellow: #f0ab00;
+      --accent-yellow-glow: rgba(240, 171, 0, 0.4);
+      --accent-green: #00e676;
+      --accent-cyan: #00d4ff;
       
       --font-heading: 'Poppins', sans-serif;
       --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -50,8 +55,11 @@
       display: flex;
       flex-direction: column;
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.5) 0%, transparent 65%),
-        radial-gradient(circle at 80% 30%, rgba(255, 34, 56, 0.07) 0%, transparent 50%);
+        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.55) 0%, transparent 65%),
+        radial-gradient(circle at 85% 25%, rgba(255, 34, 56, 0.08) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
       background-attachment: fixed;
       -webkit-font-smoothing: antialiased;
       line-height: 1.6;
@@ -60,13 +68,13 @@
     /* Top Navigation Bar */
     .top-navbar {
       background-color: var(--bg-navbar);
-      border-bottom: 1px solid var(--border-dark);
+      border-bottom: 1.5px solid var(--border-dark);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
     }
 
     .navbar-container {
@@ -92,8 +100,8 @@
     }
 
     .logo-emblem-box {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
       border: 1.5px solid rgba(255, 255, 255, 0.25);
       border-radius: 8px;
@@ -105,8 +113,8 @@
     }
 
     .logo-triangle-svg {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       filter: drop-shadow(0 0 8px var(--accent-red));
     }
 
@@ -118,7 +126,7 @@
     .brand-name {
       font-family: var(--font-heading);
       font-weight: 800;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       letter-spacing: 0.05em;
       color: #ffffff;
       line-height: 1.1;
@@ -126,10 +134,10 @@
 
     .brand-tag {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
       color: var(--accent-red);
-      letter-spacing: 0.15em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
@@ -137,7 +145,7 @@
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.75rem;
     }
 
     .btn {
@@ -155,13 +163,13 @@
       gap: 0.4rem;
     }
 
-    .btn-home {
+    .btn-nav-link {
       background: transparent;
       color: var(--text-muted);
       border: 1px solid transparent;
     }
 
-    .btn-home:hover {
+    .btn-nav-link:hover {
       color: #ffffff;
       background: rgba(255, 255, 255, 0.05);
     }
@@ -248,19 +256,19 @@
       max-width: 1200px;
       width: 100%;
       margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
+      padding: 2rem 1.5rem 4rem;
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 3rem;
     }
 
-    /* Showcase Card: Hero Image + Explanation */
+    /* Corporate Hero Showcase Card */
     .hero-lobby-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-dark);
+      border: 1.5px solid var(--border-dark);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 12px 45px rgba(0, 0, 0, 0.6);
       position: relative;
     }
 
@@ -292,14 +300,13 @@
       bottom: 0;
       background: linear-gradient(
         180deg,
-        rgba(6, 3, 18, 0.2) 0%,
-        rgba(6, 3, 18, 0.5) 60%,
-        rgba(14, 7, 34, 0.98) 100%
+        rgba(6, 3, 18, 0.15) 0%,
+        rgba(6, 3, 18, 0.5) 50%,
+        rgba(12, 6, 32, 0.98) 100%
       );
       pointer-events: none;
     }
 
-    /* Compatibility Badge (Top-Right of Image) */
     .compatibility-badge-container {
       position: absolute;
       top: 1.25rem;
@@ -317,13 +324,12 @@
     }
 
     .compatibility-badge-container img {
-      height: 48px;
+      height: 44px;
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 0 6px rgba(255, 34, 56, 0.4));
     }
 
-    /* Information Content */
     .hero-info-content {
       padding: 2.25rem 2.5rem 2.5rem;
     }
@@ -357,9 +363,15 @@
       color: #70a4ff;
     }
 
+    .badge-yellow {
+      background: rgba(240, 171, 0, 0.15);
+      border: 1px solid var(--accent-yellow);
+      color: #ffd700;
+    }
+
     .hero-title {
       font-family: var(--font-heading);
-      font-size: 2.25rem;
+      font-size: 2.3rem;
       font-weight: 800;
       color: #ffffff;
       letter-spacing: -0.02em;
@@ -374,12 +386,12 @@
 
     .hero-description {
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       line-height: 1.7;
-      max-width: 980px;
+      max-width: 1000px;
     }
 
-    /* 3 Main Directives / Operational Pillars */
+    /* 3 Main Directives */
     .operations-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -422,6 +434,263 @@
       font-size: 0.86rem;
       color: var(--text-muted);
       line-height: 1.5;
+    }
+
+    /* Section Cards Styling */
+    .section-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-header {
+      background: #09041a;
+      border-bottom: 2px solid var(--border-dark);
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-header.header-red { border-bottom-color: var(--accent-red); }
+    .section-header.header-blue { border-bottom-color: var(--accent-blue); }
+    .section-header.header-yellow { border-bottom-color: var(--accent-yellow); }
+
+    .section-body {
+      padding: 2rem;
+    }
+
+    /* Department 4 Cards Grid */
+    .dept-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .dept-card {
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: all 0.2s ease;
+    }
+
+    .dept-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 85, 255, 0.18);
+    }
+
+    .dept-icon-box {
+      font-size: 1.75rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .dept-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .dept-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* ARC Framework Feature Grid */
+    .arc-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .arc-feature-card {
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .arc-feature-card.f-anomaly { border-top: 4px solid var(--accent-blue); }
+    .arc-feature-card.f-reality { border-top: 4px solid var(--accent-yellow); }
+    .arc-feature-card.f-competency { border-top: 4px solid var(--accent-red); }
+
+    .arc-f-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+    }
+
+    .arc-f-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* QA Matrix 9 Items Showcase */
+    .qa-pills-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+
+    .qa-pill-item {
+      background: rgba(0, 85, 255, 0.08);
+      border: 1px solid rgba(0, 85, 255, 0.3);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #8bb5ff;
+    }
+
+    /* Careers & Benefits Banner */
+    .careers-banner-box {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .benefits-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+    }
+
+    .benefits-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .benefits-list li strong {
+      color: #ffffff;
+    }
+
+    .career-action-box {
+      background: #08031a;
+      border: 1.5px solid var(--border-medium);
+      border-radius: 12px;
+      padding: 1.75rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 0 20px rgba(255, 34, 56, 0.15);
+    }
+
+    .btn-apply-hero {
+      background: var(--accent-red);
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.85rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 0 15px var(--accent-red-glow);
+      transition: all 0.2s;
+    }
+
+    .btn-apply-hero:hover {
+      background: #ff3b4f;
+      transform: translateY(-2px);
+    }
+
+    .btn-handbook-link {
+      background: rgba(240, 171, 0, 0.1);
+      border: 1px solid var(--accent-yellow);
+      color: #ffd700;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.65rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-handbook-link:hover {
+      background: rgba(240, 171, 0, 0.2);
+    }
+
+    /* Internal Memos Grid */
+    .memos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .memo-card {
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-left: 4px solid var(--accent-red);
+      border-radius: 8px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .memo-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .memo-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .memo-content {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.45;
     }
 
     /* ==========================================
@@ -511,7 +780,6 @@
       padding: 1.75rem;
     }
 
-    /* Form Elements */
     .form-group {
       margin-bottom: 1.25rem;
     }
@@ -588,11 +856,6 @@
       transform: translateY(-1px);
     }
 
-    .auth-submit-btn:active {
-      transform: translateY(0);
-    }
-
-    /* Secondary Action Button (Register Button under Login) */
     .auth-tab-btn {
       width: 100%;
       padding: 0.75rem;
@@ -622,11 +885,6 @@
       transform: translateY(-1px);
     }
 
-    .auth-tab-btn:active {
-      transform: translateY(0);
-    }
-
-    /* Feedback Alert Message */
     .auth-feedback-alert {
       display: none;
       padding: 0.75rem 1rem;
@@ -636,9 +894,7 @@
       font-family: var(--font-body);
     }
 
-    /* ==========================================
-       USER NOT FOUND ALERT POPUP MODAL
-       ========================================== */
+    /* USER NOT FOUND ALERT POPUP */
     .user-not-found-modal-overlay {
       position: fixed;
       top: 0;
@@ -738,32 +994,45 @@
 
     /* Footer */
     .app-footer {
-      border-top: 1px solid var(--border-dark);
+      border-top: 1.5px solid var(--border-dark);
       background-color: #04020c;
-      padding: 1.5rem 0;
+      padding: 2.5rem 0 2rem;
       margin-top: auto;
       color: var(--text-muted);
       font-size: 0.85rem;
     }
 
-    .footer-container {
+    .footer-grid {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-bottom-bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
     }
 
     /* Responsive */
     @media (max-width: 900px) {
-      .operations-grid {
+      .operations-grid, .dept-grid, .arc-feature-grid, .memos-grid, .careers-banner-box, .footer-grid {
         grid-template-columns: 1fr;
       }
       .lobby-image-wrapper {
-        height: 340px;
+        height: 320px;
       }
       .hero-title {
         font-size: 1.75rem;
@@ -778,7 +1047,7 @@
     <div class="navbar-container">
       
       <!-- Logo บริษัท ทางซ้ายบน -->
-      <a href="#" class="brand-logo" id="company-logo">
+      <a href="index.html" class="brand-logo" id="company-logo">
         <div class="logo-emblem-box">
           <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
             <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
@@ -786,17 +1055,20 @@
         </div>
         <div class="brand-text">
           <span class="brand-name">TRIANGLE AGENCY</span>
-          <span class="brand-tag">CLASSIFIED // DIVISION</span>
+          <span class="brand-tag">CORPORATE HEADQUARTERS</span>
         </div>
       </a>
 
-      <!-- ปุ่มนำทางทางขวาบน (หน้าแรก, Admin, Login / Profile) -->
+      <!-- ปุ่มนำทางทางขวาบน -->
       <nav class="nav-actions" aria-label="Main Navigation">
+        <a href="#divisions" class="btn btn-nav-link">แผนกองค์กร</a>
+        <a href="#arc-tech" class="btn btn-nav-link">เทคโนโลยี ARC</a>
+        <a href="#careers" class="btn btn-nav-link">ร่วมงานกับเรา</a>
+        <a href="create-character.html" class="btn btn-nav-link" style="color:var(--accent-yellow);">＋ สร้างตัวละคร</a>
+
         <a href="admin.html" class="btn btn-admin-nav" id="btn-nav-admin" style="display:none;" title="แผงควบคุมผู้ดูแลระบบ">
           <span>🛡️ แผงควบคุม Admin</span>
         </a>
-
-        <a href="index.html" class="btn btn-home" id="btn-nav-home">หน้าแรก</a>
 
         <!-- ปุ่ม Login (เมื่อยังไม่ได้ล็อกอิน) -->
         <a href="#login" class="btn btn-login" id="btn-nav-login">Login</a>
@@ -817,45 +1089,43 @@
   <!-- Main Content Body -->
   <main class="main-content" id="main-content">
     
-    <!-- Hero Showcase Card: แสดงรูป Lobby + Compatibility Logo + คำอธิบาย -->
+    <!-- ==========================================
+         HERO SECTION: SHOWCASE & CORPORATE MISSION
+         ========================================== -->
     <section class="hero-lobby-card" aria-label="Triangle Agency Overview">
-      
-      <!-- รูปภาพ Lobby ส่วนกลางพร้อม Overlay และ Compatibility Logo -->
       <div class="lobby-image-wrapper">
         <img src="images/lobby.jpg" alt="Triangle Agency Corporate Headquarters Lobby" class="lobby-bg">
         <div class="lobby-image-overlay"></div>
 
-        <!-- กล่องแสดง Compatibility Logo มุมขวาบนของภาพ Lobby -->
         <div class="compatibility-badge-container" title="Official Compatibility Asset">
           <img src="images/compatibility logo - agency colors.png" alt="Compatibility Logo">
         </div>
       </div>
 
-      <!-- ส่วนข้อความและคำอธิบายบริษัท -->
       <div class="hero-info-content">
         <div class="classified-tag-row">
-          <span class="badge-tag badge-red">RESTRICTED ACCESS</span>
+          <span class="badge-tag badge-red">GLOBAL HEADQUARTERS</span>
           <span class="badge-tag badge-blue">ANOMALOUS RETRIEVAL & CONTAINMENT</span>
+          <span class="badge-tag badge-yellow">REALITY STABILIZATION CORP</span>
         </div>
 
         <h1 class="hero-title">
-          WELCOME TO <span class="highlight-anomaly">TRIANGLE AGENCY</span>
+          WORKING TOGETHER FOR A <span class="highlight-anomaly">STABLE TOMORROW</span>
         </h1>
 
-        <!-- คำอธิบายตามที่ผู้ใช้ต้องการ -->
         <p class="hero-description">
-          <strong>Triangle Agency</strong> คือบริษัทที่คอยจัดการสิ่งผิดปกติ (<span style="color:var(--accent-red); font-weight:700;">Anomaly</span>) 
-          และปฏิบัติการปกป้องเสถียรภาพความเป็นจริง (Reality) ภายใต้กฎระเบียบและความร่วมมือของหน่วยงานองค์กรระดับสูง เพื่อไม่ให้ปรากฏการณ์เหนือธรรมชาติสร้างความเสียหายต่อโลกภายนอก
+          <strong>Triangle Agency</strong> คือองค์กรชั้นนำระดับโลกที่มุ่งมั่นในการควบคุม ตรวจจับ และบริหารจัดการสิ่งผิดปกติ (<span style="color:var(--accent-red); font-weight:700;">Anomaly</span>) 
+          พร้อมทั้งปกป้องความต่อเนื่องของเส้นเวลาและความเป็นจริง (Reality Defense) โดยผสานเทคโนโลยีการกักกัน ARC ขั้นสูงเข้ากับมาตรฐานการทำงานระดับองค์กรมืออาชีพ
         </p>
 
-        <!-- การปฏิบัติงานหลัก 3 ด้านขององค์กร -->
+        <!-- 3 Pillars -->
         <div class="operations-grid">
           <div class="op-card">
             <div class="op-card-header">
               <span class="triangle-icon">▲</span>
               <span>1. ตรวจจับสิ่งผิดปกติ (Anomaly Detection)</span>
             </div>
-            <p>ติดตาม สืบสวน และค้นหารูปแบบการแทรกแซงของ Anomaly ที่หลุดเข้ามาในโลกความเป็นจริง</p>
+            <p>เฝ้าระวังและระบุตำแหน่งของสิ่งผิดปกติทั่วโลกก่อนที่จะเกิดการบิดเบือนความเป็นจริงในระดับวิกฤต</p>
           </div>
 
           <div class="op-card">
@@ -863,7 +1133,7 @@
               <span class="triangle-icon">▲</span>
               <span>2. กักกันและควบคุม (Containment Protocol)</span>
             </div>
-            <p>ส่งทีมภาคสนาม (Field Agents) เข้าควบคุมพื้นที่และใช้อุปกรณ์เทคโนโลยี ARC ในการกักกันอย่างปลอดภัย</p>
+            <p>ส่งทีมตัวแทนภาคสนาม (Field Agents) เข้าควบคุมพื้นที่และใช้เครื่องมือ ARC ในการกักเก็บอย่างปลอดภัย</p>
           </div>
 
           <div class="op-card">
@@ -871,12 +1141,217 @@
               <span class="triangle-icon">▲</span>
               <span>3. รักษาเสถียรภาพความจริง (Reality Defense)</span>
             </div>
-            <p>ป้องกันการพังทลายของเส้นเวลาและความเป็นจริงตามระเบียบ Prime Directive ของบริษัท</p>
+            <p>รักษาชีวิตฉากหน้าและกฎระเบียบ Prime Directive เพื่อป้องกันการพังทลายของระเบียบสังคมมนุษย์</p>
           </div>
         </div>
 
       </div>
+    </section>
 
+    <!-- ==========================================
+         SECTION 1: แผนกและโครงสร้างองค์กร (DIVISIONS)
+         ========================================== -->
+    <section class="section-card" id="divisions">
+      <div class="section-header header-red">
+        <h2>
+          <span>🏢 โครงสร้างแผนกความเชี่ยวชาญ (Corporate Competency Divisions)</span>
+        </h2>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">ORGANIZATIONAL STRUCTURE</span>
+      </div>
+      <div class="section-body">
+        <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:1.5rem;">
+          Triangle Agency ขับเคลื่อนด้วยบุคลากรผู้เชี่ยวชาญจาก 4 แผนกหลักที่ทำงานประสานกันอย่างไร้รอยต่อ เพื่อให้ภารกิจกักกันสำเร็จลุล่วงด้วยประสิทธิภาพสูงสุด
+        </p>
+
+        <div class="dept-grid">
+          <!-- Dept 1: R&D -->
+          <div class="dept-card">
+            <div class="dept-icon-box">🔬</div>
+            <div class="dept-name">ฝ่ายวิจัยและพัฒนา (R&D)</div>
+            <div class="dept-desc">
+              พัฒนานวัตกรรมอุปกรณ์กักกัน ARC วิเคราะห์ความถี่เหนือธรรมชาติ และสร้างเครื่องมือช่วยลดดัชนีหมดไฟ (Burnout Index)
+            </div>
+          </div>
+
+          <!-- Dept 2: PR -->
+          <div class="dept-card">
+            <div class="dept-icon-box">📢</div>
+            <div class="dept-name">ฝ่ายประชาสัมพันธ์ (PR)</div>
+            <div class="dept-desc">
+              ควบคุมข่าวสาร ปกปิดการปรากฏตัวของ Anomaly จัดการฉากหน้าทางสื่อ และลบความทรงจำพลเรือนตามระเบียบ
+            </div>
+          </div>
+
+          <!-- Dept 3: Field Ops -->
+          <div class="dept-card">
+            <div class="dept-icon-box">🛡️</div>
+            <div class="dept-name">ฝ่ายปฏิบัติการภาคสนาม (Field Ops)</div>
+            <div class="dept-desc">
+              หน่วยตอบโต้ฉุกเฉินและตัวแทนภาคสนามที่พร้อมเข้ากักกันและเผชิญหน้ากับ Anomaly ตลอด 24 ชั่วโมง
+            </div>
+          </div>
+
+          <!-- Dept 4: HR & Compliance -->
+          <div class="dept-card">
+            <div class="dept-icon-box">📋</div>
+            <div class="dept-name">ฝ่ายบุคคลและกำกับดูแล (HR)</div>
+            <div class="dept-desc">
+              ตรวจสอบการปฏิบัติตาม Prime Directive บริหารคะแนนคำชมเชย (Commendations) และทัณฑ์บน (Demerits)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 2: เทคโนโลยี ARC & 9 สมรรถนะ (TECH & QA)
+         ========================================== -->
+    <section class="section-card" id="arc-tech">
+      <div class="section-header header-blue">
+        <h2>
+          <span>⚙️ กรอบโครงสร้าง ARC และการประเมิน 9 ด้าน (ARC Framework & QA Matrix)</span>
+        </h2>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-blue);">D4 SUCCESS SYSTEM</span>
+      </div>
+      <div class="section-body">
+        
+        <div class="arc-feature-grid">
+          <div class="arc-feature-card f-anomaly">
+            <div class="arc-f-title">▲ ANOMALY (สิ่งผิดปกติ)</div>
+            <div class="arc-f-desc">
+              พลังและอำนาจเหนือธรรมชาติที่ตัวแทนผูกมัดและใช้งานเพื่อต่อกรกับสิ่งผิดปกติอื่น ภายใต้การควบคุมของเครื่องมือ ARC
+            </div>
+          </div>
+
+          <div class="arc-feature-card f-reality">
+            <div class="arc-f-title">▲ REALITY (ฉากหน้าความเป็นจริง)</div>
+            <div class="arc-f-desc">
+              อาชีพปกติ ครอบครัว และสายสัมพันธ์ในชีวิตมนุษย์ ทำหน้าที่เป็นสมอยึดเหนี่ยวจิตใจไม่ให้สูญเสียตัวตนไปในความว่างเปล่า
+            </div>
+          </div>
+
+          <div class="arc-feature-card f-competency">
+            <div class="arc-f-title">▲ COMPETENCY (ความเชี่ยวชาญ)</div>
+            <div class="arc-f-desc">
+              ทักษะทางวิชาชีพ วินัยองค์กร และกฎข้อห้ามเคร่งครัด (Prime Directive) ที่ปกป้องความปลอดภัยของตัวแทนและบริษัท
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#08031a; border:1px solid var(--border-dark); border-radius:10px; padding:1.25rem 1.5rem;">
+          <strong style="color:#ffffff; font-size:0.92rem;">มาตรฐานประเมินสมรรถนะตัวแทน 9 ด้าน (9 Quality Assurances):</strong>
+          <div class="qa-pills-wrap">
+            <span class="qa-pill-item">👁️ Attentiveness (ความช่างสังเกต)</span>
+            <span class="qa-pill-item">🎭 Duplicity (การเจรจาโน้มน้าว/หลอกล่อ)</span>
+            <span class="qa-pill-item">⚡ Dynamism (ความดุดัน/การบุกทะลวง)</span>
+            <span class="qa-pill-item">🤝 Empathy (ความเห็นอกเห็นใจ)</span>
+            <span class="qa-pill-item">🎯 Initiative (ความว่องไวชิงลงมือ)</span>
+            <span class="qa-pill-item">🛡️ Persistence (ความอดทนไม่ยอมแพ้)</span>
+            <span class="qa-pill-item">👑 Presence (ความน่าเกรงขาม/สั่งการ)</span>
+            <span class="qa-pill-item">💼 Professionalism (ความสุขุมมืออาชีพ)</span>
+            <span class="qa-pill-item">🕶️ Subtlety (ความแนบเนียนเงียบเชียบ)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 3: สวัสดิการและการรับสมัคร (CAREERS)
+         ========================================== -->
+    <section class="section-card" id="careers">
+      <div class="section-header header-yellow">
+        <h2>
+          <span>💼 โอกาสร่วมงานและสิทธิประโยชน์พนักงาน (Careers & Agent Benefits)</span>
+        </h2>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:#ffd700;">EMPLOYMENT OPPORTUNITIES</span>
+      </div>
+      <div class="section-body">
+        <div class="careers-banner-box">
+          <div>
+            <h3 style="font-size:1.35rem; color:#ffffff; font-weight:800; margin-bottom:0.5rem;">
+              ร่วมเป็นส่วนหนึ่งของทีมปกป้องความเป็นจริงระดับแนวหน้า
+            </h3>
+            <p style="color:var(--text-muted); font-size:0.9rem;">
+              ที่ Triangle Agency เราให้ความสำคัญกับความปลอดภัยและสุขภาพจิตของพนักงาน ตัวแทนทุกคนจะได้รับสวัสดิการระดับพรีเมียมเพื่อสนับสนุนการปฏิบัติงานภาคสนามอย่างเต็มศักยภาพ:
+            </p>
+
+            <ul class="benefits-list">
+              <li>
+                <span style="color:var(--accent-green);">✔</span>
+                <span><strong>ประกันสุขภาพและความเสี่ยง Anomaly:</strong> ครอบคลุมการฟื้นฟูสภาวะหมดไฟ (Burnout Recovery) และการบำบัดทางจิต 100%</span>
+              </li>
+              <li>
+                <span style="color:var(--accent-green);">✔</span>
+                <span><strong>ชุดอุปกรณ์ ARC มาตรฐานสากล:</strong> เครื่องมือภาคสนามระดับองค์กร พร้อมการรับประกันและอัปเกรดฟรี</span>
+              </li>
+              <li>
+                <span style="color:var(--accent-green);">✔</span>
+                <span><strong>โบนัสผลการปฏิบัติงาน (Commendations System):</strong> โอกาสเลื่อนตำแหน่งจาก Trainee สู่ General Director</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="career-action-box">
+            <span style="font-family:var(--font-mono); font-size:0.72rem; color:var(--accent-red); font-weight:700;">RECRUITMENT ACTIVE</span>
+            <h4 style="color:#ffffff; font-size:1.1rem; font-weight:700;">พร้อมเริ่มงานแล้วหรือยัง?</h4>
+            <a href="create-character.html" class="btn-apply-hero">
+              <span>＋ ลงทะเบียนสร้างตัวละคร</span>
+            </a>
+            <a href="Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" class="btn-handbook-link">
+              <span>📖 คู่มือระเบียบบริษัท ARC (หน้า 31-62)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 4: กระดานข่าวสารภายใน (INTERNAL MEMOS)
+         ========================================== -->
+    <section class="section-card">
+      <div class="section-header header-red">
+        <h2>
+          <span>📢 ข่าวสารและประกาศภายในองค์กร (Internal Corporate Bulletins)</span>
+        </h2>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">OFFICIAL DIRECTIVES</span>
+      </div>
+      <div class="section-body">
+        <div class="memos-grid">
+          <div class="memo-card">
+            <div>
+              <div class="memo-tag">HR BULLETIN // CODE 401</div>
+              <div class="memo-title">เกณฑ์การล้างทัณฑ์บน (Demerits) ประจำไตรมาส</div>
+              <div class="memo-content">
+                ตัวแทนที่สะสมแต้ม Demerit สามารถลดทัณฑ์บนได้โดยการทำเป้าหมาย Sanctioned Behaviors ประจำแผนกให้ครบถ้วนในภารกิจถัดไป
+              </div>
+            </div>
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim); margin-top:1rem;">DEPARTMENT: HUMAN RESOURCES</div>
+          </div>
+
+          <div class="memo-card" style="border-left-color:var(--accent-blue);">
+            <div>
+              <div class="memo-tag" style="color:var(--accent-blue);">R&D LABS // ALERT</div>
+              <div class="memo-title">เปิดตัวชุดเครื่องมือ ARC Mobile Field Kit Rev 2.4</div>
+              <div class="memo-content">
+                เพิ่มประสิทธิภาพการกักกัน Anomaly ขึ้น 35% และลดอัตราการเกิด Complication ขณะทอยลูกเต๋า D4
+              </div>
+            </div>
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim); margin-top:1rem;">DEPARTMENT: RESEARCH & CONTAINMENT</div>
+          </div>
+
+          <div class="memo-card" style="border-left-color:var(--accent-yellow);">
+            <div>
+              <div class="memo-tag" style="color:var(--accent-yellow);">FIELD OPS // NOTICE</div>
+              <div class="memo-title">รายงานความผันผวนของความเป็นจริงใน Sector 4</div>
+              <div class="memo-content">
+                ตรวจพบคลื่นแทรกแซงระดับ 3 ขอให้ตัวแทนภาคสนามรักษาฉากหน้า Reality Cover อย่างเคร่งครัดเพื่อป้องกันความตื่นตระหนก
+              </div>
+            </div>
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim); margin-top:1rem;">DEPARTMENT: REALITY DEFENSE</div>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
@@ -887,7 +1362,6 @@
   <div class="auth-modal-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
     <div class="auth-modal-card">
       
-      <!-- Modal Header -->
       <div class="auth-modal-header">
         <div class="auth-header-title">
           <svg class="logo-triangle-svg" style="width:20px; height:20px;" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -898,15 +1372,10 @@
         <button class="btn-close-modal" id="btn-close-auth-modal" aria-label="Close Modal">✕</button>
       </div>
 
-      <!-- Modal Body -->
       <div class="auth-modal-body">
-        
-        <!-- กล่องแจ้งเตือนผลลัพธ์ (Error / Success) -->
         <div class="auth-feedback-alert" id="auth-feedback"></div>
 
-        <!-- FORM LOGIN -->
         <form id="form-login">
-          <!-- Username (ชื่อตัวละคร หรือ admin) -->
           <div class="form-group">
             <label for="login-username">
               Username <span class="label-sub">(ชื่อตัวละคร / บัญชี Admin)</span>
@@ -916,7 +1385,6 @@
             </div>
           </div>
 
-          <!-- Password (ใส่รหัส) -->
           <div class="form-group">
             <label for="login-password">
               Password <span class="label-sub">(รหัสผ่านเข้าถึง)</span>
@@ -926,24 +1394,21 @@
             </div>
           </div>
 
-          <!-- ปุ่มยืนยันเข้าสู่ระบบ (LOGIN) -->
           <button type="submit" class="auth-submit-btn" id="btn-submit-login">
             <span>▲ ยืนยันเข้าสู่ระบบ (LOGIN)</span>
           </button>
 
-          <!-- ปุ่มสร้างตัวละคร (Register) ที่จะเด้งไปหน้าสร้างตัวละครใหม่ create-character.html -->
           <a href="create-character.html" class="auth-tab-btn" id="tab-btn-register">
             <span>+ สร้างตัวละคร (Register)</span>
           </a>
         </form>
-
       </div>
 
     </div>
   </div>
 
   <!-- ==========================================
-       USER NOT FOUND ALERT POPUP MODAL (หน้าต่างแจ้งเตือนไม่พบบัญชีพนักงาน)
+       USER NOT FOUND ALERT POPUP MODAL
        ========================================== -->
   <div class="user-not-found-modal-overlay" id="user-not-found-modal" role="dialog" aria-modal="true" aria-labelledby="not-found-title">
     <div class="user-not-found-card">
@@ -964,21 +1429,54 @@
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- Corporate Footer -->
   <footer class="app-footer">
-    <div class="footer-container">
-      <div style="display:flex; align-items:center; gap:0.75rem;">
-        <img src="images/compatibility logo - agency colors.png" alt="Compatibility Logo" style="height:28px;">
-        <span>Triangle Agency &bull; Investigation & Anomaly Management System</span>
+    <div class="footer-grid">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.65rem; margin-bottom:0.75rem;">
+          <div class="logo-emblem-box" style="width:32px; height:32px;">
+            <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" style="width:18px; height:18px;">
+              <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span style="font-family:var(--font-heading); font-weight:800; font-size:1.1rem; color:#ffffff;">TRIANGLE AGENCY</span>
+        </div>
+        <p style="font-size:0.84rem; line-height:1.6; color:var(--text-muted); max-width:480px;">
+          สำนักงานใหญ่บริหารจัดการสิ่งผิดปกติและการพิทักษ์เสถียรภาพความเป็นจริงระดับสากล ปฏิบัติการภายใต้กรอบข้อตกลงลับและระเบียบความปลอดภัย Prime Directive
+        </p>
       </div>
-      <div style="font-family:var(--font-mono); font-size:0.75rem;">
-        STATUS: <span style="color:#00ff9d;">SYSTEM ACTIVE</span> &bull; CONFIDENTIAL
+
+      <div>
+        <strong style="color:#ffffff; font-size:0.9rem; display:block; margin-bottom:0.75rem;">ลิงก์ด่วน (Quick Links)</strong>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.4rem; font-size:0.84rem;">
+          <li><a href="create-character.html" style="color:var(--text-muted); text-decoration:none;">ลงทะเบียนตัวแทนใหม่</a></li>
+          <li><a href="Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" style="color:var(--text-muted); text-decoration:none;">คู่มือ ARC Spreads PDF</a></li>
+          <li><a href="admin.html" style="color:var(--text-muted); text-decoration:none;">สารบบ Admin Directorate</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <strong style="color:#ffffff; font-size:0.9rem; display:block; margin-bottom:0.75rem;">ติดต่อองค์กร (Contact HQ)</strong>
+        <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.5;">
+          📍 Triangle Agency Global Tower, Floor 44<br>
+          📞 24/7 Anomaly Hotline: 1-800-ARC-TRIS<br>
+          🔒 Security Clearance: LEVEL 4
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <div>
+        &copy; 2026 Triangle Agency. All rights reserved. &bull; Third Party Publishing Asset Compatible.
+      </div>
+      <div>
+        STATUS: <span style="color:var(--accent-green);">● SYSTEM ACTIVE</span> &bull; CONFIDENTIAL RECORD
       </div>
     </div>
   </footer>
 
   <!-- ==========================================
-       JAVASCRIPT LOGIC (AUTH & MODAL HANDLING)
+       JAVASCRIPT LOGIC (AUTH & MODAL & SHORTCUT 333)
        ========================================== -->
   <script>
     // Ensure default master admin account exists
@@ -1024,7 +1522,6 @@
 
       // Elements
       const btnNavLogin = document.getElementById('btn-nav-login');
-      const btnNavHome = document.getElementById('btn-nav-home');
       const btnNavAdmin = document.getElementById('btn-nav-admin');
       const authModal = document.getElementById('auth-modal');
       const btnCloseAuthModal = document.getElementById('btn-close-auth-modal');
@@ -1089,12 +1586,6 @@
         openAuthModal();
       });
 
-      if (btnNavHome) {
-        btnNavHome.addEventListener('click', () => {
-          closeAuthModal();
-        });
-      }
-
       btnCloseAuthModal.addEventListener('click', closeAuthModal);
 
       // Close on backdrop click
@@ -1126,7 +1617,6 @@
         const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value;
 
-        // Retrieve existing characters/accounts
         const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
 
         // เมื่อไม่พบบัญชีพนักงาน (User Not Found)
@@ -1148,7 +1638,6 @@
 
         setTimeout(() => {
           closeAuthModal();
-          // If admin, go to admin directory, otherwise go to profile
           if (username === 'admin' || accounts[username].role === 'admin') {
             window.location.href = 'admin.html';
           } else {
@@ -1161,6 +1650,13 @@
       userLoggedBadge.addEventListener('click', (e) => {
         if (e.target.closest('#btn-logout')) return;
         window.location.href = 'profile.html';
+      });
+
+      // Logout handler
+      btnLogout.addEventListener('click', (e) => {
+        e.stopPropagation();
+        localStorage.removeItem('triangle_current_user');
+        checkAuthStatus();
       });
 
       // ==========================================
