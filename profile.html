@@ -388,6 +388,40 @@
       max-width: 1360px;
     }
 
+    /* Admin Inspection Mode Banner */
+    .admin-inspection-banner {
+      background: rgba(255, 34, 56, 0.12);
+      border: 1.5px solid var(--accent-red);
+      border-radius: 10px;
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 0 20px var(--accent-red-glow);
+    }
+
+    .btn-back-admin {
+      background: var(--accent-red);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+
+    .btn-back-admin:hover {
+      background: #ff3b4f;
+      transform: scale(1.03);
+    }
+
     /* Top Corporate Banner Bar */
     .corporate-top-bar {
       background: var(--bg-surface);
@@ -1037,6 +1071,10 @@
         <div>
           <div class="sidebar-section-title">PORTAL NAVIGATION</div>
           <nav class="sidebar-nav-list" aria-label="Portal Menu">
+            <a href="admin.html" class="sidebar-nav-link" id="sidebar-admin-link" style="display:none; color:#ff7080;">
+              <span class="nav-icon">🛡️</span>
+              <span>แผงควบคุม Admin</span>
+            </a>
             <a href="index.html" class="sidebar-nav-link">
               <span class="nav-icon">⌂</span>
               <span>หน้าแรก (Home Lobby)</span>
@@ -1077,6 +1115,17 @@
          ========================================== -->
     <main class="app-main-content">
       <div class="main-content-inner">
+
+        <!-- แถบตรวจตราผู้ดูแลระบบ (Admin Inspection Banner) -->
+        <div class="admin-inspection-banner" id="admin-inspection-banner">
+          <div>
+            <span style="color:var(--accent-red); font-weight:800; font-family:var(--font-mono); font-size:0.8rem;">[OVERSEER AUDIT]</span>
+            <span style="font-size:0.9rem; margin-left:0.5rem; color:#ffffff;">กำลังตรวจสอบแฟ้มประวัติของ: <strong id="admin-inspecting-user" style="color:#ffd700;">-</strong></span>
+          </div>
+          <a href="admin.html" class="btn-back-admin">
+            <span>⬅️ กลับสู่หน้าสารบบ Admin (Directorate)</span>
+          </a>
+        </div>
 
         <!-- แถบแจ้งเตือนระดับองค์กร (Corporate Top Bar) -->
         <div class="corporate-top-bar">
@@ -1374,9 +1423,23 @@
     // Load active character
     function loadAgentProfile() {
       const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
-      currentUserKey = localStorage.getItem('triangle_current_user') || '';
+      const loggedInUser = localStorage.getItem('triangle_current_user') || '';
 
-      if (!currentUserKey || !accounts[currentUserKey]) {
+      // Check URL parameters for admin inspection (?user=...)
+      const urlParams = new URLSearchParams(window.location.search);
+      const userParam = urlParams.get('user');
+
+      if (userParam && accounts[userParam]) {
+        currentUserKey = userParam;
+        // Show admin banner
+        const adminBanner = document.getElementById('admin-inspection-banner');
+        if (adminBanner) {
+          adminBanner.style.display = 'flex';
+          document.getElementById('admin-inspecting-user').textContent = `${currentUserKey} (${accounts[currentUserKey].character?.name || currentUserKey})`;
+        }
+      } else if (loggedInUser && accounts[loggedInUser]) {
+        currentUserKey = loggedInUser;
+      } else {
         const keys = Object.keys(accounts);
         if (keys.length > 0) {
           currentUserKey = keys[keys.length - 1];
@@ -1388,7 +1451,13 @@
         }
       }
 
-      currentAgent = accounts[currentUserKey].character;
+      // Check if logged in user is admin -> show admin link in sidebar
+      if (loggedInUser === 'admin' || (accounts[loggedInUser] && accounts[loggedInUser].role === 'admin')) {
+        const adminLink = document.getElementById('sidebar-admin-link');
+        if (adminLink) adminLink.style.display = 'flex';
+      }
+
+      currentAgent = accounts[currentUserKey].character || {};
 
       // Ensure metrics exist
       if (currentAgent.commendations === undefined) currentAgent.commendations = 0;
@@ -1673,7 +1742,7 @@
         localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
         localStorage.removeItem('triangle_current_user');
         alert(`ถอนสถานะตัวแทนเจ้าหน้าที่ "${currentUserKey}" ออกจากระบบเรียบร้อยแล้ว`);
-        window.location.href = 'index.html';
+        window.location.href = 'admin.html';
       }
     });
 

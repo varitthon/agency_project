@@ -101,15 +101,13 @@
       align-items: center;
       justify-content: center;
       padding: 6px;
-      box-shadow: 
-        0 0 16px var(--accent-red-glow),
-        inset 0 0 10px rgba(255, 34, 56, 0.2);
+      box-shadow: 0 0 20px var(--accent-red-glow);
     }
 
     .logo-triangle-svg {
       width: 26px;
       height: 26px;
-      filter: drop-shadow(0 0 6px var(--accent-red));
+      filter: drop-shadow(0 0 8px var(--accent-red));
     }
 
     .brand-text {
@@ -120,166 +118,161 @@
     .brand-name {
       font-family: var(--font-heading);
       font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: 0.08em;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
       color: #ffffff;
       line-height: 1.1;
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
     }
 
     .brand-tag {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 700;
       color: var(--accent-red);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      text-shadow: 0 0 8px rgba(255, 34, 56, 0.5);
     }
 
-    /* Navigation Links & Buttons (Right) */
+    /* Navigation Actions (Right) */
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 0.85rem;
     }
 
     .btn {
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.55rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.35rem;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      font-weight: 600;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      border: 1px solid transparent;
+      gap: 0.4rem;
     }
 
     .btn-home {
-      color: var(--text-main);
-      background-color: transparent;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid transparent;
     }
 
     .btn-home:hover {
       color: #ffffff;
-      background-color: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .btn-login {
-      background: linear-gradient(135deg, rgba(255, 34, 56, 0.2), rgba(209, 0, 23, 0.35));
+      background: #0055ff;
       color: #ffffff;
-      border: 1px solid var(--accent-red);
-      box-shadow: 0 0 14px rgba(255, 34, 56, 0.35);
+      border: 1px solid #0055ff;
+      box-shadow: 0 0 14px rgba(0, 85, 255, 0.4);
     }
 
     .btn-login:hover {
-      background: var(--accent-red);
-      color: #ffffff;
-      box-shadow: 0 0 24px rgba(255, 34, 56, 0.7);
+      background: #206dff;
+      box-shadow: 0 0 20px rgba(0, 85, 255, 0.6);
       transform: translateY(-1px);
     }
 
-    /* User Profile State in Navbar when Logged In */
+    .btn-admin-nav {
+      background: rgba(255, 34, 56, 0.15);
+      border: 1px solid var(--accent-red);
+      color: #ff5e6c;
+      font-size: 0.82rem;
+    }
+
+    .btn-admin-nav:hover {
+      background: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 14px var(--accent-red-glow);
+    }
+
+    /* User Logged In Badge */
     .user-logged-badge {
       display: none;
       align-items: center;
       gap: 0.75rem;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-dark);
+      background: rgba(0, 85, 255, 0.12);
+      border: 1px solid rgba(0, 85, 255, 0.35);
       padding: 0.35rem 0.85rem;
-      border-radius: 6px;
+      border-radius: 20px;
+      font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
     .user-logged-badge:hover {
-      background: rgba(255, 34, 56, 0.1);
-      border-color: var(--accent-red);
-      box-shadow: 0 0 14px var(--accent-red-glow);
-    }
-
-    .user-badge-profile-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      color: #ffffff;
-      text-decoration: none;
+      background: rgba(0, 85, 255, 0.25);
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 15px rgba(0, 85, 255, 0.5);
     }
 
     .user-avatar-pip {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: var(--accent-green);
+      background-color: var(--accent-green);
       box-shadow: 0 0 8px var(--accent-green);
     }
 
     .user-agent-name {
       font-family: var(--font-mono);
-      font-size: 0.85rem;
       font-weight: 700;
       color: #ffffff;
-      transition: color 0.15s ease;
-    }
-
-    .user-logged-badge:hover .user-agent-name {
-      color: var(--accent-red);
     }
 
     .btn-logout {
       background: transparent;
       border: none;
-      color: var(--text-muted);
+      color: var(--accent-red);
       font-size: 0.75rem;
-      font-family: var(--font-mono);
+      font-weight: 700;
       cursor: pointer;
-      padding: 0.2rem 0.4rem;
-      border-radius: 3px;
-      z-index: 2;
-    }
-    .btn-logout:hover {
-      color: #ffffff;
-      background: var(--accent-red);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      transition: background 0.2s;
     }
 
-    /* Main Content Container */
+    .btn-logout:hover {
+      background: rgba(255, 34, 56, 0.15);
+    }
+
+    /* Main Content Area */
     .main-content {
       flex: 1;
       max-width: 1200px;
-      margin: 0 auto;
       width: 100%;
+      margin: 0 auto;
       padding: 2.5rem 1.5rem 4rem;
       display: flex;
       flex-direction: column;
       gap: 2.5rem;
     }
 
-    /* ==========================================
-       HERO LOBBY SHOWCASE SECTION
-       ========================================== */
+    /* Showcase Card: Hero Image + Explanation */
     .hero-lobby-card {
       background: var(--bg-surface);
       border: 1px solid var(--border-dark);
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
       position: relative;
     }
 
     .lobby-image-wrapper {
       position: relative;
       width: 100%;
-      height: 480px;
+      height: 440px;
+      background-color: #08031a;
       overflow: hidden;
-      background-color: #000000;
     }
 
-    .lobby-image-wrapper img.lobby-bg {
+    .lobby-bg {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -287,7 +280,7 @@
       transition: transform 0.6s ease;
     }
 
-    .hero-lobby-card:hover .lobby-image-wrapper img.lobby-bg {
+    .hero-lobby-card:hover .lobby-bg {
       transform: scale(1.02);
     }
 
@@ -298,142 +291,141 @@
       right: 0;
       bottom: 0;
       background: linear-gradient(
-        180deg, 
-        rgba(6, 3, 18, 0.3) 0%, 
-        rgba(6, 3, 18, 0.65) 60%, 
+        180deg,
+        rgba(6, 3, 18, 0.2) 0%,
+        rgba(6, 3, 18, 0.5) 60%,
         rgba(14, 7, 34, 0.98) 100%
       );
       pointer-events: none;
     }
 
+    /* Compatibility Badge (Top-Right of Image) */
     .compatibility-badge-container {
       position: absolute;
       top: 1.25rem;
       right: 1.25rem;
-      z-index: 10;
-      background: rgba(10, 5, 28, 0.85);
-      border: 1px solid var(--border-light);
+      background: rgba(6, 3, 18, 0.85);
+      border: 1.5px solid var(--border-light);
+      backdrop-filter: blur(8px);
+      padding: 0.6rem 0.9rem;
       border-radius: 8px;
-      padding: 0.5rem 0.9rem;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      z-index: 10;
     }
 
     .compatibility-badge-container img {
-      height: 32px;
+      height: 48px;
       width: auto;
       object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(255, 34, 56, 0.4));
     }
 
+    /* Information Content */
     .hero-info-content {
-      padding: 2.25rem 2.5rem;
-      position: relative;
-      z-index: 5;
+      padding: 2.25rem 2.5rem 2.5rem;
     }
 
     .classified-tag-row {
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
       flex-wrap: wrap;
     }
 
     .badge-tag {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 0.25rem 0.65rem;
+      padding: 0.25rem 0.75rem;
       border-radius: 4px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .badge-red {
       background: rgba(255, 34, 56, 0.15);
+      border: 1px solid var(--accent-red);
       color: var(--accent-red);
-      border: 1px solid rgba(255, 34, 56, 0.35);
     }
 
     .badge-blue {
       background: rgba(0, 85, 255, 0.15);
-      color: #66a3ff;
-      border: 1px solid rgba(0, 85, 255, 0.35);
+      border: 1px solid var(--accent-blue);
+      color: #70a4ff;
     }
 
     .hero-title {
       font-family: var(--font-heading);
+      font-size: 2.25rem;
       font-weight: 800;
-      font-size: 2.2rem;
-      line-height: 1.25;
       color: #ffffff;
-      margin-bottom: 1rem;
       letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1.15rem;
     }
 
-    .hero-title span.highlight-anomaly {
+    .highlight-anomaly {
       color: var(--accent-red);
-      text-shadow: 0 0 18px var(--accent-red-glow);
+      text-shadow: 0 0 20px var(--accent-red-glow);
     }
 
     .hero-description {
-      font-size: 1.15rem;
-      color: var(--text-main);
-      max-width: 900px;
-      margin-bottom: 1.75rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
       line-height: 1.7;
+      max-width: 980px;
     }
 
+    /* 3 Main Directives / Operational Pillars */
     .operations-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border-dark);
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
 
     .op-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      padding: 1.25rem;
-      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.4rem;
+      transition: all 0.25s ease;
     }
 
     .op-card:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 34, 56, 0.4);
+      border-color: var(--accent-blue);
+      background: rgba(255, 255, 255, 0.04);
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 85, 255, 0.15);
     }
 
     .op-card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
       font-family: var(--font-heading);
+      font-size: 0.95rem;
       font-weight: 700;
-      font-size: 1.05rem;
       color: #ffffff;
       margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .op-card-header span.triangle-icon {
+    .op-card-header .triangle-icon {
       color: var(--accent-red);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
 
     .op-card p {
-      font-size: 0.9rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
       line-height: 1.5;
     }
 
     /* ==========================================
-       LOGIN & REGISTER MODAL (POP-UP DIALOG)
+       AUTHENTICATION MODAL STYLING
        ========================================== */
     .auth-modal-overlay {
       position: fixed;
@@ -441,14 +433,14 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(4, 2, 14, 0.88);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(4, 2, 12, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 1000;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 1.25rem;
+      padding: 1.5rem;
       animation: modalFadeIn 0.25s ease-out;
     }
 
@@ -457,25 +449,25 @@
     }
 
     @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.96); }
+      from { opacity: 0; transform: scale(0.97); }
       to { opacity: 1; transform: scale(1); }
     }
 
     .auth-modal-card {
-      background: var(--bg-surface-elevated);
+      background: var(--bg-surface);
       border: 1.5px solid var(--border-dark);
       border-radius: 14px;
       width: 100%;
       max-width: 480px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(255, 34, 56, 0.15);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 34, 56, 0.15);
       overflow: hidden;
       position: relative;
     }
 
     .auth-modal-header {
-      background: #0b051e;
+      background: #090418;
       border-bottom: 1px solid var(--border-dark);
-      padding: 1.25rem 1.5rem;
+      padding: 1.2rem 1.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -484,43 +476,42 @@
     .auth-header-title {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
 
     .auth-header-title h2 {
       font-family: var(--font-heading);
-      font-size: 1.15rem;
-      color: #ffffff;
+      font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
+      color: #ffffff;
     }
 
     .btn-close-modal {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-light);
+      background: transparent;
+      border: none;
       color: var(--text-muted);
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: color 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: all 0.15s ease;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
     }
 
     .btn-close-modal:hover {
-      background: rgba(255, 34, 56, 0.2);
       color: #ffffff;
-      border-color: var(--accent-red);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .auth-modal-body {
-      padding: 1.75rem 2rem 2rem;
+      padding: 1.75rem;
     }
 
-    /* Form Fields */
+    /* Form Elements */
     .form-group {
       margin-bottom: 1.25rem;
     }
@@ -532,46 +523,47 @@
       font-weight: 600;
       color: var(--text-main);
       margin-bottom: 0.45rem;
-      letter-spacing: 0.02em;
     }
 
-    .form-group label span.label-sub {
+    .label-sub {
+      font-size: 0.75rem;
       color: var(--text-muted);
-      font-size: 0.78rem;
       font-weight: 400;
+      margin-left: 0.35rem;
     }
 
     .input-field-wrapper {
       position: relative;
+      display: flex;
+      align-items: center;
     }
 
     .input-auth {
       width: 100%;
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 8px;
       padding: 0.75rem 1rem;
-      background: #09041a;
-      border: 1px solid var(--border-dark);
-      border-radius: 6px;
       color: #ffffff;
       font-family: var(--font-body);
-      font-size: 0.98rem;
+      font-size: 0.95rem;
+      outline: none;
       transition: all 0.2s ease;
     }
 
     .input-auth:focus {
-      outline: none;
       border-color: var(--accent-red);
-      box-shadow: 0 0 0 3px rgba(255, 34, 56, 0.2);
-      background: #0f0729;
+      box-shadow: 0 0 15px var(--accent-red-glow);
+      background: #0c0524;
     }
 
     .input-auth::placeholder {
-      color: rgba(155, 163, 203, 0.45);
+      color: #555075;
     }
 
-    /* Primary Submit Button (Login) */
     .auth-submit-btn {
       width: 100%;
-      padding: 0.8rem;
+      padding: 0.85rem;
       background: var(--accent-red);
       color: #ffffff;
       border: none;
@@ -600,7 +592,7 @@
       transform: translateY(0);
     }
 
-    /* Secondary Action Button (Register Button under Login -> Opens create-character.html) */
+    /* Secondary Action Button (Register Button under Login) */
     .auth-tab-btn {
       width: 100%;
       padding: 0.75rem;
@@ -741,17 +733,17 @@
     .alert-success {
       background: rgba(0, 230, 118, 0.15);
       border: 1px solid rgba(0, 230, 118, 0.4);
-      color: #69f0ae;
+      color: #70ffb0;
     }
 
     /* Footer */
     .app-footer {
-      background: #04020c;
       border-top: 1px solid var(--border-dark);
+      background-color: #04020c;
       padding: 1.5rem 0;
-      font-size: 0.82rem;
-      color: var(--text-muted);
       margin-top: auto;
+      color: var(--text-muted);
+      font-size: 0.85rem;
     }
 
     .footer-container {
@@ -798,8 +790,12 @@
         </div>
       </a>
 
-      <!-- ปุ่มนำทางทางขวาบน (หน้าแรก, Login / Profile) -->
+      <!-- ปุ่มนำทางทางขวาบน (หน้าแรก, Admin, Login / Profile) -->
       <nav class="nav-actions" aria-label="Main Navigation">
+        <a href="admin.html" class="btn btn-admin-nav" id="btn-nav-admin" style="display:none;" title="แผงควบคุมผู้ดูแลระบบ">
+          <span>🛡️ แผงควบคุม Admin</span>
+        </a>
+
         <a href="index.html" class="btn btn-home" id="btn-nav-home">หน้าแรก</a>
 
         <!-- ปุ่ม Login (เมื่อยังไม่ได้ล็อกอิน) -->
@@ -910,13 +906,13 @@
 
         <!-- FORM LOGIN -->
         <form id="form-login">
-          <!-- Username (ชื่อตัวละคร) -->
+          <!-- Username (ชื่อตัวละคร หรือ admin) -->
           <div class="form-group">
             <label for="login-username">
-              Username <span class="label-sub">(ชื่อตัวละคร / Agent Codename)</span>
+              Username <span class="label-sub">(ชื่อตัวละคร / บัญชี Admin)</span>
             </label>
             <div class="input-field-wrapper">
-              <input type="text" id="login-username" class="input-auth" placeholder="เช่น Valerie Ross หรือ Vance Sterling" required autocomplete="username">
+              <input type="text" id="login-username" class="input-auth" placeholder="เช่น Valerie Ross หรือ admin" required autocomplete="username">
             </div>
           </div>
 
@@ -985,10 +981,51 @@
        JAVASCRIPT LOGIC (AUTH & MODAL HANDLING)
        ========================================== -->
   <script>
+    // Ensure default master admin account exists
+    function ensureAdminAccount() {
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      if (!accounts['admin']) {
+        accounts['admin'] = {
+          password: 'admin',
+          role: 'admin',
+          createdDate: new Date().toISOString(),
+          character: {
+            name: 'Central Overseer (Admin)',
+            title: 'General Director',
+            standing: 'Executive Standing',
+            id: 'DIR-000',
+            arc: {
+              anomaly: 'Omniscience',
+              reality: 'Directorate Office',
+              competency: 'Executive Oversight',
+              primeDirective: 'Preserve Agency Continuity',
+              burnoutRelease: 'Execute Audit Protocol',
+              sanctionedBehaviors: [
+                { text: 'Review Field Agent Dossiers', done: true },
+                { text: 'Maintain Database Security', done: true }
+              ]
+            },
+            commendations: 10,
+            demerits: 0,
+            burnout: 0,
+            qualities: {
+              attentiveness: { max: 5, current: 5 },
+              professionalism: { max: 5, current: 5 },
+              presence: { max: 5, current: 5 }
+            }
+          }
+        };
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      ensureAdminAccount();
+
       // Elements
       const btnNavLogin = document.getElementById('btn-nav-login');
       const btnNavHome = document.getElementById('btn-nav-home');
+      const btnNavAdmin = document.getElementById('btn-nav-admin');
       const authModal = document.getElementById('auth-modal');
       const btnCloseAuthModal = document.getElementById('btn-close-auth-modal');
 
@@ -1026,13 +1063,23 @@
       // Check current login status
       function checkAuthStatus() {
         const loggedUser = localStorage.getItem('triangle_current_user');
+        const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+
         if (loggedUser) {
           btnNavLogin.style.display = 'none';
           userLoggedBadge.style.display = 'inline-flex';
           displayAgentName.textContent = loggedUser;
+
+          // Check if admin
+          if (loggedUser === 'admin' || (accounts[loggedUser] && accounts[loggedUser].role === 'admin')) {
+            btnNavAdmin.style.display = 'inline-flex';
+          } else {
+            btnNavAdmin.style.display = 'none';
+          }
         } else {
           btnNavLogin.style.display = 'inline-flex';
           userLoggedBadge.style.display = 'none';
+          btnNavAdmin.style.display = 'none';
         }
       }
 
@@ -1101,8 +1148,13 @@
 
         setTimeout(() => {
           closeAuthModal();
-          window.location.href = 'profile.html';
-        }, 800);
+          // If admin, go to admin directory, otherwise go to profile
+          if (username === 'admin' || accounts[username].role === 'admin') {
+            window.location.href = 'admin.html';
+          } else {
+            window.location.href = 'profile.html';
+          }
+        }, 700);
       });
 
       // User badge click -> go to profile.html

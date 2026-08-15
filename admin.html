@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triangle Agency // ฝ่ายกำกับดูแลและสารบบพนักงาน (Admin Directorate)</title>
+  <meta name="description" content="แผงควบคุมผู้ดูแลระบบและสารบบข้อมูลพนักงาน Triangle Agency Personnel Directorate">
+  
+  <!-- Google Fonts: Inter, Poppins, Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-base: #060312;
+      --bg-surface: #0c0620;
+      --bg-surface-elevated: #130a30;
+      --bg-navbar: rgba(8, 4, 24, 0.97);
+      
+      --border-dark: #23154f;
+      --border-medium: #3a257a;
+      --border-light: rgba(255, 255, 255, 0.12);
+      
+      --text-main: #f8f9fe;
+      --text-muted: #9ba3cb;
+      --text-dim: #687099;
+      
+      --accent-red: #ff2238;
+      --accent-red-glow: rgba(255, 34, 56, 0.45);
+      --accent-blue: #0055ff;
+      --accent-blue-glow: rgba(0, 85, 255, 0.4);
+      --accent-yellow: #f0ab00;
+      --accent-yellow-glow: rgba(240, 171, 0, 0.4);
+      --accent-green: #00e676;
+      --accent-green-glow: rgba(0, 230, 118, 0.4);
+      --accent-cyan: #00d4ff;
+      
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.6) 0%, transparent 65%),
+        radial-gradient(circle at 90% 10%, rgba(255, 34, 56, 0.1) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    .app-layout {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Left Sidebar */
+    .app-sidebar {
+      width: 260px;
+      min-width: 260px;
+      background-color: var(--bg-navbar);
+      border-right: 1.5px solid var(--border-dark);
+      backdrop-filter: blur(14px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem 1.15rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 100;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
+    }
+
+    .sidebar-top {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .sidebar-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-dark);
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .logo-emblem-box {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      box-shadow: 0 0 16px var(--accent-red-glow);
+      flex-shrink: 0;
+    }
+
+    .logo-triangle-svg {
+      width: 20px;
+      height: 20px;
+      filter: drop-shadow(0 0 6px var(--accent-red));
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .brand-tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-section-title {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      padding-left: 0.5rem;
+    }
+
+    .sidebar-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      list-style: none;
+    }
+
+    .sidebar-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.65rem 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-family: var(--font-body);
+      position: relative;
+    }
+
+    .sidebar-nav-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(3px);
+    }
+
+    .sidebar-nav-link.active {
+      color: #ffffff;
+      background: rgba(255, 34, 56, 0.12);
+      font-weight: 600;
+    }
+
+    .sidebar-nav-link.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      background: var(--accent-red);
+      border-radius: 0 2px 2px 0;
+      box-shadow: 0 0 8px var(--accent-red);
+    }
+
+    .sidebar-nav-link .nav-icon {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-nav-link:hover .nav-icon {
+      color: var(--accent-red);
+    }
+
+    .sidebar-bottom {
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .sidebar-status-box {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.25rem;
+    }
+
+    /* Main Container */
+    .app-main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2.25rem 3rem 4rem;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .main-content-inner {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    /* Admin Header Banner */
+    .admin-header-card {
+      background: linear-gradient(135deg, rgba(255, 34, 56, 0.15), rgba(14, 7, 34, 0.95));
+      border: 1.5px solid var(--accent-red);
+      border-radius: 14px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      box-shadow: 0 10px 35px rgba(255, 34, 56, 0.2);
+    }
+
+    .admin-title-group h1 {
+      font-family: var(--font-heading);
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .admin-title-group p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 0.35rem;
+    }
+
+    .admin-badge-clearance {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: var(--accent-red);
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      letter-spacing: 0.1em;
+      box-shadow: 0 0 15px var(--accent-red-glow);
+    }
+
+    /* Stat Counters Grid */
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .stat-card-title {
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-card-num {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    /* Action Toolbar */
+    .admin-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+
+    .search-input-box {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #08031a;
+      border: 1px solid var(--border-medium);
+      border-radius: 6px;
+      padding: 0.5rem 0.9rem;
+      min-width: 320px;
+    }
+
+    .search-input-box input {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      outline: none;
+      width: 100%;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-tool {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-dark);
+      color: #ffffff;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+      text-decoration: none;
+      font-family: var(--font-body);
+    }
+
+    .btn-tool:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-tool-red {
+      background: rgba(255, 34, 56, 0.15);
+      border-color: var(--accent-red);
+      color: #ff5e6c;
+    }
+
+    .btn-tool-red:hover {
+      background: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 15px var(--accent-red-glow);
+    }
+
+    /* Roster Table Card */
+    .roster-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .admin-table th {
+      background: #08031a;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1rem 1.25rem;
+      border-bottom: 1.5px solid var(--border-dark);
+    }
+
+    .admin-table td {
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .agent-table-user {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .agent-avatar-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      background: #060212;
+      border: 1px solid var(--border-medium);
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .agent-name-bold {
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 0.95rem;
+    }
+
+    .agent-username-sub {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .badge-pill {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .pill-green { background: rgba(0, 230, 118, 0.12); color: var(--accent-green); border: 1px solid var(--accent-green); }
+    .pill-red { background: rgba(255, 34, 56, 0.12); color: var(--accent-red); border: 1px solid var(--accent-red); }
+    .pill-blue { background: rgba(0, 85, 255, 0.12); color: #70a4ff; border: 1px solid var(--accent-blue); }
+    .pill-yellow { background: rgba(240, 171, 0, 0.12); color: var(--accent-yellow); border: 1px solid var(--accent-yellow); }
+
+    .password-reveal-box {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: #08031a;
+      padding: 0.25rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-dark);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .password-reveal-box:hover {
+      color: #ffffff;
+      border-color: var(--accent-blue);
+    }
+
+    .action-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-action-view {
+      background: rgba(0, 85, 255, 0.15);
+      border: 1px solid var(--accent-blue);
+      color: #70a4ff;
+      padding: 0.4rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .btn-action-view:hover {
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 0 10px var(--accent-blue-glow);
+    }
+
+    .btn-action-del {
+      background: rgba(255, 34, 56, 0.15);
+      border: 1px solid var(--accent-red);
+      color: #ff5e6c;
+      padding: 0.4rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-action-del:hover {
+      background: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 10px var(--accent-red-glow);
+    }
+
+    @media (max-width: 960px) {
+      .app-sidebar {
+        display: none;
+      }
+      .app-main-content {
+        padding: 2rem 1.25rem;
+      }
+      .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-header-row">
+          <a href="index.html" class="brand-logo">
+            <div class="logo-emblem-box">
+              <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="brand-name">TRIANGLE AGENCY</div>
+              <div class="brand-tag">DIRECTORATE // ADMIN</div>
+            </div>
+          </a>
+        </div>
+
+        <div>
+          <div class="sidebar-section-title">ADMIN CONTROLS</div>
+          <nav class="sidebar-nav-list">
+            <a href="admin.html" class="sidebar-nav-link active">
+              <span class="nav-icon">🛡️</span>
+              <span>สารบบพนักงาน (Directory)</span>
+            </a>
+            <a href="index.html" class="sidebar-nav-link">
+              <span class="nav-icon">⌂</span>
+              <span>หน้าแรก (Home Lobby)</span>
+            </a>
+            <a href="create-character.html" class="sidebar-nav-link">
+              <span class="nav-icon">＋</span>
+              <span>ลงทะเบียนตัวแทนใหม่</span>
+            </a>
+            <button type="button" class="sidebar-nav-link" id="btn-logout-admin">
+              <span class="nav-icon">⎋</span>
+              <span>ออกจากระบบ Admin</span>
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <a href="Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" style="color:#ffd700; text-decoration:none; font-size:0.78rem;">
+          📖 คู่มือ ARC (หน้า 31-62)
+        </a>
+        <div class="sidebar-status-box">
+          <span>ROLE: CENTRAL DIRECTOR</span>
+          <span style="color:var(--accent-green);">● ROOT ACCESS</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main-content">
+      <div class="main-content-inner">
+
+        <!-- Admin Header Card -->
+        <div class="admin-header-card">
+          <div class="admin-title-group">
+            <h1>
+              <span>🛡️ แผงควบคุมสารบบพนักงาน (Personnel Directorate)</span>
+            </h1>
+            <p>
+              ควบคุมและตรวจสอบแฟ้มประวัติพนักงานทั้งหมดในระบบ Triangle Agency สามารถดูโปรไฟล์ทุกบัญชี และสั่งลบบัญชีพนักงานได้
+            </p>
+          </div>
+          <div class="admin-badge-clearance">CLEARANCE: LEVEL 5 // OVERSEER</div>
+        </div>
+
+        <!-- Stat Grid -->
+        <div class="admin-stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-title">👥 บัญชีพนักงานทั้งหมด</div>
+            <div class="stat-card-num" id="stat-total-agents">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">🎖️ คำชมเชยสะสม (Total Comm.)</div>
+            <div class="stat-card-num" style="color:var(--accent-green);" id="stat-total-comm">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">⚠️ ทัณฑ์บนสะสม (Total Demerits)</div>
+            <div class="stat-card-num" style="color:var(--accent-red);" id="stat-total-demerits">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-title">🔥 หมดไฟสะสม (Total Burnout)</div>
+            <div class="stat-card-num" style="color:var(--accent-yellow);" id="stat-total-burnout">0</div>
+          </div>
+        </div>
+
+        <!-- Action Toolbar -->
+        <div class="admin-toolbar">
+          <div class="search-input-box">
+            <span>🔍</span>
+            <input type="text" id="search-agent-input" placeholder="ค้นหาชื่อตัวแทน, Username, หรือ ARC...">
+          </div>
+
+          <div class="toolbar-actions">
+            <a href="create-character.html" class="btn-tool" style="background:rgba(0,85,255,0.15); border-color:var(--accent-blue); color:#70a4ff;">
+              ＋ ลงทะเบียนตัวแทนใหม่
+            </a>
+            <button type="button" class="btn-tool" id="btn-export-json">
+              📥 Export Data (JSON)
+            </button>
+            <button type="button" class="btn-tool-red btn-tool" id="btn-wipe-all">
+              🗑️ ล้างฐานข้อมูลทั้งหมด
+            </button>
+          </div>
+        </div>
+
+        <!-- Table Roster -->
+        <div class="roster-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ตัวแทน / พนักงาน</th>
+                  <th>ตำแหน่ง & สถานะ</th>
+                  <th>ARC โครงสร้าง</th>
+                  <th>รหัสผ่าน (Password)</th>
+                  <th>🎖️ / ⚠️ / 🔥</th>
+                  <th style="text-align:right;">การดำเนินการ (Actions)</th>
+                </tr>
+              </thead>
+              <tbody id="agent-table-body">
+                <!-- Roster Rows Rendered Dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    // Ensure default master admin exists in accounts
+    function ensureAdminAccount() {
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      if (!accounts['admin']) {
+        accounts['admin'] = {
+          password: 'admin',
+          role: 'admin',
+          createdDate: new Date().toISOString(),
+          character: {
+            name: 'Central Overseer (Admin)',
+            title: 'General Director',
+            standing: 'Executive Standing',
+            id: 'DIR-000',
+            arc: {
+              anomaly: 'Omniscience',
+              reality: 'Directorate Office',
+              competency: 'Executive Oversight',
+              primeDirective: 'Preserve Agency Continuity',
+              burnoutRelease: 'Execute Audit Protocol',
+              sanctionedBehaviors: [
+                { text: 'Review Field Agent Dossiers', done: true },
+                { text: 'Maintain Database Security', done: true }
+              ]
+            },
+            commendations: 10,
+            demerits: 0,
+            burnout: 0,
+            qualities: {
+              attentiveness: { max: 5, current: 5 },
+              professionalism: { max: 5, current: 5 },
+              presence: { max: 5, current: 5 }
+            }
+          }
+        };
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+      }
+    }
+
+    let accountsData = {};
+
+    function loadAccounts() {
+      ensureAdminAccount();
+      accountsData = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      renderRoster();
+    }
+
+    function renderRoster(filterText = '') {
+      const tbody = document.getElementById('agent-table-body');
+      tbody.innerHTML = '';
+
+      const keys = Object.keys(accountsData);
+      let totalComm = 0;
+      let totalDemerits = 0;
+      let totalBurnout = 0;
+
+      let filteredKeys = keys.filter(k => {
+        const acc = accountsData[k];
+        const char = acc.character || {};
+        const term = filterText.toLowerCase();
+        return k.toLowerCase().includes(term) ||
+               (char.name && char.name.toLowerCase().includes(term)) ||
+               (char.title && char.title.toLowerCase().includes(term)) ||
+               (char.arc && char.arc.anomaly && char.arc.anomaly.toLowerCase().includes(term));
+      });
+
+      keys.forEach(k => {
+        const c = accountsData[k].character || {};
+        totalComm += (c.commendations || 0);
+        totalDemerits += (c.demerits || 0);
+        totalBurnout += (c.burnout || 0);
+      });
+
+      document.getElementById('stat-total-agents').textContent = keys.length;
+      document.getElementById('stat-total-comm').textContent = totalComm;
+      document.getElementById('stat-total-demerits').textContent = totalDemerits;
+      document.getElementById('stat-total-burnout').textContent = totalBurnout;
+
+      if (filteredKeys.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align:center; padding:3rem; color:var(--text-muted);">
+              ไม่พบข้อมูลพนักงานที่ตรงกับเงื่อนไข
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filteredKeys.forEach(k => {
+        const acc = accountsData[k];
+        const char = acc.character || {};
+        const arc = char.arc || {};
+
+        const tr = document.createElement('tr');
+        
+        // Avatar thumb
+        let avatarHtml = `<div class="agent-avatar-thumb">👤</div>`;
+        if (char.avatar) {
+          avatarHtml = `<img src="${char.avatar}" class="agent-avatar-thumb" alt="${char.name || k}">`;
+        }
+
+        tr.innerHTML = `
+          <td>
+            <div class="agent-table-user">
+              ${avatarHtml}
+              <div>
+                <div class="agent-name-bold">${char.name || k}</div>
+                <div class="agent-username-sub">@${k} ${acc.role === 'admin' ? '<span class="badge-pill pill-red">ADMIN</span>' : ''}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div><span class="badge-pill pill-blue">${char.title || 'Trainee'}</span></div>
+            <div style="margin-top:0.25rem;"><span class="badge-pill pill-green">${char.standing || 'Good Standing'}</span></div>
+          </td>
+          <td>
+            <div style="font-size:0.82rem; color:#ffffff;"><strong>A:</strong> ${arc.anomaly || '-'}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);"><strong>R:</strong> ${arc.reality || '-'} | <strong>C:</strong> ${arc.competency || '-'}</div>
+          </td>
+          <td>
+            <div class="password-reveal-box" onclick="togglePassword(this, '${acc.password || ''}')" title="คลิกเพื่อดูรหัสผ่าน">
+              <span>🔒 ••••••••</span>
+            </div>
+          </td>
+          <td>
+            <div style="font-family:var(--font-mono); font-size:0.82rem;">
+              <span style="color:var(--accent-green);">🎖️ ${char.commendations || 0}</span> |
+              <span style="color:var(--accent-red);">⚠️ ${char.demerits || 0}</span> |
+              <span style="color:var(--accent-yellow);">🔥 ${char.burnout || 0}</span>
+            </div>
+          </td>
+          <td style="text-align:right;">
+            <div class="action-btn-group" style="justify-content: flex-end;">
+              <a href="profile.html?user=${encodeURIComponent(k)}" class="btn-action-view" title="ดูแฟ้มประวัติโปรไฟล์">
+                👁️ ดูโปรไฟล์
+              </a>
+              <button type="button" class="btn-action-del" onclick="deleteAccount('${k}')" title="ลบบัญชีนี้ออกจากระบบ">
+                🗑️ ลบบัญชี
+              </button>
+            </div>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Toggle password reveal
+    window.togglePassword = function(el, pass) {
+      if (el.dataset.revealed === 'true') {
+        el.innerHTML = '<span>🔒 ••••••••</span>';
+        el.dataset.revealed = 'false';
+      } else {
+        el.innerHTML = `<span>🔓 <strong style="color:#ffffff;">${pass}</strong></span>`;
+        el.dataset.revealed = 'true';
+      }
+    };
+
+    // Delete Account
+    window.deleteAccount = function(username) {
+      if (confirm(`⚠️ ยืนยันการลบบัญชีพนักงาน "${username}" ออกจากระบบ Triangle Agency อย่างถาวร?`)) {
+        delete accountsData[username];
+        localStorage.setItem('triangle_accounts', JSON.stringify(accountsData));
+        
+        // If deleted current user
+        if (localStorage.getItem('triangle_current_user') === username) {
+          localStorage.removeItem('triangle_current_user');
+        }
+
+        alert(`ลบบัญชี "${username}" เรียบร้อยแล้ว`);
+        loadAccounts();
+      }
+    };
+
+    // Search filter
+    document.getElementById('search-agent-input').addEventListener('input', (e) => {
+      renderRoster(e.target.value.trim());
+    });
+
+    // Wipe all
+    document.getElementById('btn-wipe-all').addEventListener('click', () => {
+      if (confirm('🚨 คำเตือน: คุณต้องการล้างฐานข้อมูลตัวละครและบัญชีทั้งหมดในเครื่องนี้ใช่หรือไม่? ข้อมูลจะไม่สามารถกู้คืนได้')) {
+        localStorage.removeItem('triangle_accounts');
+        localStorage.removeItem('triangle_current_user');
+        alert('ล้างข้อมูลบัญชีทั้งหมดเรียบร้อยแล้ว');
+        loadAccounts();
+      }
+    });
+
+    // Export JSON
+    document.getElementById('btn-export-json').addEventListener('click', () => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(accountsData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `triangle_agency_accounts_backup_${Date.now()}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    });
+
+    // Logout admin
+    document.getElementById('btn-logout-admin').addEventListener('click', () => {
+      localStorage.removeItem('triangle_current_user');
+      window.location.href = 'index.html';
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAccounts();
+    });
+  </script>
+</body>
+</html>
