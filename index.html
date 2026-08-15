@@ -1163,11 +1163,58 @@
         window.location.href = 'profile.html';
       });
 
-      // Logout handler
-      btnLogout.addEventListener('click', (e) => {
-        e.stopPropagation();
-        localStorage.removeItem('triangle_current_user');
-        checkAuthStatus();
+      // ==========================================
+      // SECRET ADMIN KEYSTROKE SHORTCUT ("333")
+      // ==========================================
+      let secretKeyBuffer = '';
+      let secretKeyTimer = null;
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '3') {
+          secretKeyBuffer += '3';
+          
+          if (secretKeyTimer) clearTimeout(secretKeyTimer);
+          secretKeyTimer = setTimeout(() => {
+            secretKeyBuffer = '';
+          }, 1400);
+
+          if (secretKeyBuffer === '333') {
+            secretKeyBuffer = '';
+            ensureAdminAccount();
+            localStorage.setItem('triangle_current_user', 'admin');
+            
+            // Show HUD Alert
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+              position: fixed;
+              top: 25px;
+              left: 50%;
+              transform: translateX(-50%);
+              background: #0d0522;
+              border: 2px solid #ff2238;
+              box-shadow: 0 0 35px rgba(255, 34, 56, 0.8), 0 10px 40px rgba(0,0,0,0.9);
+              color: #ffffff;
+              padding: 1.1rem 2.2rem;
+              border-radius: 12px;
+              font-family: var(--font-mono);
+              font-weight: 700;
+              font-size: 0.95rem;
+              z-index: 999999;
+              display: flex;
+              align-items: center;
+              gap: 0.85rem;
+              animation: modalFadeIn 0.2s ease-out;
+            `;
+            toast.innerHTML = `<span style="color:#ff2238; font-size:1.6rem; text-shadow:0 0 10px rgba(255,34,56,0.8);">▲</span> <span>SECRET CLEARANCE OVERRIDE [333] // REDIRECTING TO ADMIN DIRECTORATE...</span>`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+              window.location.href = 'admin.html';
+            }, 650);
+          }
+        } else if (e.key !== '3' && e.key.length === 1) {
+          secretKeyBuffer = '';
+        }
       });
 
       // Initial check
