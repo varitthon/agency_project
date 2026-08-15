@@ -995,6 +995,248 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Edit Profile Actions in Dossier Header */
+    .dossier-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .dossier-actions-col {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-edit-profile {
+      background: linear-gradient(135deg, rgba(0, 85, 255, 0.25), rgba(0, 85, 255, 0.1));
+      border: 1.5px solid var(--accent-blue);
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 0 16px var(--accent-blue-glow);
+      transition: all 0.25s ease;
+    }
+
+    .btn-edit-profile:hover {
+      background: var(--accent-blue);
+      box-shadow: 0 0 24px rgba(0, 85, 255, 0.7);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================
+       EDIT PROFILE MODAL STYLING
+       ========================================== */
+    .edit-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(4, 2, 14, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .edit-modal-overlay.active {
+      display: flex;
+    }
+
+    .edit-modal-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-medium);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 85, 255, 0.2);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .edit-modal-header {
+      background: #090418;
+      border-bottom: 1.5px solid var(--border-dark);
+      padding: 1.2rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .edit-modal-tabs {
+      display: flex;
+      background: #070314;
+      border-bottom: 1.5px solid var(--border-dark);
+      padding: 0 1rem;
+      overflow-x: auto;
+      flex-shrink: 0;
+      gap: 0.25rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2.5px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-btn.active {
+      color: #ffffff;
+      border-bottom-color: var(--accent-blue);
+      background: rgba(0, 85, 255, 0.08);
+    }
+
+    .edit-modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: modalFadeIn 0.2s ease;
+    }
+
+    .edit-form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .edit-form-group label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.45rem;
+    }
+
+    .edit-form-group label span.sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: 0.35rem;
+    }
+
+    .edit-input-field {
+      width: 100%;
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .edit-input-field:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 15px var(--accent-blue-glow);
+      background: #0b0522;
+    }
+
+    .edit-textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .edit-modal-footer {
+      background: #070314;
+      border-top: 1.5px solid var(--border-dark);
+      padding: 1.15rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .edit-card-item {
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 1.15rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .btn-add-item {
+      background: rgba(0, 85, 255, 0.12);
+      border: 1px dashed var(--accent-blue);
+      color: #8bb5ff;
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-add-item:hover {
+      background: rgba(0, 85, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .btn-del-item {
+      background: transparent;
+      border: 1px solid rgba(255, 34, 56, 0.4);
+      color: var(--accent-red);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-del-item:hover {
+      background: var(--accent-red);
+      color: #ffffff;
+    }
+
     /* Responsive */
     @media (max-width: 960px) {
       .app-sidebar {
@@ -1021,6 +1263,169 @@
         gap: 1rem;
         align-items: flex-start;
       }
+    }
+
+    /* Retire Confirmation Modal Styling */
+    .retire-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(4, 2, 14, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .retire-modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .retire-modal-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--accent-red);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 30px var(--accent-red-glow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .retire-modal-header {
+      background: #0d051c;
+      border-bottom: 1.5px solid var(--border-dark);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .retire-header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .retire-icon-box {
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 34, 56, 0.15);
+      border: 1px solid var(--accent-red);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 0 12px var(--accent-red-glow);
+    }
+
+    .retire-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .retire-heading {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .btn-close-retire-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .btn-close-retire-modal:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .retire-modal-body {
+      padding: 1.5rem;
+    }
+
+    .retire-warning-box {
+      background: rgba(255, 34, 56, 0.08);
+      border: 1px solid rgba(255, 34, 56, 0.35);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .retire-warning-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ff5e6c;
+      margin-bottom: 0.4rem;
+    }
+
+    .retire-warning-text {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .retire-modal-actions {
+      background: #070314;
+      border-top: 1px solid var(--border-dark);
+      padding: 1.15rem 1.5rem;
+      display: flex;
+      gap: 0.85rem;
+      justify-content: flex-end;
+    }
+
+    .btn-retire-confirm {
+      background: var(--accent-red);
+      color: #ffffff;
+      border: 1px solid var(--accent-red);
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.65rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 16px var(--accent-red-glow);
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .btn-retire-confirm:hover {
+      background: #ff3b4f;
+      box-shadow: 0 0 24px rgba(255, 34, 56, 0.8);
+      transform: translateY(-1px);
     }
   </style>
 </head>
@@ -1168,7 +1573,15 @@
                     <span class="badge-tag badge-standing" id="profile-standing">Good Standing</span>
                     <span class="badge-tag badge-clearance" id="profile-dept-badge">COMPETENCY: -</span>
                     <span class="badge-tag" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); color:#ffffff;" id="profile-id-code">ID-0000</span>
+                    <span class="badge-tag" id="profile-access-badge" style="background:rgba(0,85,255,0.15); border:1px solid var(--accent-blue); color:#70a4ff;">👁️ VIEW ACCESS</span>
                   </div>
+                </div>
+
+                <!-- Edit Profile Button (Visible only to owner / admin) -->
+                <div class="dossier-actions-col">
+                  <button type="button" class="btn-edit-profile" id="btn-open-edit-profile" style="display:none;" title="แก้ไขข้อมูลโปรไฟล์ตัวละคร">
+                    <span>✏️ แก้ไขข้อมูลโปรไฟล์ (Edit Profile)</span>
+                  </button>
                 </div>
               </div>
 
@@ -1383,6 +1796,306 @@
     </div>
   </div>
 
+  <!-- ==========================================
+       RETIRE AGENT CONFIRMATION MODAL (แจ้งเตือนยืนยันลบตัวละคร)
+       ========================================== -->
+  <div class="retire-modal-overlay" id="retire-modal" role="dialog" aria-modal="true" aria-labelledby="retire-modal-title">
+    <div class="retire-modal-card">
+      <div class="retire-modal-header">
+        <div class="retire-header-title">
+          <div class="retire-icon-box">⚠️</div>
+          <div>
+            <div class="retire-tag">DOSSIER TERMINATION PROTOCOL</div>
+            <h2 id="retire-modal-title" class="retire-heading">ยืนยันการถอนสถานะตัวแทน</h2>
+          </div>
+        </div>
+        <button type="button" class="btn-close-retire-modal" id="btn-close-retire-modal" aria-label="Close Modal">✕</button>
+      </div>
+
+      <div class="retire-modal-body">
+        <div class="retire-warning-box">
+          <div class="retire-warning-title">🚨 คำเตือน: การกระทำนี้เป็นการลบข้อมูลถาวร</div>
+          <p class="retire-warning-text">
+            คุณกำลังจะลบแฟ้มประวัติและถอนสถานะของเจ้าหน้าที่ <strong id="retire-target-name" style="color:#ffffff;">-</strong> ออกจากสารบบ Triangle Agency ข้อมูลคะแนน สมรรถนะ และความสัมพันธ์ทั้งหมดจะถูกลบออกจากเครื่องของคุณ
+          </p>
+        </div>
+
+        <p style="font-size:0.86rem; color:var(--text-muted); line-height:1.5; margin-bottom:0.5rem;">
+          หากคุณต้องการใช้งานตัวแทนนี้อีกในอนาคต จะต้องทำการลงทะเบียนบรรจุพนักงานใหม่อีกครั้งเท่านั้น
+        </p>
+      </div>
+
+      <div class="retire-modal-actions">
+        <button type="button" class="btn btn-outline" id="btn-cancel-retire" style="flex:1;">
+          <span>ยกเลิก (Cancel)</span>
+        </button>
+        <button type="button" class="btn btn-retire-confirm" id="btn-confirm-retire-final" style="flex:1.4;">
+          <span>🗑️ ยืนยันลบตัวแทน (CONFIRM)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       EDIT PROFILE MODAL (หน้าต่างแก้ไขข้อมูลโปรไฟล์)
+       ========================================== -->
+  <div class="edit-modal-overlay" id="edit-profile-modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+    <div class="edit-modal-card">
+      
+      <!-- Modal Header -->
+      <div class="edit-modal-header">
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <div class="logo-emblem-box" style="width:32px; height:32px;">
+            <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" style="width:18px; height:18px;">
+              <polygon points="50,5 95,85 5,85" fill="#0055ff" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-blue); font-weight:700; letter-spacing:0.15em;">AGENT DOSSIER EDITOR</div>
+            <h2 id="edit-modal-title" style="font-family:var(--font-heading); font-size:1.15rem; font-weight:700; color:#ffffff; margin:0;">
+              แก้ไขแฟ้มข้อมูลตัวละคร: <span id="edit-modal-agent-name" style="color:var(--accent-blue);">-</span>
+            </h2>
+          </div>
+        </div>
+        <button type="button" class="btn-close-modal" id="btn-close-edit-modal" aria-label="Close Modal">✕</button>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="edit-modal-tabs">
+        <button type="button" class="tab-btn active" data-tab="tab-edit-identity">👤 ข้อมูลพื้นฐาน</button>
+        <button type="button" class="tab-btn" data-tab="tab-edit-arc">🔺 โครงสร้าง ARC</button>
+        <button type="button" class="tab-btn" data-tab="tab-edit-qa">⚙️ สมรรถนะ 9 ด้าน (QA)</button>
+        <button type="button" class="tab-btn" data-tab="tab-edit-abilities">⚡ ทักษะ & สายสัมพันธ์</button>
+        <button type="button" class="tab-btn" data-tab="tab-edit-hr">📋 บันทึก HR</button>
+      </div>
+
+      <!-- Modal Body (Tabs Content) -->
+      <div class="edit-modal-body">
+        
+        <!-- Tab 1: Identity & General -->
+        <div class="tab-pane active" id="tab-edit-identity">
+          <div class="grid-2col">
+            <div class="edit-form-group">
+              <label>Agent Title <span class="sub">(ตำแหน่งองค์กร)</span></label>
+              <input type="text" id="edit-agent-title" class="edit-input-field" placeholder="เช่น Field Agent, Trainee, Senior Specialist">
+            </div>
+            <div class="edit-form-group">
+              <label>Agent Standing <span class="sub">(สถานภาพ)</span></label>
+              <input type="text" id="edit-agent-standing" class="edit-input-field" placeholder="เช่น Good Standing, Executive Standing">
+            </div>
+          </div>
+
+          <div class="grid-2col">
+            <div class="edit-form-group">
+              <label>Agent ID Code <span class="sub">(รหัสประจำตัว)</span></label>
+              <input type="text" id="edit-agent-id" class="edit-input-field" placeholder="เช่น ID-001, AGT-4402">
+            </div>
+            <div class="edit-form-group">
+              <label>รหัสผ่านเข้าสู่ระบบ <span class="sub">(Password)</span></label>
+              <input type="text" id="edit-agent-password" class="edit-input-field" placeholder="แก้ไขรหัสผ่านของบัญชีนี้">
+            </div>
+          </div>
+
+          <!-- Photo Upload / URL -->
+          <div class="edit-form-group" style="background:#08031a; border:1px solid var(--border-dark); border-radius:10px; padding:1.1rem;">
+            <label>รูปภาพประจำตัวเจ้าหน้าที่ (Agent Photo)</label>
+            <div style="display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap;">
+              <div style="width:70px; height:80px; background:#0e0724; border:1.5px solid var(--border-dark); border-radius:6px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                <img id="edit-preview-avatar" style="width:100%; height:100%; object-fit:cover; display:none;">
+                <span id="edit-preview-placeholder" style="font-size:1.4rem; color:var(--text-dim);">👤</span>
+              </div>
+              <div style="flex:1; min-width:200px;">
+                <input type="file" id="edit-photo-file" accept="image/*" style="display:none;">
+                <button type="button" class="btn btn-outline" onclick="document.getElementById('edit-photo-file').click()" style="padding:0.45rem 1rem; font-size:0.84rem;">
+                  📷 เลือกไฟล์ภาพใหม่...
+                </button>
+                <button type="button" class="btn btn-del-item" id="btn-edit-clear-photo" style="margin-left:0.5rem; display:none;">
+                  ลบรูปภาพ
+                </button>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">รองรับไฟล์ JPG, PNG, WebP ขนาดไม่เกิน 2MB</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Direct Metrics Adjuster -->
+          <div style="background:#08031a; border:1px solid var(--border-dark); border-radius:10px; padding:1.1rem;">
+            <label style="font-family:var(--font-heading); font-size:0.88rem; font-weight:700; color:#ffffff; margin-bottom:0.75rem; display:block;">
+              ปรับค่าดัชนีและแต้มสถานะ (Evaluative Metrics)
+            </label>
+            <div class="grid-3col">
+              <div class="edit-form-group" style="margin-bottom:0;">
+                <label>🎖️ Commendations</label>
+                <input type="number" id="edit-metric-commendations" class="edit-input-field" min="0" value="0">
+              </div>
+              <div class="edit-form-group" style="margin-bottom:0;">
+                <label>⚠️ Demerits</label>
+                <input type="number" id="edit-metric-demerits" class="edit-input-field" min="0" value="0">
+              </div>
+              <div class="edit-form-group" style="margin-bottom:0;">
+                <label>🔥 Burnout Index</label>
+                <input type="number" id="edit-metric-burnout" class="edit-input-field" min="0" value="0">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: ARC Framework -->
+        <div class="tab-pane" id="tab-edit-arc">
+          <div class="grid-3col">
+            <div class="edit-form-group">
+              <label>Anomaly <span class="sub">(สิ่งผิดปกติ)</span></label>
+              <input type="text" id="edit-arc-anomaly" class="edit-input-field" placeholder="เช่น Drain, Blink, Shaper">
+            </div>
+            <div class="edit-form-group">
+              <label>Reality <span class="sub">(ฉากหน้าชีวิตจริง)</span></label>
+              <input type="text" id="edit-arc-reality" class="edit-input-field" placeholder="เช่น Caretaker, Academic, Artist">
+            </div>
+            <div class="edit-form-group">
+              <label>Competency <span class="sub">(แผนกความเชี่ยวชาญ)</span></label>
+              <input type="text" id="edit-arc-competency" class="edit-input-field" placeholder="เช่น PR, R&D, Field Ops, HR">
+            </div>
+          </div>
+
+          <div class="edit-form-group">
+            <label>Visual Manifestation of Anomaly <span class="sub">(ลักษณะการปรากฏตัวของพลัง)</span></label>
+            <textarea id="edit-arc-manifest" class="edit-input-field edit-textarea" placeholder="บรรยายลักษณะเวลาใช้งานพลัง Anomaly..."></textarea>
+          </div>
+
+          <div class="edit-form-group">
+            <label>Reality Trigger <span class="sub">(เงื่อนไขกระทบชีวิตจริง GM 3 Chaos)</span></label>
+            <textarea id="edit-arc-reality-trigger" class="edit-input-field edit-textarea" placeholder="เงื่อนไขที่ชีวิตจริงถูกแทรกแซง..."></textarea>
+          </div>
+
+          <div class="edit-form-group">
+            <label>Prime Directive <span class="sub">(กฎข้อห้ามเคร่งครัด - ละเมิดรับ 1 Demerit)</span></label>
+            <textarea id="edit-arc-prime-directive" class="edit-input-field edit-textarea" placeholder="กฎเหล็กของแผนกประจำตัว..."></textarea>
+          </div>
+
+          <div class="edit-form-group">
+            <label>Burnout Release Protocol <span class="sub">(เงื่อนไขล้างสภาวะหมดไฟ)</span></label>
+            <input type="text" id="edit-arc-burnout-release" class="edit-input-field" placeholder="สิ่งที่ต้องทำเพื่อล้างค่า Burnout...">
+          </div>
+
+          <!-- Sanctioned Behaviors -->
+          <div style="background:#08031a; border:1px solid var(--border-dark); border-radius:10px; padding:1.1rem;">
+            <label style="font-family:var(--font-heading); font-size:0.88rem; font-weight:700; color:#ffffff; margin-bottom:0.75rem; display:block;">
+              เป้าหมายองค์กร (Sanctioned Behaviors)
+            </label>
+            <div class="edit-form-group">
+              <label style="font-size:0.8rem;">Target 1:</label>
+              <div style="display:flex; gap:0.6rem; align-items:center;">
+                <input type="checkbox" id="edit-sb-done-0" style="width:18px; height:18px; accent-color:var(--accent-green);">
+                <input type="text" id="edit-sb-text-0" class="edit-input-field" placeholder="เป้าหมายที่ 1">
+              </div>
+            </div>
+            <div class="edit-form-group">
+              <label style="font-size:0.8rem;">Target 2:</label>
+              <div style="display:flex; gap:0.6rem; align-items:center;">
+                <input type="checkbox" id="edit-sb-done-1" style="width:18px; height:18px; accent-color:var(--accent-green);">
+                <input type="text" id="edit-sb-text-1" class="edit-input-field" placeholder="เป้าหมายที่ 2">
+              </div>
+            </div>
+            <div class="edit-form-group" style="margin-bottom:0;">
+              <label style="font-size:0.8rem;">Target 3:</label>
+              <div style="display:flex; gap:0.6rem; align-items:center;">
+                <input type="checkbox" id="edit-sb-done-2" style="width:18px; height:18px; accent-color:var(--accent-green);">
+                <input type="text" id="edit-sb-text-2" class="edit-input-field" placeholder="เป้าหมายที่ 3">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: 9 Quality Assurances -->
+        <div class="tab-pane" id="tab-edit-qa">
+          <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1.25rem;">
+            กำหนดระดับคะแนนสมรรถนะ Quality Assurances (0 ถึง 5 แต้ม) สำหรับการทอยเต๋า D4:
+          </p>
+          <div class="grid-3col" id="edit-qa-container">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Tab 4: Abilities & Relationships -->
+        <div class="tab-pane" id="tab-edit-abilities">
+          <!-- Abilities Section -->
+          <div style="margin-bottom:2rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <strong style="color:#ffffff; font-size:0.95rem;">⚡ ทักษะและอำนาจ Anomaly (Abilities)</strong>
+            </div>
+            <div id="edit-abilities-list"></div>
+            <button type="button" class="btn-add-item" id="btn-add-edit-ability">＋ เพิ่ม Ability ใหม่</button>
+          </div>
+
+          <!-- Relationships Section -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <strong style="color:#ffffff; font-size:0.95rem;">🤝 สายสัมพันธ์และผู้ติดต่อ (Relationships)</strong>
+            </div>
+            <div id="edit-relationships-list"></div>
+            <button type="button" class="btn-add-item" id="btn-add-edit-relationship">＋ เพิ่ม Relationship ใหม่</button>
+          </div>
+        </div>
+
+        <!-- Tab 5: HR Questionnaire -->
+        <div class="tab-pane" id="tab-edit-hr">
+          <div class="grid-3col">
+            <div class="edit-form-group">
+              <label>ผู้ติดต่อฉุกเฉิน (Emergency Contact)</label>
+              <input type="text" id="edit-q-contact" class="edit-input-field" placeholder="ชื่อผู้ติดต่อ">
+            </div>
+            <div class="edit-form-group">
+              <label>ความสัมพันธ์ (Relationship)</label>
+              <input type="text" id="edit-q-relation" class="edit-input-field" placeholder="เช่น พี่น้อง, เพื่อนสนิท">
+            </div>
+            <div class="edit-form-group">
+              <label>เงินเดือนประจำปี (Salary)</label>
+              <input type="text" id="edit-q-salary" class="edit-input-field" placeholder="เช่น ฿850,000 / ปี">
+            </div>
+          </div>
+
+          <div class="edit-form-group">
+            <label>1. การสัมผัส Anomaly ครั้งแรก (Contact with Anomaly)</label>
+            <textarea id="edit-q-1" class="edit-input-field edit-textarea"></textarea>
+          </div>
+          <div class="edit-form-group">
+            <label>2. องค์กรค้นพบคุณได้อย่างไร (Agency Found You)</label>
+            <textarea id="edit-q-2" class="edit-input-field edit-textarea"></textarea>
+          </div>
+          <div class="edit-form-group">
+            <label>3. กาแฟหรือเครื่องดื่มประจำ (Coffee Preferences)</label>
+            <input type="text" id="edit-q-4" class="edit-input-field"></textarea>
+          </div>
+          <div class="edit-form-group">
+            <label>4. ประสบการณ์การทำงานก่อนหน้า (Prior Work Experience)</label>
+            <textarea id="edit-q-5" class="edit-input-field edit-textarea"></textarea>
+          </div>
+          <div class="edit-form-group">
+            <label>5. ทักษะโปรแกรมสำนักงาน (Office Software)</label>
+            <input type="text" id="edit-q-6" class="edit-input-field">
+          </div>
+          <div class="edit-form-group">
+            <label>6. สิ่งที่คุณนำมาเสริมทีม (Team Value)</label>
+            <textarea id="edit-q-7" class="edit-input-field edit-textarea"></textarea>
+          </div>
+          <div class="edit-form-group">
+            <label>บันทึกพิเศษฝ่ายบุคคล (HR Psychological Notes)</label>
+            <textarea id="edit-q-notes" class="edit-input-field edit-textarea"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="edit-modal-footer">
+        <button type="button" class="btn btn-outline" id="btn-cancel-edit-modal">ยกเลิก (Cancel)</button>
+        <button type="button" class="btn btn-primary" id="btn-save-edit-profile" style="padding:0.65rem 1.75rem;">
+          <span>💾 บันทึกการแก้ไข (Save Changes)</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <script>
     const QUALITIES_DATA = [
       { id: 'attentiveness', name: 'Attentiveness', desc: 'ความช่างสังเกต ข้อมูลซับซ้อน ค้นหาความจริงที่ซ่อนอยู่' },
@@ -1425,15 +2138,15 @@
       const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
       const loggedInUser = localStorage.getItem('triangle_current_user') || '';
 
-      // Check URL parameters for admin inspection (?user=...)
+      // Check URL parameters for admin inspection (?user=... or ?agent=...)
       const urlParams = new URLSearchParams(window.location.search);
-      const userParam = urlParams.get('user');
+      const userParam = urlParams.get('user') || urlParams.get('agent');
 
       if (userParam && accounts[userParam]) {
         currentUserKey = userParam;
-        // Show admin banner
+        // Show admin/inspection banner if userParam is different from loggedInUser
         const adminBanner = document.getElementById('admin-inspection-banner');
-        if (adminBanner) {
+        if (adminBanner && loggedInUser !== userParam) {
           adminBanner.style.display = 'flex';
           document.getElementById('admin-inspecting-user').textContent = `${currentUserKey} (${accounts[currentUserKey].character?.name || currentUserKey})`;
         }
@@ -1442,10 +2155,9 @@
       } else {
         const keys = Object.keys(accounts);
         if (keys.length > 0) {
-          currentUserKey = keys[keys.length - 1];
-          localStorage.setItem('triangle_current_user', currentUserKey);
+          currentUserKey = keys[0];
         } else {
-          alert('ไม่พบข้อมูลตัวละคร กรุณาสร้างตัวละครก่อน');
+          alert('ไม่พบข้อมูลตัวละครในสารบบ กรุณาสร้างตัวละครก่อน');
           window.location.href = 'create-character.html';
           return;
         }
@@ -1457,7 +2169,7 @@
         if (adminLink) adminLink.style.display = 'flex';
       }
 
-      currentAgent = accounts[currentUserKey].character || {};
+      currentAgent = (accounts[currentUserKey] && accounts[currentUserKey].character) ? accounts[currentUserKey].character : {};
 
       // Ensure metrics exist
       if (currentAgent.commendations === undefined) currentAgent.commendations = 0;
@@ -1465,6 +2177,14 @@
       if (currentAgent.burnout === undefined) currentAgent.burnout = 0;
 
       renderProfile();
+    }
+
+    function isCurrentUserAllowedToEdit() {
+      const loggedInUser = localStorage.getItem('triangle_current_user') || '';
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      const isOwner = loggedInUser && (loggedInUser === currentUserKey);
+      const isAdmin = loggedInUser === 'admin' || (accounts[loggedInUser] && accounts[loggedInUser].role === 'admin');
+      return { isOwner, isAdmin, canEdit: isOwner || isAdmin };
     }
 
     function saveAgentProfile() {
@@ -1479,11 +2199,51 @@
     function renderProfile() {
       if (!currentAgent) return;
 
+      const { isOwner, isAdmin, canEdit } = isCurrentUserAllowedToEdit();
+
       // Identity & Photo
       document.getElementById('profile-name').textContent = currentAgent.name || currentUserKey;
       document.getElementById('profile-title').textContent = currentAgent.title || 'Trainee';
       document.getElementById('profile-standing').textContent = currentAgent.standing || 'Good Standing';
       document.getElementById('profile-id-code').textContent = currentAgent.id || 'ID-001';
+
+      // Access Badge
+      const accessBadge = document.getElementById('profile-access-badge');
+      if (accessBadge) {
+        if (isAdmin) {
+          accessBadge.textContent = '🛡️ ADMIN DIRECTORATE';
+          accessBadge.style.color = '#ff5e6c';
+          accessBadge.style.borderColor = 'var(--accent-red)';
+          accessBadge.style.background = 'rgba(255, 34, 56, 0.15)';
+        } else if (isOwner) {
+          accessBadge.textContent = '👤 เจ้าของตัวละคร (OWNER)';
+          accessBadge.style.color = '#00e676';
+          accessBadge.style.borderColor = 'var(--accent-green)';
+          accessBadge.style.background = 'rgba(0, 230, 118, 0.15)';
+        } else {
+          accessBadge.textContent = '🔒 โหมดอ่านอย่างเดียว (READ-ONLY)';
+          accessBadge.style.color = '#9ba3cb';
+          accessBadge.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+          accessBadge.style.background = 'rgba(255, 255, 255, 0.05)';
+        }
+      }
+
+      // Edit Button visibility (Only owner and admin can edit)
+      const btnEdit = document.getElementById('btn-open-edit-profile');
+      if (btnEdit) {
+        btnEdit.style.display = canEdit ? 'inline-flex' : 'none';
+      }
+
+      // Counter controls visibility (only interactive if canEdit)
+      document.querySelectorAll('.metric-controls button').forEach(btn => {
+        btn.style.display = canEdit ? 'inline-flex' : 'none';
+      });
+
+      // Danger Zone visibility (only owner/admin)
+      const retireBar = document.querySelector('.retire-action-bar');
+      if (retireBar) {
+        retireBar.style.display = canEdit ? 'flex' : 'none';
+      }
 
       const photoEl = document.getElementById('agent-profile-avatar');
       const placeholderEl = document.getElementById('agent-profile-placeholder');
@@ -1521,21 +2281,23 @@
         const item = document.createElement('div');
         item.className = 'sb-list-item';
         item.innerHTML = `
-          <input type="checkbox" class="sb-checkbox" id="sb-check-${index}" ${sb.done ? 'checked' : ''}>
-          <label for="sb-check-${index}" style="font-size:0.85rem; color:${sb.done ? 'var(--accent-green)' : '#ffffff'}; cursor:pointer;">
+          <input type="checkbox" class="sb-checkbox" id="sb-check-${index}" ${sb.done ? 'checked' : ''} ${canEdit ? '' : 'disabled'}>
+          <label for="sb-check-${index}" style="font-size:0.85rem; color:${sb.done ? 'var(--accent-green)' : '#ffffff'}; cursor:${canEdit ? 'pointer' : 'default'};">
             ${sb.text || `Sanctioned Target ${index + 1}`}
           </label>
         `;
-        item.querySelector('input').addEventListener('change', (e) => {
-          sb.done = e.target.checked;
-          saveAgentProfile();
-          renderProfile();
-        });
+        if (canEdit) {
+          item.querySelector('input').addEventListener('change', (e) => {
+            sb.done = e.target.checked;
+            saveAgentProfile();
+            renderProfile();
+          });
+        }
         sbContainer.appendChild(item);
       });
 
       // 9 Quality Assurances
-      renderQAGrid();
+      renderQAGrid(canEdit);
 
       // Abilities
       renderAbilities();
@@ -1549,7 +2311,9 @@
 
     // Adjust Commendations / Demerits / Burnout
     function adjustMetric(type, change) {
-      if (!currentAgent) return;
+      const { canEdit } = isCurrentUserAllowedToEdit();
+      if (!canEdit || !currentAgent) return;
+
       if (type === 'commendations') {
         currentAgent.commendations = Math.max(0, (currentAgent.commendations || 0) + change);
       } else if (type === 'demerits') {
@@ -1562,7 +2326,7 @@
     }
 
     // Render 9 Quality Assurances with actions
-    function renderQAGrid() {
+    function renderQAGrid(canEdit = true) {
       const container = document.getElementById('profile-qa-grid');
       container.innerHTML = '';
 
@@ -1588,7 +2352,7 @@
           <div class="qa-pips-container" id="pips-${q.id}"></div>
 
           <div class="qa-action-row">
-            <span style="font-size:0.72rem; font-family:var(--font-mono); color:var(--text-muted);">Action Pip</span>
+            <span style="font-size:0.72rem; font-family:var(--font-mono); color:var(--text-muted);">${canEdit ? 'คลิกเพื่อเปลี่ยนแต้ม' : 'โหมดดูข้อมูล'}</span>
             <button type="button" class="btn-qa-action" onclick="rollQualityAction('${q.name}', ${val})">🎲 ทอยตรวจสอบ D4</button>
           </div>
         `;
@@ -1598,12 +2362,17 @@
           const pip = document.createElement('div');
           pip.className = `qa-pip-toggle ${i <= val ? 'active' : ''}`;
           pip.title = `${q.name} ${i} QA`;
-          pip.addEventListener('click', () => {
-            currentAgent.qualities[q.id].max = (val === i) ? i - 1 : i;
-            currentAgent.qualities[q.id].current = currentAgent.qualities[q.id].max;
-            saveAgentProfile();
-            renderProfile();
-          });
+          if (canEdit) {
+            pip.style.cursor = 'pointer';
+            pip.addEventListener('click', () => {
+              currentAgent.qualities[q.id].max = (val === i) ? i - 1 : i;
+              currentAgent.qualities[q.id].current = currentAgent.qualities[q.id].max;
+              saveAgentProfile();
+              renderProfile();
+            });
+          } else {
+            pip.style.cursor = 'default';
+          }
           pipsRow.appendChild(pip);
         }
 
@@ -1651,7 +2420,7 @@
       const abilities = currentAgent.abilities || [];
 
       if (abilities.length === 0) {
-        container.innerHTML = '<div style="color:var(--text-muted); font-size:0.9rem;">ยังไม่มีการบันทึก Ability พิเศษ</div>';
+        container.innerHTML = '<div style="color:var(--text-muted); font-size:0.9rem;">ยังไม่มีการบันทึก Ability พิเศษ (สามารถกดปุ่ม "แก้ไขโปรไฟล์" เพื่อเพิ่มได้)</div>';
         return;
       }
 
@@ -1681,7 +2450,7 @@
       const relationships = currentAgent.relationships || [];
 
       if (relationships.length === 0) {
-        container.innerHTML = '<div style="color:var(--text-muted); font-size:0.9rem;">ยังไม่มีการบันทึกสายสัมพันธ์</div>';
+        container.innerHTML = '<div style="color:var(--text-muted); font-size:0.9rem;">ยังไม่มีการบันทึกสายสัมพันธ์ (สามารถกดปุ่ม "แก้ไขโปรไฟล์" เพื่อเพิ่มได้)</div>';
         return;
       }
 
@@ -1734,17 +2503,441 @@
       });
     }
 
-    // Retire / Delete Agent
-    document.getElementById('btn-retire-agent').addEventListener('click', () => {
-      if (confirm(`คุณแน่ใจหรือไม่ว่าต้องการถอนสถานะและลบตัวละคร "${currentUserKey}" ออกจากระบบ Triangle Agency อย่างถาวร?`)) {
+    // ==========================================
+    // EDIT PROFILE MODAL WORKFLOW & FUNCTIONS
+    // ==========================================
+    const editModal = document.getElementById('edit-profile-modal');
+    const btnOpenEditProfile = document.getElementById('btn-open-edit-profile');
+    const btnCloseEditModal = document.getElementById('btn-close-edit-modal');
+    const btnCancelEditModal = document.getElementById('btn-cancel-edit-modal');
+    const btnSaveEditProfile = document.getElementById('btn-save-edit-profile');
+
+    let editAvatarBase64 = '';
+
+    // Tab Navigation within Modal
+    document.querySelectorAll('.edit-modal-tabs .tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.edit-modal-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.edit-modal-body .tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const target = document.getElementById(btn.dataset.tab);
+        if (target) target.classList.add('active');
+      });
+    });
+
+    // Open Edit Modal
+    function openEditProfileModal() {
+      const { canEdit } = isCurrentUserAllowedToEdit();
+      if (!canEdit || !currentAgent) return;
+
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      const account = accounts[currentUserKey] || {};
+
+      document.getElementById('edit-modal-agent-name').textContent = currentAgent.name || currentUserKey;
+
+      // 1. Identity Tab
+      document.getElementById('edit-agent-title').value = currentAgent.title || '';
+      document.getElementById('edit-agent-standing').value = currentAgent.standing || '';
+      document.getElementById('edit-agent-id').value = currentAgent.id || '';
+      document.getElementById('edit-agent-password').value = account.password || '';
+
+      editAvatarBase64 = currentAgent.avatar || '';
+      updateEditAvatarPreview();
+
+      document.getElementById('edit-metric-commendations').value = currentAgent.commendations || 0;
+      document.getElementById('edit-metric-demerits').value = currentAgent.demerits || 0;
+      document.getElementById('edit-metric-burnout').value = currentAgent.burnout || 0;
+
+      // 2. ARC Tab
+      const arc = currentAgent.arc || {};
+      document.getElementById('edit-arc-anomaly').value = arc.anomaly || '';
+      document.getElementById('edit-arc-reality').value = arc.reality || '';
+      document.getElementById('edit-arc-competency').value = arc.competency || '';
+      document.getElementById('edit-arc-manifest').value = arc.anomalyManifestation || '';
+      document.getElementById('edit-arc-reality-trigger').value = arc.realityTrigger || '';
+      document.getElementById('edit-arc-prime-directive').value = arc.primeDirective || '';
+      document.getElementById('edit-arc-burnout-release').value = arc.burnoutRelease || '';
+
+      const sbs = arc.sanctionedBehaviors || [];
+      for (let i = 0; i < 3; i++) {
+        const sb = sbs[i] || { text: '', done: false };
+        const textInput = document.getElementById(`edit-sb-text-${i}`);
+        const checkInput = document.getElementById(`edit-sb-done-${i}`);
+        if (textInput) textInput.value = sb.text || '';
+        if (checkInput) checkInput.checked = !!sb.done;
+      }
+
+      // 3. QA Tab
+      renderEditQATab();
+
+      // 4. Abilities & Relationships Tab
+      renderEditAbilitiesList();
+      renderEditRelationshipsList();
+
+      // 5. HR Tab
+      const q = currentAgent.questionnaire || {};
+      document.getElementById('edit-q-contact').value = q.emergencyContact || '';
+      document.getElementById('edit-q-relation').value = q.relationship || '';
+      document.getElementById('edit-q-salary').value = q.salary || '';
+      document.getElementById('edit-q-1').value = q.q1_anomalyContact || '';
+      document.getElementById('edit-q-2').value = q.q2_agencyFound || '';
+      document.getElementById('edit-q-4').value = q.q4_coffee || '';
+      document.getElementById('edit-q-5').value = q.q5_experience || '';
+      document.getElementById('edit-q-6').value = q.q6_software || '';
+      document.getElementById('edit-q-7').value = q.q7_teamValue || '';
+      document.getElementById('edit-q-notes').value = q.notes || '';
+
+      editModal.classList.add('active');
+    }
+
+    function closeEditProfileModal() {
+      editModal.classList.remove('active');
+    }
+
+    if (btnOpenEditProfile) btnOpenEditProfile.addEventListener('click', openEditProfileModal);
+    if (btnCloseEditModal) btnCloseEditModal.addEventListener('click', closeEditProfileModal);
+    if (btnCancelEditModal) btnCancelEditModal.addEventListener('click', closeEditProfileModal);
+    if (editModal) {
+      editModal.addEventListener('click', (e) => {
+        if (e.target === editModal) closeEditProfileModal();
+      });
+    }
+
+    // Avatar preview update
+    function updateEditAvatarPreview() {
+      const img = document.getElementById('edit-preview-avatar');
+      const placeholder = document.getElementById('edit-preview-placeholder');
+      const clearBtn = document.getElementById('btn-edit-clear-photo');
+
+      if (editAvatarBase64) {
+        img.src = editAvatarBase64;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+        if (clearBtn) clearBtn.style.display = 'inline-block';
+      } else {
+        img.src = '';
+        img.style.display = 'none';
+        placeholder.style.display = 'block';
+        if (clearBtn) clearBtn.style.display = 'none';
+      }
+    }
+
+    // Photo input change handler
+    const editPhotoFile = document.getElementById('edit-photo-file');
+    if (editPhotoFile) {
+      editPhotoFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          if (file.size > 3 * 1024 * 1024) {
+            alert('ขนาดไฟล์เกิน 3MB กรุณาเลือกภาพที่มีขนาดเล็กลง');
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            editAvatarBase64 = evt.target.result;
+            updateEditAvatarPreview();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    // Clear photo handler
+    const btnClearPhoto = document.getElementById('btn-edit-clear-photo');
+    if (btnClearPhoto) {
+      btnClearPhoto.addEventListener('click', () => {
+        editAvatarBase64 = '';
+        updateEditAvatarPreview();
+      });
+    }
+
+    // QA Tab in Edit Modal
+    function renderEditQATab() {
+      const container = document.getElementById('edit-qa-container');
+      container.innerHTML = '';
+
+      const qualities = currentAgent.qualities || {};
+
+      QUALITIES_DATA.forEach(q => {
+        const currentVal = (qualities[q.id] && qualities[q.id].max !== undefined) ? qualities[q.id].max : 0;
+        const box = document.createElement('div');
+        box.className = 'edit-form-group';
+        box.style.cssText = 'background:#08031a; border:1px solid var(--border-dark); border-radius:8px; padding:0.9rem;';
+        box.innerHTML = `
+          <label style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+            <span>${q.name}</span>
+            <span style="color:var(--accent-blue); font-family:var(--font-mono); font-weight:700;" id="edit-qa-label-${q.id}">${currentVal} QA</span>
+          </label>
+          <input type="range" min="0" max="5" value="${currentVal}" id="edit-qa-input-${q.id}" class="edit-input-field" style="padding:0; height:32px; accent-color:var(--accent-blue);">
+        `;
+
+        box.querySelector('input').addEventListener('input', (e) => {
+          box.querySelector(`#edit-qa-label-${q.id}`).textContent = `${e.target.value} QA`;
+        });
+
+        container.appendChild(box);
+      });
+    }
+
+    // Abilities editor in Edit Modal
+    function renderEditAbilitiesList() {
+      const container = document.getElementById('edit-abilities-list');
+      container.innerHTML = '';
+      const abilities = currentAgent.abilities || [];
+
+      abilities.forEach((ab, idx) => {
+        addEditAbilityCard(ab);
+      });
+    }
+
+    function addEditAbilityCard(ab = {}) {
+      const container = document.getElementById('edit-abilities-list');
+      const card = document.createElement('div');
+      card.className = 'edit-card-item';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+          <strong style="color:var(--accent-blue); font-size:0.88rem;">Ability Entry</strong>
+          <button type="button" class="btn-del-item" onclick="this.closest('.edit-card-item').remove()">ลบ</button>
+        </div>
+        <div class="grid-2col" style="margin-bottom:0.6rem;">
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">ชื่อ Ability</label>
+            <input type="text" class="edit-input-field edit-ab-name" value="${ab.name || ''}" placeholder="ชื่อทักษะ...">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">Quality ที่เกี่ยวข้อง</label>
+            <input type="text" class="edit-input-field edit-ab-quality" value="${ab.quality || ''}" placeholder="เช่น Duplicity, Presence">
+          </div>
+        </div>
+        <div style="margin-bottom:0.6rem;">
+          <label style="font-size:0.78rem; color:var(--text-muted);">Trigger (เงื่อนไขใช้งาน)</label>
+          <input type="text" class="edit-input-field edit-ab-trigger" value="${ab.trigger || ''}" placeholder="เงื่อนไขการเปิดใช้งาน...">
+        </div>
+        <div class="grid-3col">
+          <div>
+            <label style="font-size:0.75rem; color:var(--accent-blue);">Success (หน้า 3)</label>
+            <textarea class="edit-input-field edit-textarea edit-ab-success" style="min-height:50px;">${ab.success || ''}</textarea>
+          </div>
+          <div>
+            <label style="font-size:0.75rem; color:var(--accent-yellow);">Special Success (หน้า 3 สองตัวขึ้นไป)</label>
+            <textarea class="edit-input-field edit-textarea edit-ab-special" style="min-height:50px;">${ab.specialSuccess || ''}</textarea>
+          </div>
+          <div>
+            <label style="font-size:0.75rem; color:var(--accent-red);">Failure (ไม่มีหน้า 3)</label>
+            <textarea class="edit-input-field edit-textarea edit-ab-failure" style="min-height:50px;">${ab.failure || ''}</textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+
+    const btnAddEditAbility = document.getElementById('btn-add-edit-ability');
+    if (btnAddEditAbility) {
+      btnAddEditAbility.addEventListener('click', () => {
+        addEditAbilityCard();
+      });
+    }
+
+    // Relationships editor in Edit Modal
+    function renderEditRelationshipsList() {
+      const container = document.getElementById('edit-relationships-list');
+      container.innerHTML = '';
+      const relationships = currentAgent.relationships || [];
+
+      relationships.forEach(rel => {
+        addEditRelationshipCard(rel);
+      });
+    }
+
+    function addEditRelationshipCard(rel = {}) {
+      const container = document.getElementById('edit-relationships-list');
+      const card = document.createElement('div');
+      card.className = 'edit-card-item';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+          <strong style="color:var(--accent-yellow); font-size:0.88rem;">Relationship Contact</strong>
+          <button type="button" class="btn-del-item" onclick="this.closest('.edit-card-item').remove()">ลบ</button>
+        </div>
+        <div class="grid-3col" style="margin-bottom:0.6rem;">
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">ชื่อบุคคล / Contact Name</label>
+            <input type="text" class="edit-input-field edit-rel-name" value="${rel.name || ''}" placeholder="ชื่อผู้ติดต่อ...">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">Played By / Reality</label>
+            <input type="text" class="edit-input-field edit-rel-played" value="${rel.playedBy || ''}" placeholder="เช่น เพื่อนร่วมงาน, ญาติ">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">Connection Bonus</label>
+            <input type="text" class="edit-input-field edit-rel-bonus" value="${rel.bonus || ''}" placeholder="โบนัสความร่วมมือ...">
+          </div>
+        </div>
+        <div>
+          <label style="font-size:0.78rem; color:var(--text-muted);">Description (รายละเอียดความสัมพันธ์)</label>
+          <textarea class="edit-input-field edit-textarea edit-rel-desc" style="min-height:50px;">${rel.desc || ''}</textarea>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+
+    const btnAddEditRel = document.getElementById('btn-add-edit-relationship');
+    if (btnAddEditRel) {
+      btnAddEditRel.addEventListener('click', () => {
+        addEditRelationshipCard();
+      });
+    }
+
+    // Save Changes Handler
+    if (btnSaveEditProfile) {
+      btnSaveEditProfile.addEventListener('click', () => {
+        const { canEdit } = isCurrentUserAllowedToEdit();
+        if (!canEdit || !currentAgent) return;
+
+        const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+        if (!accounts[currentUserKey]) return;
+
+        // 1. Identity & General
+        currentAgent.title = document.getElementById('edit-agent-title').value.trim();
+        currentAgent.standing = document.getElementById('edit-agent-standing').value.trim();
+        currentAgent.id = document.getElementById('edit-agent-id').value.trim();
+        currentAgent.avatar = editAvatarBase64;
+
+        currentAgent.commendations = parseInt(document.getElementById('edit-metric-commendations').value) || 0;
+        currentAgent.demerits = parseInt(document.getElementById('edit-metric-demerits').value) || 0;
+        currentAgent.burnout = parseInt(document.getElementById('edit-metric-burnout').value) || 0;
+
+        // Update password if provided
+        const newPassword = document.getElementById('edit-agent-password').value;
+        if (newPassword) {
+          accounts[currentUserKey].password = newPassword;
+        }
+
+        // 2. ARC
+        if (!currentAgent.arc) currentAgent.arc = {};
+        currentAgent.arc.anomaly = document.getElementById('edit-arc-anomaly').value.trim();
+        currentAgent.arc.reality = document.getElementById('edit-arc-reality').value.trim();
+        currentAgent.arc.competency = document.getElementById('edit-arc-competency').value.trim();
+        currentAgent.arc.anomalyManifestation = document.getElementById('edit-arc-manifest').value.trim();
+        currentAgent.arc.realityTrigger = document.getElementById('edit-arc-reality-trigger').value.trim();
+        currentAgent.arc.primeDirective = document.getElementById('edit-arc-prime-directive').value.trim();
+        currentAgent.arc.burnoutRelease = document.getElementById('edit-arc-burnout-release').value.trim();
+
+        currentAgent.arc.sanctionedBehaviors = [
+          { text: document.getElementById('edit-sb-text-0').value.trim(), done: document.getElementById('edit-sb-done-0').checked },
+          { text: document.getElementById('edit-sb-text-1').value.trim(), done: document.getElementById('edit-sb-done-1').checked },
+          { text: document.getElementById('edit-sb-text-2').value.trim(), done: document.getElementById('edit-sb-done-2').checked }
+        ];
+
+        // 3. QA Matrix
+        if (!currentAgent.qualities) currentAgent.qualities = {};
+        QUALITIES_DATA.forEach(q => {
+          const inputEl = document.getElementById(`edit-qa-input-${q.id}`);
+          const val = inputEl ? parseInt(inputEl.value) || 0 : 0;
+          currentAgent.qualities[q.id] = { max: val, current: val };
+        });
+
+        // 4. Abilities
+        const newAbilities = [];
+        document.querySelectorAll('#edit-abilities-list .edit-card-item').forEach(card => {
+          newAbilities.push({
+            name: card.querySelector('.edit-ab-name')?.value.trim() || '',
+            quality: card.querySelector('.edit-ab-quality')?.value.trim() || '',
+            trigger: card.querySelector('.edit-ab-trigger')?.value.trim() || '',
+            success: card.querySelector('.edit-ab-success')?.value.trim() || '',
+            specialSuccess: card.querySelector('.edit-ab-special')?.value.trim() || '',
+            failure: card.querySelector('.edit-ab-failure')?.value.trim() || ''
+          });
+        });
+        currentAgent.abilities = newAbilities;
+
+        // 5. Relationships
+        const newRelationships = [];
+        document.querySelectorAll('#edit-relationships-list .edit-card-item').forEach(card => {
+          newRelationships.push({
+            name: card.querySelector('.edit-rel-name')?.value.trim() || '',
+            playedBy: card.querySelector('.edit-rel-played')?.value.trim() || '',
+            bonus: card.querySelector('.edit-rel-bonus')?.value.trim() || '',
+            desc: card.querySelector('.edit-rel-desc')?.value.trim() || ''
+          });
+        });
+        currentAgent.relationships = newRelationships;
+
+        // 6. HR Questionnaire
+        currentAgent.questionnaire = {
+          emergencyContact: document.getElementById('edit-q-contact').value.trim(),
+          relationship: document.getElementById('edit-q-relation').value.trim(),
+          salary: document.getElementById('edit-q-salary').value.trim(),
+          q1_anomalyContact: document.getElementById('edit-q-1').value.trim(),
+          q2_agencyFound: document.getElementById('edit-q-2').value.trim(),
+          q4_coffee: document.getElementById('edit-q-4').value.trim(),
+          q5_experience: document.getElementById('edit-q-5').value.trim(),
+          q6_software: document.getElementById('edit-q-6').value.trim(),
+          q7_teamValue: document.getElementById('edit-q-7').value.trim(),
+          notes: document.getElementById('edit-q-notes').value.trim()
+        };
+
+        // Save & Refresh
+        accounts[currentUserKey].character = currentAgent;
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+
+        closeEditProfileModal();
+        renderProfile();
+
+        // Toast feedback
+        const toast = document.getElementById('toast-roll');
+        const title = document.getElementById('toast-title');
+        const desc = document.getElementById('toast-desc');
+        if (toast && title && desc) {
+          title.innerHTML = `💾 บันทึกข้อมูลสำเร็จ!`;
+          title.style.color = 'var(--accent-green)';
+          desc.innerHTML = `แฟ้มประวัติของตัวแทน <strong>${currentAgent.name || currentUserKey}</strong> ได้รับการอัปเดตเรียบร้อยแล้ว`;
+          toast.style.display = 'flex';
+          setTimeout(() => { toast.style.display = 'none'; }, 3500);
+        }
+      });
+    }
+
+    // Retire Confirmation Modal Elements & Logic
+    const retireModal = document.getElementById('retire-modal');
+    const btnRetireAgent = document.getElementById('btn-retire-agent');
+    const btnCloseRetireModal = document.getElementById('btn-close-retire-modal');
+    const btnCancelRetire = document.getElementById('btn-cancel-retire');
+    const btnConfirmRetireFinal = document.getElementById('btn-confirm-retire-final');
+    const retireTargetName = document.getElementById('retire-target-name');
+
+    function openRetireModal() {
+      if (retireTargetName) retireTargetName.textContent = `"${currentUserKey}"`;
+      if (retireModal) retireModal.classList.add('active');
+    }
+
+    function closeRetireModal() {
+      if (retireModal) retireModal.classList.remove('active');
+    }
+
+    if (btnRetireAgent) btnRetireAgent.addEventListener('click', openRetireModal);
+    if (btnCloseRetireModal) btnCloseRetireModal.addEventListener('click', closeRetireModal);
+    if (btnCancelRetire) btnCancelRetire.addEventListener('click', closeRetireModal);
+    if (retireModal) {
+      retireModal.addEventListener('click', (e) => {
+        if (e.target === retireModal) closeRetireModal();
+      });
+    }
+
+    if (btnConfirmRetireFinal) {
+      btnConfirmRetireFinal.addEventListener('click', () => {
+        btnConfirmRetireFinal.innerHTML = `<span>⏳ กำลังลบแฟ้มข้อมูล...</span>`;
+        btnConfirmRetireFinal.disabled = true;
+
         const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
         delete accounts[currentUserKey];
         localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
         localStorage.removeItem('triangle_current_user');
-        alert(`ถอนสถานะตัวแทนเจ้าหน้าที่ "${currentUserKey}" ออกจากระบบเรียบร้อยแล้ว`);
-        window.location.href = 'admin.html';
-      }
-    });
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 450);
+      });
+    }
 
     // Logout
     document.getElementById('btn-logout').addEventListener('click', () => {

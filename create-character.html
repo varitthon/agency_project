@@ -622,6 +622,172 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--accent-red-glow);
     }
 
+    /* Confirmation Modal Styling */
+    .confirm-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(4, 2, 14, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .confirm-modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .confirm-modal-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--accent-red);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 30px var(--accent-red-glow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .confirm-modal-header {
+      background: #090418;
+      border-bottom: 1.5px solid var(--border-dark);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .confirm-header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .confirm-icon-box {
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 34, 56, 0.15);
+      border: 1px solid var(--accent-red);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px var(--accent-red-glow);
+    }
+
+    .confirm-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .confirm-heading {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .btn-close-modal:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .confirm-modal-body {
+      padding: 1.5rem;
+    }
+
+    .confirm-desc {
+      font-size: 0.92rem;
+      color: var(--text-main);
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+    }
+
+    .confirm-summary-box {
+      background: #080318;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.86rem;
+      gap: 1rem;
+    }
+
+    .summary-label {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .summary-val {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #ffffff;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .confirm-alert-note {
+      background: rgba(240, 171, 0, 0.1);
+      border: 1px solid rgba(240, 171, 0, 0.3);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: #ffd24d;
+      line-height: 1.45;
+    }
+
+    .confirm-modal-actions {
+      background: #070314;
+      border-top: 1px solid var(--border-dark);
+      padding: 1.15rem 1.5rem;
+      display: flex;
+      gap: 0.85rem;
+      justify-content: flex-end;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
       .section-account-layout {
@@ -637,6 +803,9 @@
       .save-action-bar {
         flex-direction: column;
         gap: 1rem;
+      }
+      .confirm-modal-actions {
+        flex-direction: column;
       }
     }
   </style>
@@ -1056,6 +1225,74 @@
     </form>
   </main>
 
+  <!-- ==========================================
+       ONBOARDING CONFIRMATION MODAL (แจ้งเตือนยืนยัน)
+       ========================================== -->
+  <div class="confirm-modal-overlay" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+    <div class="confirm-modal-card">
+      <div class="confirm-modal-header">
+        <div class="confirm-header-title">
+          <div class="confirm-icon-box">
+            <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" style="width:22px; height:22px;">
+              <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="confirm-tag">SECURITY CLEARANCE PROTOCOL</div>
+            <h2 id="confirm-modal-title" class="confirm-heading">ยืนยันการบรรจุตัวแทนใหม่</h2>
+          </div>
+        </div>
+        <button type="button" class="btn-close-modal" id="btn-close-confirm-modal" aria-label="Close Modal">✕</button>
+      </div>
+
+      <div class="confirm-modal-body">
+        <p class="confirm-desc">
+          คุณต้องการบันทึกและบรรจุเจ้าหน้าที่รายนี้เข้าสู่สารบบพนักงานองค์กร <strong>Triangle Agency</strong> และเริ่มต้นปฏิบัติหน้าที่ทันทีหรือไม่?
+        </p>
+
+        <div class="confirm-summary-box">
+          <div class="summary-row">
+            <span class="summary-label">ชื่อเจ้าหน้าที่ (Agent Name):</span>
+            <span class="summary-val" id="modal-agent-name">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">ตำแหน่ง (Title):</span>
+            <span class="summary-val" id="modal-agent-title">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">สถานะภาพ (Standing):</span>
+            <span class="summary-val" id="modal-agent-standing">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">พลัง Anomaly:</span>
+            <span class="summary-val" id="modal-agent-anomaly" style="color:var(--accent-red);">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">ฉากหน้า Reality:</span>
+            <span class="summary-val" id="modal-agent-reality" style="color:var(--accent-yellow);">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">ความเชี่ยวชาญ Competency:</span>
+            <span class="summary-val" id="modal-agent-competency" style="color:var(--accent-blue);">-</span>
+          </div>
+        </div>
+
+        <div class="confirm-alert-note">
+          ⚠️ <strong>หมายเหตุ:</strong> เมื่อยืนยันแล้ว บัญชีจะถูกบันทึกและนำคุณเข้าสู่แฟ้มประวัติโปรไฟล์เจ้าหน้าที่ทันที
+        </div>
+      </div>
+
+      <div class="confirm-modal-actions">
+        <button type="button" class="btn btn-outline" id="btn-cancel-confirm" style="flex:1;">
+          <span>ย้อนกลับไปแก้ไข</span>
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-final-confirm" style="flex:1.4; padding:0.75rem 1.2rem;">
+          <span>▲ ยืนยันและบันทึก (CONFIRM)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Script Logic -->
   <script>
     // 9 Qualities definition
@@ -1263,7 +1500,38 @@
       container.appendChild(card);
     });
 
-    // Handle Form Submission
+    // Confirmation Modal Elements
+    const confirmModal = document.getElementById('confirm-modal');
+    const btnCloseConfirmModal = document.getElementById('btn-close-confirm-modal');
+    const btnCancelConfirm = document.getElementById('btn-cancel-confirm');
+    const btnFinalConfirm = document.getElementById('btn-final-confirm');
+
+    let pendingCharacterData = null;
+
+    function openConfirmModal(data) {
+      document.getElementById('modal-agent-name').textContent = data.name;
+      document.getElementById('modal-agent-title').textContent = data.title || 'Field Agent Trainee';
+      document.getElementById('modal-agent-standing').textContent = data.standing || 'Standard Active';
+      document.getElementById('modal-agent-anomaly').textContent = data.arc.anomaly || 'ไม่ได้ระบุ';
+      document.getElementById('modal-agent-reality').textContent = data.arc.reality || 'ไม่ได้ระบุ';
+      document.getElementById('modal-agent-competency').textContent = data.arc.competency || 'ไม่ได้ระบุ';
+      
+      confirmModal.classList.add('active');
+    }
+
+    function closeConfirmModal() {
+      confirmModal.classList.remove('active');
+    }
+
+    if (btnCloseConfirmModal) btnCloseConfirmModal.addEventListener('click', closeConfirmModal);
+    if (btnCancelConfirm) btnCancelConfirm.addEventListener('click', closeConfirmModal);
+    if (confirmModal) {
+      confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) closeConfirmModal();
+      });
+    }
+
+    // Handle Form Submission (Triggers Confirmation Modal)
     document.getElementById('character-creator-form').addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -1271,7 +1539,9 @@
       const password = document.getElementById('create-password').value;
 
       if (!username || !password) {
-        alert('กรุณากรอก Username และ Password ให้ครบถ้วน');
+        alert('กรุณากรอก Username และ Password ของตัวแทนให้ครบถ้วน');
+        if (!username) document.getElementById('create-username').focus();
+        else document.getElementById('create-password').focus();
         return;
       }
 
@@ -1344,20 +1614,40 @@
         characterData.qualities[k] = { max: qaRatings[k], current: qaRatings[k] };
       });
 
-      // Save to Accounts & Character Storage
-      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
-      accounts[username] = {
-        username: username,
-        password: password,
-        character: characterData,
-        createdAt: new Date().toISOString()
-      };
-      localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
-      localStorage.setItem('triangle_current_user', username);
+      pendingCharacterData = characterData;
 
-      alert(`บันทึกและสร้างตัวแทนเจ้าหน้าที่ "${username}" เข้าสู่ระบบ Triangle Agency เรียบร้อยแล้ว!`);
-      window.location.href = 'profile.html';
+      // Open Confirmation Modal Alert
+      openConfirmModal(characterData);
     });
+
+    // Final Confirm inside Modal
+    if (btnFinalConfirm) {
+      btnFinalConfirm.addEventListener('click', () => {
+        if (!pendingCharacterData) return;
+
+        const username = pendingCharacterData.name;
+        const password = pendingCharacterData.password;
+
+        btnFinalConfirm.innerHTML = `<span>⏳ กำลังบรรจุเข้าสู่ระบบ...</span>`;
+        btnFinalConfirm.disabled = true;
+
+        // Save to Accounts & Character Storage
+        const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+        accounts[username] = {
+          username: username,
+          password: password,
+          role: 'agent',
+          character: pendingCharacterData,
+          createdAt: new Date().toISOString()
+        };
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+        localStorage.setItem('triangle_current_user', username);
+
+        setTimeout(() => {
+          window.location.href = 'profile.html';
+        }, 400);
+      });
+    }
 
     // Init
     document.addEventListener('DOMContentLoaded', () => {
