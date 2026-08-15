@@ -657,13 +657,6 @@
           <div class="brand-tag">AGENT ONBOARDING // REV 1.2</div>
         </div>
       </a>
-
-      <div class="nav-actions">
-        <a href="index.html" class="btn btn-outline">← กลับหน้าแรก</a>
-        <button type="button" class="btn btn-primary" id="btn-top-save">
-          <span>▲ บันทึกตัวละคร</span>
-        </button>
-      </div>
     </div>
   </header>
 
@@ -1268,11 +1261,6 @@
         </div>
       `;
       container.appendChild(card);
-    });
-
-    // Top save shortcut
-    document.getElementById('btn-top-save').addEventListener('click', () => {
-      document.getElementById('character-creator-form').requestSubmit();
     });
 
     // Handle Form Submission
