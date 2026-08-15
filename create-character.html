@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triangle Agency // สร้างตัวละคร (Agent Registration & Onboarding)</title>
+  <meta name="description" content="ระบบสร้างตัวละคร Triangle Agency ตามเอกสาร Character Organization Sheets">
+  
+  <!-- Google Fonts: Inter, Poppins, Space Mono -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-base: #060312;
+      --bg-surface: #0e0722;
+      --bg-surface-elevated: #150d36;
+      --bg-navbar: rgba(10, 5, 28, 0.94);
+      
+      --border-dark: #261758;
+      --border-light: rgba(255, 255, 255, 0.12);
+      
+      --text-main: #f8f9fe;
+      --text-muted: #9ba3cb;
+      
+      --accent-red: #ff2238;
+      --accent-red-glow: rgba(255, 34, 56, 0.45);
+      --accent-blue: #0055ff;
+      --accent-yellow: #f0ab00;
+      --accent-green: #00e676;
+      
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.5) 0%, transparent 65%),
+        radial-gradient(circle at 85% 30%, rgba(255, 34, 56, 0.08) 0%, transparent 45%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* Top Navigation */
+    .top-navbar {
+      background-color: var(--bg-navbar);
+      border-bottom: 1px solid var(--border-dark);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      text-decoration: none;
+    }
+
+    .logo-emblem-box {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      box-shadow: 0 0 16px var(--accent-red-glow);
+    }
+
+    .logo-triangle-svg {
+      width: 24px;
+      height: 24px;
+      filter: drop-shadow(0 0 6px var(--accent-red));
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .brand-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.2rem;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--border-dark);
+    }
+    .btn-outline:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-primary {
+      background: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 14px var(--accent-red-glow);
+    }
+    .btn-primary:hover {
+      background: #ff3b4f;
+      box-shadow: 0 0 22px rgba(255, 34, 56, 0.6);
+    }
+
+    /* Main Container */
+    .creator-wrapper {
+      max-width: 1200px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Page Header Title */
+    .page-title-banner {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-left: 6px solid var(--accent-red);
+    }
+
+    .page-title-banner h1 {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .stamp-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      background: rgba(255, 34, 56, 0.12);
+      border: 1px solid var(--accent-red);
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Sections / Cards */
+    .sheet-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .sheet-card-header {
+      background: #0c0620;
+      border-bottom: 2px solid var(--border-dark);
+      padding: 1rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .sheet-card-header h2 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sheet-card-header.header-red {
+      border-bottom-color: var(--accent-red);
+    }
+    .sheet-card-header.header-blue {
+      border-bottom-color: var(--accent-blue);
+    }
+    .sheet-card-header.header-yellow {
+      border-bottom-color: var(--accent-yellow);
+    }
+
+    .sheet-card-body {
+      padding: 1.75rem;
+    }
+
+    /* Section 1 Layout: Left Avatar Photo Area + Right Details */
+    .section-account-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .agent-photo-upload-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1.5px dashed var(--border-dark);
+      border-radius: 10px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      transition: all 0.2s ease;
+      height: 100%;
+      min-height: 280px;
+    }
+
+    .agent-photo-upload-container:hover {
+      border-color: var(--accent-red);
+      background: rgba(255, 34, 56, 0.04);
+    }
+
+    .agent-photo-preview-box {
+      width: 100%;
+      max-width: 210px;
+      height: 220px;
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.5rem 0 1rem;
+      position: relative;
+      box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.7);
+    }
+
+    .agent-photo-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: none;
+    }
+
+    .agent-photo-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      gap: 0.6rem;
+      padding: 1rem;
+    }
+
+    .agent-photo-placeholder svg {
+      width: 56px;
+      height: 56px;
+      fill: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    .agent-photo-placeholder span {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      color: #9ba3cb;
+    }
+
+    .photo-controls-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn-choose-photo {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-light);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .btn-choose-photo:hover {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+      box-shadow: 0 0 12px var(--accent-red-glow);
+    }
+
+    .btn-remove-photo {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--accent-red);
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      margin-top: 0.5rem;
+      text-decoration: underline;
+    }
+
+    /* Form Layout Grids */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.02em;
+    }
+
+    .form-group label span.sub {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 400;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent-red);
+      box-shadow: 0 0 0 3px rgba(255, 34, 56, 0.2);
+      background: #0f0729;
+    }
+
+    /* Styled Select Dropdown */
+    select.input-field {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff2238'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1.2rem;
+      cursor: pointer;
+      padding-right: 2.2rem;
+    }
+
+    select.input-field option {
+      background: #0d0626;
+      color: #ffffff;
+      padding: 0.5rem;
+    }
+
+    textarea.input-field {
+      min-height: 80px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    /* ARC Box Grid */
+    .arc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .arc-column-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 1.25rem;
+      border-top: 4px solid var(--border-dark);
+    }
+
+    .arc-column-card.col-anomaly { border-top-color: var(--accent-blue); }
+    .arc-column-card.col-reality { border-top-color: var(--accent-yellow); }
+    .arc-column-card.col-competency { border-top-color: var(--accent-red); }
+
+    .arc-col-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* 9 Quality Assurances Matrix */
+    .qa-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .qa-item-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .qa-item-box:hover {
+      border-color: rgba(255, 34, 56, 0.4);
+    }
+
+    .qa-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.35rem;
+    }
+
+    .qa-box-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .qa-box-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      line-height: 1.35;
+    }
+
+    .qa-pips-row {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .qa-pip-box {
+      width: 24px;
+      height: 24px;
+      border: 1.5px solid var(--accent-blue);
+      border-radius: 4px;
+      background: rgba(0, 85, 255, 0.05);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .qa-pip-box.active {
+      background: var(--accent-blue);
+      box-shadow: 0 0 10px rgba(0, 85, 255, 0.6);
+    }
+
+    .qa-pip-box.active::after {
+      content: "▲";
+      font-size: 10px;
+      color: #ffffff;
+    }
+
+    /* Entry Cards (Abilities & Relationships) */
+    .ability-entry-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-left: 5px solid var(--accent-blue);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .relationship-entry-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-left: 5px solid var(--accent-yellow);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .entry-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
+    .entry-card-title {
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-delete-card {
+      background: rgba(255, 34, 56, 0.1);
+      border: 1px solid rgba(255, 34, 56, 0.35);
+      color: #ff5e6c;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-delete-card:hover {
+      background: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 10px var(--accent-red-glow);
+    }
+
+    /* Save Action Sticky Footer */
+    .save-action-bar {
+      background: var(--bg-surface-elevated);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      bottom: 1.5rem;
+      z-index: 90;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--accent-red-glow);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .section-account-layout {
+        grid-template-columns: 1fr;
+      }
+      .agent-photo-preview-box {
+        max-width: 180px;
+        height: 200px;
+      }
+      .grid-3col, .grid-2col, .arc-grid, .qa-matrix-grid {
+        grid-template-columns: 1fr;
+      }
+      .save-action-bar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-emblem-box">
+          <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">TRIANGLE AGENCY</div>
+          <div class="brand-tag">AGENT ONBOARDING // REV 1.2</div>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-outline">← กลับหน้าแรก</a>
+        <button type="button" class="btn btn-primary" id="btn-top-save">
+          <span>▲ บันทึกตัวละคร</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Creator Form Container -->
+  <main class="creator-wrapper">
+
+    <!-- Banner -->
+    <div class="page-title-banner">
+      <div>
+        <h1>
+          <span>FORM ARC-01: FIELD AGENT DOSSIER</span>
+        </h1>
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.35rem;">
+          กรอกข้อมูลสร้างตัวละครและประวัติสำหรับหน่วยงาน Triangle Agency ตามแบบฟอร์มทางการ
+        </p>
+      </div>
+      <span class="stamp-badge">CONFIDENTIAL ONBOARDING</span>
+    </div>
+
+    <form id="character-creator-form">
+
+      <!-- =======================================================
+           SECTION 1: ข้อมูลบัญชีผู้ใช้ & รูปภาพประจำตัว
+           ======================================================= -->
+      <section class="sheet-card">
+        <div class="sheet-card-header header-red">
+          <h2>1. รหัสผ่านความปลอดภัย & ข้อมูลประจำตัว (Account & Identification)</h2>
+          <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--text-muted);">FOR SECURITY ARCHIVES</span>
+        </div>
+        <div class="sheet-card-body">
+          
+          <div class="section-account-layout">
+            
+            <!-- ส่วนใส่รูปภาพและแสดงตัวอย่างภาพ -->
+            <div class="agent-photo-upload-container">
+              <label style="font-size:0.82rem; font-family:var(--font-heading); color:var(--text-main); font-weight:700;">
+                Agent Photo <span style="color:var(--text-muted); font-size:0.72rem; font-weight:400;">(รูปภาพประจำตัว)</span>
+              </label>
+
+              <div class="agent-photo-preview-box" id="photo-preview-box">
+                <img id="agent-photo-preview" src="" alt="Agent Photo Preview">
+                <div class="agent-photo-placeholder" id="photo-placeholder">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                  </svg>
+                  <span>NO PHOTO FILE</span>
+                  <span style="font-size:0.65rem; color:var(--text-muted);">คลิกปุ่มด้านล่างเพื่ออัปโหลด</span>
+                </div>
+              </div>
+
+              <div class="photo-controls-group">
+                <button type="button" class="btn-choose-photo" id="btn-browse-photo">
+                  📷 เลือกรูปภาพตัวละคร
+                </button>
+                <input type="file" id="agent-photo-input" accept="image/*" style="display:none;">
+                <button type="button" class="btn-remove-photo" id="btn-remove-photo">ลบรูปภาพ</button>
+              </div>
+            </div>
+
+            <!-- ส่วนกรอกข้อมูลประจำตัว -->
+            <div>
+              <div class="grid-2col">
+                <div class="form-group">
+                  <label for="create-username">Username <span class="sub">(ชื่อตัวละคร / Agent Codename ที่ใช้ Login) *</span></label>
+                  <input type="text" id="create-username" class="input-field" placeholder="เช่น Valerie Ross, Vance Sterling" required>
+                </div>
+                <div class="form-group">
+                  <label for="create-password">Security Password <span class="sub">(รหัสผ่านสำหรับเข้าสู่ระบบ) *</span></label>
+                  <input type="password" id="create-password" class="input-field" placeholder="กำหนดรหัสผ่าน (อย่างน้อย 4 ตัวอักษร)" required minlength="4">
+                </div>
+              </div>
+
+              <div class="grid-2col">
+                <div class="form-group">
+                  <label for="agent-title">Agency Title <span class="sub">(ตำแหน่งองค์กร)</span></label>
+                  <input type="text" id="agent-title" class="input-field" value="Trainee" placeholder="เช่น Trainee, Associate, Director">
+                </div>
+                <div class="form-group">
+                  <label for="agent-standing">Agency Standing <span class="sub">(สถานะในองค์กร)</span></label>
+                  <input type="text" id="agent-standing" class="input-field" value="Good Standing" placeholder="Good Standing, Probation">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =======================================================
+           SECTION 2: ARC (พร้อมปุ่มเปิดอ่านคู่มือหน้า 31 ถึงหน้า 62)
+           ======================================================= -->
+      <section class="sheet-card">
+        <div class="sheet-card-header header-yellow">
+          <div>
+            <h2>2. โครงสร้าง ARC (Anomaly, Reality, Competency)</h2>
+            <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--text-muted);">CORE FRAMEWORK // OFFICIAL DOSSIER</span>
+          </div>
+
+          <!-- ปุ่มเปิดคู่มือหนังสือ PDF หน้า 31 ถึง 62 -->
+          <a href="Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" class="btn btn-outline" style="border-color:var(--accent-yellow); color:#ffd700; background:rgba(240,171,0,0.1); font-size:0.85rem; padding:0.45rem 1rem;">
+            📖 เปิดอ่านคู่มือ ARC ในหนังสือ (หน้า 31 - 62)
+          </a>
+        </div>
+        <div class="sheet-card-body">
+          <div class="arc-grid">
+            
+            <!-- Anomaly (9 ชนิดทางการ) -->
+            <div class="arc-column-card col-anomaly">
+              <div class="arc-col-title">
+                <span>ANOMALY (สิ่งผิดปกติ)</span>
+                <span style="font-size:0.75rem; color:var(--accent-blue);">[PARANORMAL]</span>
+              </div>
+              <div class="form-group">
+                <label for="arc-anomaly">Anomaly Type <span class="sub">(เลือกจาก 9 สายทางการ)</span></label>
+                <select id="arc-anomaly" class="input-field" style="font-weight:600;">
+                  <option value="" disabled selected>-- เลือกประเภท Anomaly --</option>
+                  <option value="Whisper">Whisper — "It's for you." (เสียงกระซิบสื่อสาร)</option>
+                  <option value="Catalogue">Catalogue — "But wait, there's more!" (แคตตาล็อกทวีคูณ)</option>
+                  <option value="Drain">Drain — "For me? You shouldn't have." (ดูดกลืนพลังงาน)</option>
+                  <option value="Timepiece">Timepiece — "You're welcome for the wait." (ควบคุมเวลา)</option>
+                  <option value="Growth">Growth — "More is always better." (การขยายร่างผิดธรรมชาติ)</option>
+                  <option value="Gun">Gun — "It's a gun." (อาวุธปืน/พลังทำลายล้าง)</option>
+                  <option value="Dream">Dream — "Don't worry. It's not real." (ความฝันมายา)</option>
+                  <option value="Manifold">Manifold — "Straight ahead. Can't miss it." (เขาวงกตพับมิติ)</option>
+                  <option value="Absence">Absence — "And when they turned around..." (การลบการมีอยู่)</option>
+                  <option value="Other">Other / Anomaly อื่น ๆ (ระบุเอง)</option>
+                </select>
+                <input type="text" id="arc-anomaly-custom" class="input-field" placeholder="ระบุ Anomaly Type ของคุณ..." style="display:none; margin-top:0.4rem;">
+              </div>
+              <div class="form-group">
+                <label for="arc-anomaly-manifest">Visual Manifestation</label>
+                <textarea id="arc-anomaly-manifest" class="input-field" placeholder="ลักษณะการแสดงออกทางกายภาพ/ไอพลัง..."></textarea>
+              </div>
+            </div>
+
+            <!-- Reality (9 สายทางการ) -->
+            <div class="arc-column-card col-reality">
+              <div class="arc-col-title">
+                <span>REALITY (ความเป็นจริง)</span>
+                <span style="font-size:0.75rem; color:var(--accent-yellow);">[MUNDANE LIFE]</span>
+              </div>
+              <div class="form-group">
+                <label for="arc-reality">Reality Anchor <span class="sub">(เลือกจาก 9 สายทางการ)</span></label>
+                <select id="arc-reality" class="input-field" style="font-weight:600;">
+                  <option value="" disabled selected>-- เลือกประเภท Reality --</option>
+                  <option value="Caretaker">Caretaker — "Without you, they're hopeless." (ผู้ดูแลครอบครัว)</option>
+                  <option value="Overbooked">Overbooked — "No such thing as too much to do." (คนงานยุ่ง)</option>
+                  <option value="Pursued">Pursued — "They know what you are." (ผู้ถูกตามล่า)</option>
+                  <option value="Star">Star — "On the rise... for now." (คนดัง/ผู้มีพรสวรรค์)</option>
+                  <option value="Struggling">Struggling — "Between a rock, another rock..." (ผู้ดิ้นรน)</option>
+                  <option value="Newborn">Newborn — "Met any blue fairies lately?" (ผู้เพิ่งตื่นรู้)</option>
+                  <option value="Romantic">Romantic — "Try to keep them hating the game." (ผู้แสวงหารัก)</option>
+                  <option value="Backbone">Backbone — "If only it were lonely at the top." (เสาหลัก)</option>
+                  <option value="Creature">Creature — "How do you do, fellow humans?" (สิ่งมีชีวิตแฝงตัว)</option>
+                  <option value="Other">Other / Reality อื่น ๆ (ระบุเอง)</option>
+                </select>
+                <input type="text" id="arc-reality-custom" class="input-field" placeholder="ระบุ Reality Anchor ของคุณ..." style="display:none; margin-top:0.4rem;">
+              </div>
+              <div class="form-group">
+                <label for="arc-reality-trigger">Reality Trigger <span class="sub">(GM จ่าย 3 Chaos)</span></label>
+                <textarea id="arc-reality-trigger" class="input-field" placeholder="เหตุการณ์ความจริงทางโลกที่แทรกแซงภารกิจ..."></textarea>
+              </div>
+            </div>
+
+            <!-- Competency (9 สายทางการในกฎ Official Rulebook หน้า 68-77) -->
+            <div class="arc-column-card col-competency">
+              <div class="arc-col-title">
+                <span>COMPETENCY (ความเชี่ยวชาญ)</span>
+                <span style="font-size:0.75rem; color:var(--accent-red);">[DEPARTMENT]</span>
+              </div>
+              <div class="form-group">
+                <label for="arc-competency">Competency Role <span class="sub">(9 แผนกทางการในคู่มือ)</span></label>
+                <select id="arc-competency" class="input-field" style="font-weight:600;">
+                  <option value="" disabled selected>-- เลือกประเภท Competency --</option>
+                  <option value="PR">PR — "Please refrain from any future private relations." (ประชาสัมพันธ์ & กลบเกลื่อนข่าว)</option>
+                  <option value="R&D">R&D — "Give the people what they want." (วิจัยและพัฒนาอุปกรณ์ ARC)</option>
+                  <option value="Barista">Barista — "Order up!" (บาริสต้าบริการเครื่องดื่ม & เสริมพลังงานทีม)</option>
+                  <option value="CEO">CEO — "It's great to be in charge." (ผู้บริหารระดับสูง & วางแผนกลยุทธ์)</option>
+                  <option value="Intern">Intern — "Pay is overrated." (เด็กฝึกงาน & ปฏิบัติตามคำสั่ง)</option>
+                  <option value="Gravedigger">Gravedigger — "Somebody's gotta do it." (ผู้เก็บกวาด & ลบร่องรอยความเสียหาย)</option>
+                  <option value="Reception">Reception — "Right this way, please." (ฝ่ายต้อนรับ & คัดกรองบุคคลเข้า-ออก)</option>
+                  <option value="Hotline">Hotline — "The voice on the other end." (สายด่วนรับเรื่อง & สื่อสารข้ามมิติ)</option>
+                  <option value="Clown">Clown — "Honk." (ตัวตลก & บรรเทาความตึงเครียดขององค์กร)</option>
+                  <option value="Other">Other / Competency อื่น ๆ (ระบุเอง)</option>
+                </select>
+                <input type="text" id="arc-competency-custom" class="input-field" placeholder="ระบุ Competency Role ของคุณ..." style="display:none; margin-top:0.4rem;">
+              </div>
+              <div class="form-group">
+                <label for="arc-prime-directive">Prime Directive <span class="sub">(ผิดกฎรับ 1 Demerit)</span></label>
+                <textarea id="arc-prime-directive" class="input-field" placeholder="ข้อห้ามเคร่งครัดขององค์กร..."></textarea>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="grid-2col">
+            <div class="form-group">
+              <label for="arc-burnout-release">Burnout Release <span class="sub">(เงื่อนไขยกเลิกสถานะ Burnout)</span></label>
+              <input type="text" id="arc-burnout-release" class="input-field" placeholder="กิจกรรมหรือการพักผ่อนเพื่อล้างสภาวะ Burnout">
+            </div>
+            <div class="form-group">
+              <label>Sanctioned Behaviors <span class="sub">(ทำสำเร็จรับ 1 Commendation / ครบ 3 ข้อรับโบนัส +3)</span></label>
+              <input type="text" id="sb-1" class="input-field" placeholder="1. ข้อปฏิบัติตามกฎองค์กรข้อที่ 1" style="margin-bottom:0.5rem;">
+              <input type="text" id="sb-2" class="input-field" placeholder="2. ข้อปฏิบัติตามกฎองค์กรข้อที่ 2" style="margin-bottom:0.5rem;">
+              <input type="text" id="sb-3" class="input-field" placeholder="3. ข้อปฏิบัติตามกฎองค์กรข้อที่ 3">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           SECTION 3: QUALITY ASSURANCES (THE 9 QUALITIES - DEFAULT 0 QA)
+           ======================================================= -->
+      <section class="sheet-card">
+        <div class="sheet-card-header header-blue">
+          <h2>3. คุณสมบัติประเมินผล 9 ด้าน (Quality Assurances)</h2>
+          <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--text-muted);">RATING & MAXIMUM QA</span>
+        </div>
+        <div class="sheet-card-body">
+          <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:1.5rem;">
+            คลิกที่กล่องสามเหลี่ยมเพื่อกำหนดค่าความเชี่ยวชาญเริ่มต้น (Quality Assurances Rating) ประจำตัวละคร (เริ่มต้นที่ 0 QA)
+          </p>
+
+          <div class="qa-matrix-grid" id="qa-matrix-inputs">
+            <!-- 9 Qualities Generated Dynamically with 0 QA Default -->
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           SECTION 4: WELCOME, AGENT! (แบบสอบถามรับเข้าทำงาน 7 ข้อ)
+           ======================================================= -->
+      <section class="sheet-card">
+        <div class="sheet-card-header">
+          <h2>4. แบบสอบถามรับเข้าทำงาน (Welcome, Agent! Questionnaire)</h2>
+          <span class="stamp-badge">HR ONBOARDING</span>
+        </div>
+        <div class="sheet-card-body">
+          <div class="grid-3col">
+            <div class="form-group">
+              <label for="q-emergency-contact">Emergency Contact <span class="sub">(ผู้ติดต่อฉุกเฉิน)</span></label>
+              <input type="text" id="q-emergency-contact" class="input-field" placeholder="ชื่อ-นามสกุล">
+            </div>
+            <div class="form-group">
+              <label for="q-relationship">Relationship <span class="sub">(ความสัมพันธ์)</span></label>
+              <input type="text" id="q-relationship" class="input-field" placeholder="เช่น พี่สาว, ทนายความ, เพื่อนสนิท">
+            </div>
+            <div class="form-group">
+              <label for="q-salary">Annual Salary <span class="sub">(เงินเดือนประจำปี)</span></label>
+              <input type="text" id="q-salary" class="input-field" placeholder="เช่น $85,000 / yr">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="q-1">1. How did you come in contact with your Anomaly? <span class="sub">(คุณสัมผัสหรือได้รับ Anomaly มาอย่างไร?)</span></label>
+            <textarea id="q-1" class="input-field" placeholder="บรรยายเหตุการณ์ครั้งแรกที่คุณพบหรือได้รับพลัง Anomaly..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="q-2">2. How did the Agency find you? <span class="sub">(องค์กร Triangle Agency ค้นพบคุณได้อย่างไร?)</span></label>
+            <textarea id="q-2" class="input-field" placeholder="บรรยายการถูกตามรอยหรือการถูกทาบทามเข้าทำงาน..."></textarea>
+          </div>
+
+          <div class="grid-2col">
+            <div class="form-group">
+              <label for="q-3">3. Do your powers have a unique visual manifestation? <span class="sub">(พลังมีลักษณะปรากฏเฉพาะตัวอย่างไร?)</span></label>
+              <textarea id="q-3" class="input-field" placeholder="ลักษณะแสง สี หรือปรากฏการณ์ทางสายตา..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="q-4">4. How do you take your coffee? <span class="sub">(คุณดื่มกาแฟแบบไหน?)</span></label>
+              <input type="text" id="q-4" class="input-field" placeholder="เช่น Black no sugar, Double Espresso, Latte...">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="q-5">5. Please describe your prior work experience. <span class="sub">(ประสบการณ์การทำงานก่อนหน้านี้ของคุณ)</span></label>
+            <textarea id="q-5" class="input-field" placeholder="อาชีพเดิม ทักษะ หรือหน้าที่การงานในโลกมนุษย์..."></textarea>
+          </div>
+
+          <div class="grid-2col">
+            <div class="form-group">
+              <label for="q-6">6. Level of familiarity with Adobe, Excel, and Google Suite? <span class="sub">(ความคุ้นเคยกับโปรแกรมสำนักงาน)</span></label>
+              <input type="text" id="q-6" class="input-field" placeholder="เช่น Excel Master, Basic Google Suite, Photoshop...">
+            </div>
+            <div class="form-group">
+              <label for="q-7">7. What do you bring to the table in a collaborative work environment? <span class="sub">(สิ่งที่คุณนำมาเสริมทีม)</span></label>
+              <input type="text" id="q-7" class="input-field" placeholder="ความสามารถในการทำงานร่วมกับผู้อื่น...">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="q-notes">Additional Notes <span class="sub">(บันทึกเพิ่มเติม)</span></label>
+            <textarea id="q-notes" class="input-field" placeholder="ข้อสังเกตทางจิตวิทยา หรือบันทึกพิเศษ..."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           SECTION 5: ANOMALY ABILITIES (พร้อมช่อง On a Success เงื่อนไขพิเศษ)
+           ======================================================= -->
+      <section class="sheet-card">
+        <div class="sheet-card-header header-blue">
+          <h2>5. ทักษะความสามารถ Anomaly (Anomaly Abilities)</h2>
+          <button type="button" class="btn btn-outline" id="btn-add-ability" style="font-size:0.8rem;">+ เพิ่ม Ability</button>
+        </div>
+        <div class="sheet-card-body" id="abilities-container">
+          <!-- Ability 1 (Default) -->
+          <div class="ability-entry-card">
+            <div class="entry-card-header">
+              <span class="entry-card-title" style="color:var(--accent-blue);">▲ ความสามารถ Anomaly (Ability)</span>
+              <button type="button" class="btn-delete-card" onclick="removeEntryCard(this)">✕ ลบ Ability</button>
+            </div>
+            <div class="grid-2col" style="margin-bottom:0.75rem;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Ability Name</label>
+                <input type="text" class="input-field ab-name" placeholder="ชื่อความสามารถ">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>Quality Used</label>
+                <input type="text" class="input-field ab-quality" placeholder="เช่น Dynamism, Subtlety">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Trigger <span class="sub">(เงื่อนไขการใช้งาน)</span></label>
+              <input type="text" class="input-field ab-trigger" placeholder="เมื่อคุณสัมผัสกับ...">
+            </div>
+            <div class="grid-3col">
+              <div class="form-group" style="margin-bottom:0;">
+                <label style="color:var(--accent-blue);">▲ On a Success</label>
+                <textarea class="input-field ab-success" placeholder="ผลลัพธ์เมื่อทอยสำเร็จ..." style="min-height:60px;"></textarea>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label style="color:var(--accent-yellow);">▲▲ On a Success <span class="sub">(เงื่อนไขพิเศษ)</span></label>
+                <textarea class="input-field ab-special-success" placeholder="ผลสำเร็จเมื่อตรงเงื่อนไขพิเศษ..." style="min-height:60px;"></textarea>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label style="color:var(--accent-red);">✕ On a Failure</label>
+                <textarea class="input-field ab-failure" placeholder="ผลข้างเคียงเมื่อล้มเหลว..." style="min-height:60px;"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =======================================================
+           SECTION 6: RELATIONSHIPS & BONDS (พร้อมปุ่มลบการ์ด)
+           ======================================================= -->
+      <section class="sheet-card">
+        <div class="sheet-card-header header-yellow">
+          <h2>6. ความสัมพันธ์และสายสัมพันธ์ (Relationships & Networked Bonds)</h2>
+          <button type="button" class="btn btn-outline" id="btn-add-relationship" style="font-size:0.8rem;">+ เพิ่มความสัมพันธ์</button>
+        </div>
+        <div class="sheet-card-body" id="relationships-container">
+          <!-- Relationship 1 (Default) พร้อมปุ่มลบ -->
+          <div class="relationship-entry-card">
+            <div class="entry-card-header">
+              <span class="entry-card-title" style="color:var(--accent-yellow);">✦ สายสัมพันธ์ (Relationship)</span>
+              <button type="button" class="btn-delete-card" onclick="removeEntryCard(this)">✕ ลบความสัมพันธ์</button>
+            </div>
+            <div class="grid-3col">
+              <div class="form-group" style="margin-bottom:0.5rem;">
+                <label>Name (ชื่อบุคคล)</label>
+                <input type="text" class="input-field rel-name" placeholder="ชื่อคนรู้จัก/เพื่อนร่วมงาน">
+              </div>
+              <div class="form-group" style="margin-bottom:0.5rem;">
+                <label>Played by / Reality</label>
+                <input type="text" class="input-field rel-played" placeholder="ผู้เล่น / NPC / Reality">
+              </div>
+              <div class="form-group" style="margin-bottom:0.5rem;">
+                <label>Connection Bonus</label>
+                <input type="text" class="input-field rel-bonus" placeholder="โบนัสความร่วมมือ">
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0.5rem;">
+              <label>Description (ลักษณะความสัมพันธ์)</label>
+              <input type="text" class="input-field rel-desc" placeholder="รายละเอียดความผูกพันหรือภูมิหลังร่วมกัน">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Sticky Action Bar -->
+      <div class="save-action-bar">
+        <div>
+          <div style="font-family:var(--font-heading); font-weight:700; color:#ffffff; font-size:1.05rem;">พร้อมลงทะเบียนตัวละครใหม่?</div>
+          <div style="font-size:0.82rem; color:var(--text-muted);">ข้อมูลจะถูกบันทึกเข้าสู่ระบบฐานข้อมูล Triangle Agency</div>
+        </div>
+        <div style="display:flex; gap:1rem;">
+          <a href="index.html" class="btn btn-outline">ยกเลิก</a>
+          <button type="submit" class="btn btn-primary" style="padding:0.75rem 2rem; font-size:1.05rem;">
+            <span>▲ ยืนยันสร้างตัวละคร (SAVE AGENT)</span>
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </main>
+
+  <!-- Script Logic -->
+  <script>
+    // 9 Qualities definition
+    const QUALITIES_DATA = [
+      { id: 'attentiveness', name: 'Attentiveness', desc: 'ความช่างสังเกต ข้อมูลซับซ้อน ค้นหาความจริงที่ซ่อนอยู่' },
+      { id: 'duplicity', name: 'Duplicity', desc: 'การโกหก การหลอกลวง การสร้างภาพโน้มน้าว' },
+      { id: 'dynamism', name: 'Dynamism', desc: 'การใช้กำลัง ความดุดัน การบุกทะลวง' },
+      { id: 'empathy', name: 'Empathy', desc: 'ความเห็นอกเห็นใจ การเข้าใจจิตใจคนอื่น การเชื่อมโยง' },
+      { id: 'initiative', name: 'Initiative', desc: 'ความว่องไว การชิงลงมือก่อน การจัดการปัญหาก่อนลุกลาม' },
+      { id: 'persistence', name: 'Persistence', desc: 'ความอดทน กัดไม่ปล่อย การกดดันต่อเนื่อง' },
+      { id: 'presence', name: 'Presence', desc: 'ความน่าเกรงขาม การสั่งการ การสร้างแรงบันดาลใจ' },
+      { id: 'professionalism', name: 'Professionalism', desc: 'ความสุขุม สมาธิภายใต้ความกดดัน การต้านทานจิตใจ' },
+      { id: 'subtlety', name: 'Subtlety', desc: 'ความแนบเนียน ล่องหน ทำงานเงียบเชียบ มือเบา' }
+    ];
+
+    // Default 0 QA for all 9 Qualities
+    const qaRatings = {
+      attentiveness: 0, duplicity: 0, dynamism: 0,
+      empathy: 0, initiative: 0, persistence: 0,
+      presence: 0, professionalism: 0, subtlety: 0
+    };
+
+    let uploadedAvatarBase64 = '';
+
+    // Function to delete entry cards cleanly
+    function removeEntryCard(btn) {
+      const card = btn.closest('.relationship-entry-card') || btn.closest('.ability-entry-card');
+      if (card) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(-10px)';
+        card.style.transition = 'all 0.2s ease';
+        setTimeout(() => card.remove(), 200);
+      }
+    }
+
+    // Render 9 Quality Assurances
+    function renderQAMatrix() {
+      const container = document.getElementById('qa-matrix-inputs');
+      container.innerHTML = '';
+
+      QUALITIES_DATA.forEach(q => {
+        const box = document.createElement('div');
+        box.className = 'qa-item-box';
+        box.innerHTML = `
+          <div>
+            <div class="qa-box-header">
+              <span class="qa-box-name">${q.name}</span>
+              <span style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; color:var(--accent-blue);" id="qa-val-${q.id}">${qaRatings[q.id]} QA</span>
+            </div>
+            <div class="qa-box-desc">${q.desc}</div>
+          </div>
+          <div class="qa-pips-row" id="pips-row-${q.id}"></div>
+        `;
+
+        const pipsRow = box.querySelector(`#pips-row-${q.id}`);
+        for (let i = 1; i <= 5; i++) {
+          const pip = document.createElement('div');
+          pip.className = `qa-pip-box ${i <= qaRatings[q.id] ? 'active' : ''}`;
+          pip.title = `Rating ${i}`;
+          pip.addEventListener('click', () => {
+            qaRatings[q.id] = (qaRatings[q.id] === i) ? i - 1 : i;
+            renderQAMatrix();
+          });
+          pipsRow.appendChild(pip);
+        }
+
+        container.appendChild(box);
+      });
+    }
+
+    // Photo Upload & Preview Logic
+    const photoInput = document.getElementById('agent-photo-input');
+    const btnBrowsePhoto = document.getElementById('btn-browse-photo');
+    const photoPreview = document.getElementById('agent-photo-preview');
+    const photoPlaceholder = document.getElementById('photo-placeholder');
+    const btnRemovePhoto = document.getElementById('btn-remove-photo');
+
+    btnBrowsePhoto.addEventListener('click', () => photoInput.click());
+
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        uploadedAvatarBase64 = evt.target.result;
+        photoPreview.src = uploadedAvatarBase64;
+        photoPreview.style.display = 'block';
+        photoPlaceholder.style.display = 'none';
+        btnRemovePhoto.style.display = 'inline-block';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    btnRemovePhoto.addEventListener('click', () => {
+      uploadedAvatarBase64 = '';
+      photoInput.value = '';
+      photoPreview.src = '';
+      photoPreview.style.display = 'none';
+      photoPlaceholder.style.display = 'flex';
+      btnRemovePhoto.style.display = 'none';
+    });
+
+    // Dropdown Handlers for Other / Custom Input
+    function setupDropdownWithCustom(selectId, customInputId) {
+      const selectEl = document.getElementById(selectId);
+      const customEl = document.getElementById(customInputId);
+      if (selectEl && customEl) {
+        selectEl.addEventListener('change', () => {
+          if (selectEl.value === 'Other') {
+            customEl.style.display = 'block';
+            customEl.focus();
+          } else {
+            customEl.style.display = 'none';
+          }
+        });
+      }
+    }
+
+    setupDropdownWithCustom('arc-anomaly', 'arc-anomaly-custom');
+    setupDropdownWithCustom('arc-reality', 'arc-reality-custom');
+    setupDropdownWithCustom('arc-competency', 'arc-competency-custom');
+
+    function getARCValue(selectId, customInputId) {
+      const selectEl = document.getElementById(selectId);
+      const customEl = document.getElementById(customInputId);
+      if (!selectEl) return '';
+      if (selectEl.value === 'Other' && customEl && customEl.value.trim()) {
+        return customEl.value.trim();
+      }
+      return selectEl.value || '';
+    }
+
+    // Add Ability (มีช่อง On a Success ในเงื่อนไขพิเศษ)
+    document.getElementById('btn-add-ability').addEventListener('click', () => {
+      const container = document.getElementById('abilities-container');
+      const card = document.createElement('div');
+      card.className = 'ability-entry-card';
+      card.innerHTML = `
+        <div class="entry-card-header">
+          <span class="entry-card-title" style="color:var(--accent-blue);">▲ ความสามารถ Anomaly (Ability)</span>
+          <button type="button" class="btn-delete-card" onclick="removeEntryCard(this)">✕ ลบ Ability</button>
+        </div>
+        <div class="grid-2col" style="margin-bottom:0.75rem;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Ability Name</label>
+            <input type="text" class="input-field ab-name" placeholder="ชื่อความสามารถ">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Quality Used</label>
+            <input type="text" class="input-field ab-quality" placeholder="เช่น Dynamism, Subtlety">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Trigger</label>
+          <input type="text" class="input-field ab-trigger" placeholder="เมื่อคุณ...">
+        </div>
+        <div class="grid-3col">
+          <div class="form-group" style="margin-bottom:0;">
+            <label style="color:var(--accent-blue);">▲ On a Success</label>
+            <textarea class="input-field ab-success" placeholder="ผลลัพธ์เมื่อทอยสำเร็จ..." style="min-height:60px;"></textarea>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label style="color:var(--accent-yellow);">▲▲ On a Success <span class="sub">(เงื่อนไขพิเศษ)</span></label>
+            <textarea class="input-field ab-special-success" placeholder="ผลสำเร็จเมื่อตรงเงื่อนไขพิเศษ..." style="min-height:60px;"></textarea>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label style="color:var(--accent-red);">✕ On a Failure</label>
+            <textarea class="input-field ab-failure" placeholder="ผลข้างเคียงเมื่อล้มเหลว..." style="min-height:60px;"></textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Add Relationship
+    document.getElementById('btn-add-relationship').addEventListener('click', () => {
+      const container = document.getElementById('relationships-container');
+      const card = document.createElement('div');
+      card.className = 'relationship-entry-card';
+      card.innerHTML = `
+        <div class="entry-card-header">
+          <span class="entry-card-title" style="color:var(--accent-yellow);">✦ สายสัมพันธ์ (Relationship)</span>
+          <button type="button" class="btn-delete-card" onclick="removeEntryCard(this)">✕ ลบความสัมพันธ์</button>
+        </div>
+        <div class="grid-3col">
+          <div class="form-group" style="margin-bottom:0.5rem;">
+            <label>Name</label>
+            <input type="text" class="input-field rel-name" placeholder="ชื่อบุคคล">
+          </div>
+          <div class="form-group" style="margin-bottom:0.5rem;">
+            <label>Played by / Reality</label>
+            <input type="text" class="input-field rel-played" placeholder="ผู้เล่น / บทบาท">
+          </div>
+          <div class="form-group" style="margin-bottom:0.5rem;">
+            <label>Connection Bonus</label>
+            <input type="text" class="input-field rel-bonus" placeholder="โบนัส">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0.5rem;">
+          <label>Description</label>
+          <input type="text" class="input-field rel-desc" placeholder="รายละเอียดความสัมพันธ์">
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Top save shortcut
+    document.getElementById('btn-top-save').addEventListener('click', () => {
+      document.getElementById('character-creator-form').requestSubmit();
+    });
+
+    // Handle Form Submission
+    document.getElementById('character-creator-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('create-username').value.trim();
+      const password = document.getElementById('create-password').value;
+
+      if (!username || !password) {
+        alert('กรุณากรอก Username และ Password ให้ครบถ้วน');
+        return;
+      }
+
+      // Collect Abilities
+      const abilities = [];
+      document.querySelectorAll('.ability-entry-card').forEach(card => {
+        abilities.push({
+          name: card.querySelector('.ab-name')?.value || '',
+          quality: card.querySelector('.ab-quality')?.value || '',
+          trigger: card.querySelector('.ab-trigger')?.value || '',
+          success: card.querySelector('.ab-success')?.value || '',
+          specialSuccess: card.querySelector('.ab-special-success')?.value || '',
+          failure: card.querySelector('.ab-failure')?.value || ''
+        });
+      });
+
+      // Collect Relationships
+      const relationships = [];
+      document.querySelectorAll('.relationship-entry-card').forEach(card => {
+        relationships.push({
+          name: card.querySelector('.rel-name')?.value || '',
+          playedBy: card.querySelector('.rel-played')?.value || '',
+          bonus: card.querySelector('.rel-bonus')?.value || '',
+          desc: card.querySelector('.rel-desc')?.value || ''
+        });
+      });
+
+      // Collect ARC & Info
+      const characterData = {
+        id: 'agent-' + Date.now(),
+        name: username,
+        password: password,
+        avatar: uploadedAvatarBase64,
+        title: document.getElementById('agent-title').value,
+        standing: document.getElementById('agent-standing').value,
+        arc: {
+          anomaly: getARCValue('arc-anomaly', 'arc-anomaly-custom'),
+          anomalyManifestation: document.getElementById('arc-anomaly-manifest').value,
+          reality: getARCValue('arc-reality', 'arc-reality-custom'),
+          realityTrigger: document.getElementById('arc-reality-trigger').value,
+          competency: getARCValue('arc-competency', 'arc-competency-custom'),
+          primeDirective: document.getElementById('arc-prime-directive').value,
+          burnoutRelease: document.getElementById('arc-burnout-release').value,
+          sanctionedBehaviors: [
+            { text: document.getElementById('sb-1').value || 'Sanctioned target 1', done: false },
+            { text: document.getElementById('sb-2').value || 'Sanctioned target 2', done: false },
+            { text: document.getElementById('sb-3').value || 'Sanctioned target 3', done: false }
+          ]
+        },
+        qualities: {},
+        abilities: abilities,
+        relationships: relationships,
+        questionnaire: {
+          emergencyContact: document.getElementById('q-emergency-contact').value,
+          relationship: document.getElementById('q-relationship').value,
+          salary: document.getElementById('q-salary').value,
+          q1_anomalyContact: document.getElementById('q-1').value,
+          q2_agencyFound: document.getElementById('q-2').value,
+          q3_manifestation: document.getElementById('q-3').value,
+          q4_coffee: document.getElementById('q-4').value,
+          q5_experience: document.getElementById('q-5').value,
+          q6_software: document.getElementById('q-6').value,
+          q7_teamValue: document.getElementById('q-7').value,
+          notes: document.getElementById('q-notes').value
+        }
+      };
+
+      // Set qualities
+      Object.keys(qaRatings).forEach(k => {
+        characterData.qualities[k] = { max: qaRatings[k], current: qaRatings[k] };
+      });
+
+      // Save to Accounts & Character Storage
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      accounts[username] = {
+        username: username,
+        password: password,
+        character: characterData,
+        createdAt: new Date().toISOString()
+      };
+      localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+      localStorage.setItem('triangle_current_user', username);
+
+      alert(`บันทึกและสร้างตัวแทนเจ้าหน้าที่ "${username}" เข้าสู่ระบบ Triangle Agency เรียบร้อยแล้ว!`);
+      window.location.href = 'index.html';
+    });
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      renderQAMatrix();
+    });
+  </script>
+</body>
+</html>

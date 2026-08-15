@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triangle Agency // Investigation & Anomaly Management</title>
+  <meta name="description" content="Triangle Agency คือบริษัทที่คอยจัดการสิ่งผิดปกติ (Anomaly) และควบคุมดูแลเสถียรภาพความเป็นจริง">
+  
+  <!-- Google Fonts: Inter, Poppins, Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Dark & Mysterious Theme Palette */
+      --bg-base: #060312;          /* พื้นหลังมืดสนิท */
+      --bg-surface: #0e0722;       /* พื้นหลังกล่องการ์ด */
+      --bg-surface-elevated: #160c38;
+      --bg-navbar: rgba(10, 5, 28, 0.92);
+      
+      --border-dark: #261758;      /* เส้นขอบสีม่วงเข้ม */
+      --border-light: rgba(255, 255, 255, 0.12);
+      
+      --text-main: #f8f9fe;        /* ตัวอักษรสีขาวสว่าง */
+      --text-muted: #9ba3cb;       /* ตัวอักษรสีเทาควัน */
+      
+      --accent-red: #ff2238;       /* Agency Red */
+      --accent-red-glow: rgba(255, 34, 56, 0.45);
+      --accent-blue: #0055ff;      /* Anomaly Blue */
+      --accent-yellow: #f0ab00;    /* Reality Yellow */
+      --accent-green: #00e676;     /* Success Green */
+      
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.5) 0%, transparent 65%),
+        radial-gradient(circle at 80% 30%, rgba(255, 34, 56, 0.07) 0%, transparent 50%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* Top Navigation Bar */
+    .top-navbar {
+      background-color: var(--bg-navbar);
+      border-bottom: 1px solid var(--border-dark);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Logo (Left) */
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .brand-logo:hover {
+      transform: translateY(-1px);
+    }
+
+    .logo-emblem-box {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      box-shadow: 
+        0 0 16px var(--accent-red-glow),
+        inset 0 0 10px rgba(255, 34, 56, 0.2);
+    }
+
+    .logo-triangle-svg {
+      width: 26px;
+      height: 26px;
+      filter: drop-shadow(0 0 6px var(--accent-red));
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      line-height: 1.1;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+    }
+
+    .brand-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px rgba(255, 34, 56, 0.5);
+    }
+
+    /* Navigation Links & Buttons (Right) */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.35rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-home {
+      color: var(--text-main);
+      background-color: transparent;
+    }
+
+    .btn-home:hover {
+      color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-login {
+      background: linear-gradient(135deg, rgba(255, 34, 56, 0.2), rgba(209, 0, 23, 0.35));
+      color: #ffffff;
+      border: 1px solid var(--accent-red);
+      box-shadow: 0 0 14px rgba(255, 34, 56, 0.35);
+    }
+
+    .btn-login:hover {
+      background: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 24px rgba(255, 34, 56, 0.7);
+      transform: translateY(-1px);
+    }
+
+    /* User Profile State in Navbar when Logged In */
+    .user-logged-badge {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-dark);
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+    }
+
+    .user-avatar-pip {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .user-agent-name {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+    }
+    .btn-logout:hover {
+      color: var(--accent-red);
+      background: rgba(255, 34, 56, 0.1);
+    }
+
+    /* Main Content Container */
+    .main-content {
+      flex: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 2.5rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* ==========================================
+       HERO LOBBY SHOWCASE SECTION
+       ========================================== */
+    .hero-lobby-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .lobby-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      overflow: hidden;
+      background-color: #000000;
+    }
+
+    .lobby-image-wrapper img.lobby-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.6s ease;
+    }
+
+    .hero-lobby-card:hover .lobby-image-wrapper img.lobby-bg {
+      transform: scale(1.02);
+    }
+
+    .lobby-image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        180deg, 
+        rgba(6, 3, 18, 0.3) 0%, 
+        rgba(6, 3, 18, 0.65) 60%, 
+        rgba(14, 7, 34, 0.98) 100%
+      );
+      pointer-events: none;
+    }
+
+    .compatibility-badge-container {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      z-index: 10;
+      background: rgba(10, 5, 28, 0.85);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 0.5rem 0.9rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .compatibility-badge-container img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .hero-info-content {
+      padding: 2.25rem 2.5rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    .classified-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .badge-red {
+      background: rgba(255, 34, 56, 0.15);
+      color: var(--accent-red);
+      border: 1px solid rgba(255, 34, 56, 0.35);
+    }
+
+    .badge-blue {
+      background: rgba(0, 85, 255, 0.15);
+      color: #66a3ff;
+      border: 1px solid rgba(0, 85, 255, 0.35);
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 2.2rem;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title span.highlight-anomaly {
+      color: var(--accent-red);
+      text-shadow: 0 0 18px var(--accent-red-glow);
+    }
+
+    .hero-description {
+      font-size: 1.15rem;
+      color: var(--text-main);
+      max-width: 900px;
+      margin-bottom: 1.75rem;
+      line-height: 1.7;
+    }
+
+    .operations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    .op-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 1.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .op-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 34, 56, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .op-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .op-card-header span.triangle-icon {
+      color: var(--accent-red);
+      font-size: 0.85rem;
+    }
+
+    .op-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================
+       LOGIN & REGISTER MODAL (POP-UP DIALOG)
+       ========================================== */
+    .auth-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(4, 2, 14, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      animation: modalFadeIn 0.25s ease-out;
+    }
+
+    .auth-modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .auth-modal-card {
+      background: var(--bg-surface-elevated);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(255, 34, 56, 0.15);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .auth-modal-header {
+      background: #0b051e;
+      border-bottom: 1px solid var(--border-dark);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .auth-header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .auth-header-title h2 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-close-modal {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-light);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-close-modal:hover {
+      background: rgba(255, 34, 56, 0.2);
+      color: #ffffff;
+      border-color: var(--accent-red);
+    }
+
+    .auth-modal-body {
+      padding: 1.75rem 2rem 2rem;
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.45rem;
+      letter-spacing: 0.02em;
+    }
+
+    .form-group label span.label-sub {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 400;
+    }
+
+    .input-field-wrapper {
+      position: relative;
+    }
+
+    .input-auth {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #09041a;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      transition: all 0.2s ease;
+    }
+
+    .input-auth:focus {
+      outline: none;
+      border-color: var(--accent-red);
+      box-shadow: 0 0 0 3px rgba(255, 34, 56, 0.2);
+      background: #0f0729;
+    }
+
+    .input-auth::placeholder {
+      color: rgba(155, 163, 203, 0.45);
+    }
+
+    /* Primary Submit Button (Login) */
+    .auth-submit-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--accent-red);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(255, 34, 56, 0.35);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .auth-submit-btn:hover {
+      background: #ff3b4f;
+      box-shadow: 0 6px 22px rgba(255, 34, 56, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .auth-submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Secondary Action Button (Register Button under Login -> Opens create-character.html) */
+    .auth-tab-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 6px;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .auth-tab-btn:hover {
+      background: rgba(255, 34, 56, 0.15);
+      border-color: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(255, 34, 56, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .auth-tab-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Feedback Alert Message */
+    .auth-feedback-alert {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      margin-bottom: 1.25rem;
+      font-family: var(--font-body);
+    }
+
+    .alert-error {
+      background: rgba(255, 34, 56, 0.15);
+      border: 1px solid rgba(255, 34, 56, 0.4);
+      color: #ff8591;
+    }
+
+    .alert-success {
+      background: rgba(0, 230, 118, 0.15);
+      border: 1px solid rgba(0, 230, 118, 0.4);
+      color: #69f0ae;
+    }
+
+    /* Footer */
+    .app-footer {
+      background: #04020c;
+      border-top: 1px solid var(--border-dark);
+      padding: 1.5rem 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .operations-grid {
+        grid-template-columns: 1fr;
+      }
+      .lobby-image-wrapper {
+        height: 340px;
+      }
+      .hero-title {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-navbar">
+    <div class="navbar-container">
+      
+      <!-- Logo บริษัท ทางซ้ายบน -->
+      <a href="#" class="brand-logo" id="company-logo">
+        <div class="logo-emblem-box">
+          <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">TRIANGLE AGENCY</span>
+          <span class="brand-tag">CLASSIFIED // DIVISION</span>
+        </div>
+      </a>
+
+      <!-- ปุ่มนำทางทางขวาบน (หน้าแรก, Login / Profile) -->
+      <nav class="nav-actions" aria-label="Main Navigation">
+        <a href="index.html" class="btn btn-home" id="btn-nav-home">หน้าแรก</a>
+
+        <!-- ปุ่ม Login (เมื่อยังไม่ได้ล็อกอิน) -->
+        <a href="#login" class="btn btn-login" id="btn-nav-login">Login</a>
+
+        <!-- ข้อมูลโปรไฟล์เจ้าหน้าที่ (เมื่อล็อกอินแล้ว) -->
+        <div class="user-logged-badge" id="user-logged-badge">
+          <span class="user-avatar-pip"></span>
+          <span class="user-agent-name" id="display-agent-name">Agent</span>
+          <button class="btn-logout" id="btn-logout" title="ออกจากระบบ">Logout</button>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Main Content Body -->
+  <main class="main-content" id="main-content">
+    
+    <!-- Hero Showcase Card: แสดงรูป Lobby + Compatibility Logo + คำอธิบาย -->
+    <section class="hero-lobby-card" aria-label="Triangle Agency Overview">
+      
+      <!-- รูปภาพ Lobby ส่วนกลางพร้อม Overlay และ Compatibility Logo -->
+      <div class="lobby-image-wrapper">
+        <img src="images/lobby.jpg" alt="Triangle Agency Corporate Headquarters Lobby" class="lobby-bg">
+        <div class="lobby-image-overlay"></div>
+
+        <!-- กล่องแสดง Compatibility Logo มุมขวาบนของภาพ Lobby -->
+        <div class="compatibility-badge-container" title="Official Compatibility Asset">
+          <img src="images/compatibility logo - agency colors.png" alt="Compatibility Logo">
+        </div>
+      </div>
+
+      <!-- ส่วนข้อความและคำอธิบายบริษัท -->
+      <div class="hero-info-content">
+        <div class="classified-tag-row">
+          <span class="badge-tag badge-red">RESTRICTED ACCESS</span>
+          <span class="badge-tag badge-blue">ANOMALOUS RETRIEVAL & CONTAINMENT</span>
+        </div>
+
+        <h1 class="hero-title">
+          WELCOME TO <span class="highlight-anomaly">TRIANGLE AGENCY</span>
+        </h1>
+
+        <!-- คำอธิบายตามที่ผู้ใช้ต้องการ -->
+        <p class="hero-description">
+          <strong>Triangle Agency</strong> คือบริษัทที่คอยจัดการสิ่งผิดปกติ (<span style="color:var(--accent-red); font-weight:700;">Anomaly</span>) 
+          และปฏิบัติการปกป้องเสถียรภาพความเป็นจริง (Reality) ภายใต้กฎระเบียบและความร่วมมือของหน่วยงานองค์กรระดับสูง เพื่อไม่ให้ปรากฏการณ์เหนือธรรมชาติสร้างความเสียหายต่อโลกภายนอก
+        </p>
+
+        <!-- การปฏิบัติงานหลัก 3 ด้านขององค์กร -->
+        <div class="operations-grid">
+          <div class="op-card">
+            <div class="op-card-header">
+              <span class="triangle-icon">▲</span>
+              <span>1. ตรวจจับสิ่งผิดปกติ (Anomaly Detection)</span>
+            </div>
+            <p>ติดตาม สืบสวน และค้นหารูปแบบการแทรกแซงของ Anomaly ที่หลุดเข้ามาในโลกความเป็นจริง</p>
+          </div>
+
+          <div class="op-card">
+            <div class="op-card-header">
+              <span class="triangle-icon">▲</span>
+              <span>2. กักกันและควบคุม (Containment Protocol)</span>
+            </div>
+            <p>ส่งทีมภาคสนาม (Field Agents) เข้าควบคุมพื้นที่และใช้อุปกรณ์เทคโนโลยี ARC ในการกักกันอย่างปลอดภัย</p>
+          </div>
+
+          <div class="op-card">
+            <div class="op-card-header">
+              <span class="triangle-icon">▲</span>
+              <span>3. รักษาเสถียรภาพความจริง (Reality Defense)</span>
+            </div>
+            <p>ป้องกันการพังทลายของเส้นเวลาและความเป็นจริงตามระเบียบ Prime Directive ของบริษัท</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       LOGIN & REGISTER MODAL (หน้าต่างล็อกอิน)
+       ========================================== -->
+  <div class="auth-modal-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+    <div class="auth-modal-card">
+      
+      <!-- Modal Header -->
+      <div class="auth-modal-header">
+        <div class="auth-header-title">
+          <svg class="logo-triangle-svg" style="width:20px; height:20px;" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+          </svg>
+          <h2 id="auth-modal-title">AGENT CLEARANCE ACCESS</h2>
+        </div>
+        <button class="btn-close-modal" id="btn-close-auth-modal" aria-label="Close Modal">✕</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="auth-modal-body">
+        
+        <!-- กล่องแจ้งเตือนผลลัพธ์ (Error / Success) -->
+        <div class="auth-feedback-alert" id="auth-feedback"></div>
+
+        <!-- FORM LOGIN -->
+        <form id="form-login">
+          <!-- Username (ชื่อตัวละคร) -->
+          <div class="form-group">
+            <label for="login-username">
+              Username <span class="label-sub">(ชื่อตัวละคร / Agent Codename)</span>
+            </label>
+            <div class="input-field-wrapper">
+              <input type="text" id="login-username" class="input-auth" placeholder="เช่น Valerie Ross หรือ Vance Sterling" required autocomplete="username">
+            </div>
+          </div>
+
+          <!-- Password (ใส่รหัส) -->
+          <div class="form-group">
+            <label for="login-password">
+              Password <span class="label-sub">(รหัสผ่านเข้าถึง)</span>
+            </label>
+            <div class="input-field-wrapper">
+              <input type="password" id="login-password" class="input-auth" placeholder="กรอกรหัสผ่านของคุณ" required autocomplete="current-password">
+            </div>
+          </div>
+
+          <!-- ปุ่มยืนยันเข้าสู่ระบบ (LOGIN) -->
+          <button type="submit" class="auth-submit-btn" id="btn-submit-login">
+            <span>▲ ยืนยันเข้าสู่ระบบ (LOGIN)</span>
+          </button>
+
+          <!-- ปุ่มสร้างตัวละคร (Register) ที่จะเด้งไปหน้าสร้างตัวละครใหม่ create-character.html -->
+          <a href="create-character.html" class="auth-tab-btn" id="tab-btn-register">
+            <span>+ สร้างตัวละคร (Register)</span>
+          </a>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div style="display:flex; align-items:center; gap:0.75rem;">
+        <img src="images/compatibility logo - agency colors.png" alt="Compatibility Logo" style="height:28px;">
+        <span>Triangle Agency &bull; Investigation & Anomaly Management System</span>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:0.75rem;">
+        STATUS: <span style="color:#00ff9d;">SYSTEM ACTIVE</span> &bull; CONFIDENTIAL
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       JAVASCRIPT LOGIC (AUTH & MODAL HANDLING)
+       ========================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Elements
+      const btnNavLogin = document.getElementById('btn-nav-login');
+      const btnNavHome = document.getElementById('btn-nav-home');
+      const authModal = document.getElementById('auth-modal');
+      const btnCloseAuthModal = document.getElementById('btn-close-auth-modal');
+
+      const formLogin = document.getElementById('form-login');
+      const authFeedback = document.getElementById('auth-feedback');
+
+      const userLoggedBadge = document.getElementById('user-logged-badge');
+      const displayAgentName = document.getElementById('display-agent-name');
+      const btnLogout = document.getElementById('btn-logout');
+
+      // Helper: Show Alert
+      function showAlert(msg, isSuccess = false) {
+        authFeedback.textContent = msg;
+        authFeedback.className = `auth-feedback-alert ${isSuccess ? 'alert-success' : 'alert-error'}`;
+        authFeedback.style.display = 'block';
+      }
+
+      function hideAlert() {
+        authFeedback.style.display = 'none';
+        authFeedback.textContent = '';
+      }
+
+      // Open Modal
+      function openAuthModal() {
+        authModal.classList.add('active');
+        hideAlert();
+      }
+
+      // Close Modal
+      function closeAuthModal() {
+        authModal.classList.remove('active');
+        hideAlert();
+      }
+
+      // Check current login status
+      function checkAuthStatus() {
+        const loggedUser = localStorage.getItem('triangle_current_user');
+        if (loggedUser) {
+          btnNavLogin.style.display = 'none';
+          userLoggedBadge.style.display = 'inline-flex';
+          displayAgentName.textContent = loggedUser;
+        } else {
+          btnNavLogin.style.display = 'inline-flex';
+          userLoggedBadge.style.display = 'none';
+        }
+      }
+
+      // Event Listeners for Nav
+      btnNavLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAuthModal();
+      });
+
+      if (btnNavHome) {
+        btnNavHome.addEventListener('click', () => {
+          closeAuthModal();
+        });
+      }
+
+      btnCloseAuthModal.addEventListener('click', closeAuthModal);
+
+      // Close on backdrop click
+      authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) closeAuthModal();
+      });
+
+      // 1. Handle Login Form Submit
+      formLogin.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        // Retrieve existing characters/accounts
+        const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+
+        if (!accounts[username]) {
+          showAlert('ไม่พบชื่อตัวละครนี้ในระบบ กรุณากด "+ สร้างตัวละคร (Register)" ด้านล่างเพื่อสร้างตัวละครใหม่', false);
+          return;
+        }
+
+        if (accounts[username].password !== password) {
+          showAlert('รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง', false);
+          return;
+        }
+
+        // Login Success
+        localStorage.setItem('triangle_current_user', username);
+        showAlert(`เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับเจ้าหน้าที่ ${username}`, true);
+
+        setTimeout(() => {
+          closeAuthModal();
+          checkAuthStatus();
+        }, 800);
+      });
+
+      // Logout handler
+      btnLogout.addEventListener('click', () => {
+        localStorage.removeItem('triangle_current_user');
+        checkAuthStatus();
+      });
+
+      // Initial check
+      checkAuthStatus();
+    });
+  </script>
+
+</body>
+</html>
