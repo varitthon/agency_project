@@ -62,10 +62,11 @@
       display: flex;
       width: 100%;
       min-height: 100vh;
+      position: relative;
     }
 
     /* ==========================================
-       LEFT SIDEBAR NAVBAR
+       LEFT SIDEBAR NAVBAR (พร้อมระบบหุบ-ขยาย)
        ========================================== */
     .app-sidebar {
       width: 270px;
@@ -82,58 +83,149 @@
       height: 100vh;
       z-index: 100;
       box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Sidebar Collapsed State (เมื่อกดหุบ) */
+    .app-sidebar.collapsed {
+      transform: translateX(-100%);
+      margin-left: -270px;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .sidebar-top {
       display: flex;
       flex-direction: column;
-      gap: 1.75rem;
+      gap: 1.5rem;
+    }
+
+    .sidebar-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-dark);
+      gap: 0.5rem;
     }
 
     .brand-logo {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.75rem;
       text-decoration: none;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border-dark);
     }
 
     .logo-emblem-box {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
       border: 1.5px solid rgba(255, 255, 255, 0.25);
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 6px;
+      padding: 5px;
       box-shadow: 0 0 16px var(--accent-red-glow);
+      flex-shrink: 0;
     }
 
     .logo-triangle-svg {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       filter: drop-shadow(0 0 6px var(--accent-red));
     }
 
     .brand-name {
       font-family: var(--font-heading);
       font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.06em;
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
       color: #ffffff;
       line-height: 1.1;
     }
 
     .brand-tag {
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 700;
       color: var(--accent-red);
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+    }
+
+    /* ปุ่มขีด 3 เส้น (Hamburger Toggle Button) */
+    .hamburger-lines {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      width: 18px;
+      height: 14px;
+    }
+
+    .hamburger-lines span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #ffffff;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-sidebar-toggle {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-dark);
+      color: #ffffff;
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-sidebar-toggle:hover {
+      background: rgba(255, 34, 56, 0.2);
+      border-color: var(--accent-red);
+      box-shadow: 0 0 10px var(--accent-red-glow);
+    }
+
+    .btn-sidebar-toggle:hover .hamburger-lines span {
+      background-color: var(--accent-red);
+    }
+
+    /* ปุ่มลอยสำหรับเปิด Sidebar เมื่อหุบอยู่ */
+    .btn-floating-toggle {
+      position: fixed;
+      top: 1.25rem;
+      left: 1.25rem;
+      z-index: 999;
+      background: var(--bg-surface-elevated);
+      border: 1.5px solid var(--border-dark);
+      color: #ffffff;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 12px var(--accent-red-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-floating-toggle:hover {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+      transform: scale(1.05);
+    }
+
+    .app-layout.sidebar-collapsed .btn-floating-toggle {
+      display: flex;
     }
 
     /* Left Navbar Actions (ปุ่มนำทางด้านซ้าย) */
@@ -230,6 +322,7 @@
       overflow-y: auto;
       padding: 2rem 2.5rem 4rem;
       max-width: 1280px;
+      transition: all 0.3s ease;
     }
 
     /* Top Agent Dossier Card */
@@ -661,18 +754,18 @@
 
     /* Responsive */
     @media (max-width: 960px) {
-      .app-layout {
-        flex-direction: column;
-      }
       .app-sidebar {
-        width: 100%;
-        min-width: 100%;
-        height: auto;
-        position: relative;
-        padding: 1rem 1.5rem;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        height: 100vh;
+      }
+      .btn-floating-toggle {
+        display: flex;
       }
       .app-main-content {
-        padding: 1.5rem;
+        padding: 4.5rem 1.5rem 2rem;
       }
       .dossier-hero-card {
         grid-template-columns: 1fr;
@@ -685,26 +778,46 @@
 </head>
 <body>
 
-  <div class="app-layout">
+  <div class="app-layout" id="app-layout">
+
+    <!-- ปุ่มลอย 3 ขีดสำหรับเปิด Sidebar เมื่อหุบอยู่ -->
+    <button type="button" class="btn-floating-toggle" id="btn-floating-toggle" title="เปิดเมนูนำทาง (Expand Navbar)">
+      <div class="hamburger-lines">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
 
     <!-- ==========================================
          NAVBAR ทางด้านซ้าย (LEFT SIDEBAR NAVBAR)
          ========================================== -->
-    <aside class="app-sidebar" aria-label="Sidebar Navigation">
+    <aside class="app-sidebar" id="app-sidebar" aria-label="Sidebar Navigation">
       
       <div class="sidebar-top">
-        <!-- Brand Logo & Header -->
-        <a href="index.html" class="brand-logo">
-          <div class="logo-emblem-box">
-            <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div>
-            <div class="brand-name">TRIANGLE AGENCY</div>
-            <div class="brand-tag">AGENT ARCHIVE // SECURE</div>
-          </div>
-        </a>
+        <!-- แถวหัวข้อ: Brand Logo + ปุ่มขีด 3 เส้นสำหรับหุบ -->
+        <div class="sidebar-header-row">
+          <a href="index.html" class="brand-logo">
+            <div class="logo-emblem-box">
+              <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="brand-name">TRIANGLE AGENCY</div>
+              <div class="brand-tag">AGENT ARCHIVE</div>
+            </div>
+          </a>
+
+          <!-- ปุ่มขีด 3 เส้น สำหรับหุบ Navbar -->
+          <button type="button" class="btn-sidebar-toggle" id="btn-sidebar-toggle" title="หุบเมนูนำทาง (Collapse Navbar)">
+            <div class="hamburger-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+        </div>
 
         <!-- ชุดปุ่มนำทางทางด้านซ้าย (Nav Actions) -->
         <div class="nav-actions">
@@ -938,6 +1051,27 @@
 
     let currentAgent = null;
     let currentUserKey = '';
+
+    // Sidebar Collapse / Expand Toggle Logic
+    const appLayout = document.getElementById('app-layout');
+    const appSidebar = document.getElementById('app-sidebar');
+    const btnSidebarToggle = document.getElementById('btn-sidebar-toggle');
+    const btnFloatingToggle = document.getElementById('btn-floating-toggle');
+
+    function toggleSidebar() {
+      const isCollapsed = appSidebar.classList.toggle('collapsed');
+      appLayout.classList.toggle('sidebar-collapsed', isCollapsed);
+      localStorage.setItem('triangle_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+    }
+
+    if (btnSidebarToggle) btnSidebarToggle.addEventListener('click', toggleSidebar);
+    if (btnFloatingToggle) btnFloatingToggle.addEventListener('click', toggleSidebar);
+
+    // Restore sidebar state
+    if (localStorage.getItem('triangle_sidebar_collapsed') === 'true') {
+      appSidebar.classList.add('collapsed');
+      appLayout.classList.add('sidebar-collapsed');
+    }
 
     // Load active character
     function loadAgentProfile() {
