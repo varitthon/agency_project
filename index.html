@@ -193,6 +193,22 @@
       border: 1px solid var(--border-dark);
       padding: 0.35rem 0.85rem;
       border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .user-logged-badge:hover {
+      background: rgba(255, 34, 56, 0.1);
+      border-color: var(--accent-red);
+      box-shadow: 0 0 14px var(--accent-red-glow);
+    }
+
+    .user-badge-profile-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #ffffff;
+      text-decoration: none;
     }
 
     .user-avatar-pip {
@@ -208,6 +224,11 @@
       font-size: 0.85rem;
       font-weight: 700;
       color: #ffffff;
+      transition: color 0.15s ease;
+    }
+
+    .user-logged-badge:hover .user-agent-name {
+      color: var(--accent-red);
     }
 
     .btn-logout {
@@ -219,10 +240,11 @@
       cursor: pointer;
       padding: 0.2rem 0.4rem;
       border-radius: 3px;
+      z-index: 2;
     }
     .btn-logout:hover {
-      color: var(--accent-red);
-      background: rgba(255, 34, 56, 0.1);
+      color: #ffffff;
+      background: var(--accent-red);
     }
 
     /* Main Content Container */
@@ -952,8 +974,15 @@
         }, 800);
       });
 
+      // User badge click -> go to profile.html
+      userLoggedBadge.addEventListener('click', (e) => {
+        if (e.target.closest('#btn-logout')) return;
+        window.location.href = 'profile.html';
+      });
+
       // Logout handler
-      btnLogout.addEventListener('click', () => {
+      btnLogout.addEventListener('click', (e) => {
+        e.stopPropagation();
         localStorage.removeItem('triangle_current_user');
         checkAuthStatus();
       });
