@@ -697,8 +697,10 @@
 
         <!-- ข้อมูลโปรไฟล์เจ้าหน้าที่ (เมื่อล็อกอินแล้ว) -->
         <div class="user-logged-badge" id="user-logged-badge">
-          <span class="user-avatar-pip"></span>
-          <span class="user-agent-name" id="display-agent-name">Agent</span>
+          <a href="profile.html" style="display:flex; align-items:center; gap:0.5rem; color:inherit; text-decoration:none;" title="เปิดแฟ้มโปรไฟล์ตัวละคร">
+            <span class="user-avatar-pip"></span>
+            <span class="user-agent-name" id="display-agent-name">Agent</span>
+          </a>
           <button class="btn-logout" id="btn-logout" title="ออกจากระบบ">Logout</button>
         </div>
       </nav>
@@ -946,7 +948,7 @@
 
         setTimeout(() => {
           closeAuthModal();
-          checkAuthStatus();
+          window.location.href = 'profile.html';
         }, 800);
       });
 

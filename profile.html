@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triangle Agency // แฟ้มประวัติเจ้าหน้าที่ (Agent Dossier & Profile)</title>
+  <meta name="description" content="หน้าโปรไฟล์และข้อมูลตัวละครตัวแทนภาคสนาม Triangle Agency">
+  
+  <!-- Google Fonts: Inter, Poppins, Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-base: #060312;
+      --bg-surface: #0e0722;
+      --bg-surface-elevated: #150d36;
+      --bg-navbar: rgba(10, 5, 28, 0.94);
+      
+      --border-dark: #261758;
+      --border-light: rgba(255, 255, 255, 0.12);
+      
+      --text-main: #f8f9fe;
+      --text-muted: #9ba3cb;
+      
+      --accent-red: #ff2238;
+      --accent-red-glow: rgba(255, 34, 56, 0.45);
+      --accent-blue: #0055ff;
+      --accent-blue-glow: rgba(0, 85, 255, 0.4);
+      --accent-yellow: #f0ab00;
+      --accent-yellow-glow: rgba(240, 171, 0, 0.4);
+      --accent-green: #00e676;
+      
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.5) 0%, transparent 65%),
+        radial-gradient(circle at 85% 30%, rgba(255, 34, 56, 0.08) 0%, transparent 45%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    /* Top Navigation */
+    .top-navbar {
+      background-color: var(--bg-navbar);
+      border-bottom: 1px solid var(--border-dark);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      text-decoration: none;
+    }
+
+    .logo-emblem-box {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      box-shadow: 0 0 16px var(--accent-red-glow);
+    }
+
+    .logo-triangle-svg {
+      width: 24px;
+      height: 24px;
+      filter: drop-shadow(0 0 6px var(--accent-red));
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .brand-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.2rem;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--border-dark);
+    }
+    .btn-outline:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-primary {
+      background: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 14px var(--accent-red-glow);
+    }
+    .btn-primary:hover {
+      background: #ff3b4f;
+      box-shadow: 0 0 22px rgba(255, 34, 56, 0.6);
+    }
+
+    /* Main Container */
+    .profile-wrapper {
+      max-width: 1200px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Top Agent Dossier Card */
+    .dossier-hero-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      border-left: 6px solid var(--accent-red);
+    }
+
+    .dossier-photo-box {
+      width: 100%;
+      height: 260px;
+      background: #08031a;
+      border: 2px solid var(--border-dark);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px var(--accent-red-glow);
+    }
+
+    .dossier-photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .dossier-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-muted);
+      gap: 0.5rem;
+    }
+
+    .dossier-placeholder svg {
+      width: 64px;
+      height: 64px;
+      fill: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .dossier-identity {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .dossier-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .agent-display-name {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .agent-badges-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .badge-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-standing {
+      background: rgba(0, 230, 118, 0.12);
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    .badge-title {
+      background: rgba(255, 34, 56, 0.12);
+      border: 1px solid var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    /* Core Status Metrics Bar: Commendations, Demerits, Additional Burnout */
+    .metrics-bar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .metric-label {
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .metric-value-display {
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
+      font-weight: 800;
+      min-width: 45px;
+    }
+
+    .val-commendations { color: var(--accent-green); text-shadow: 0 0 10px rgba(0,230,118,0.4); }
+    .val-demerits { color: var(--accent-red); text-shadow: 0 0 10px rgba(255,34,56,0.4); }
+    .val-burnout { color: var(--accent-yellow); text-shadow: 0 0 10px rgba(240,171,0,0.4); }
+
+    .btn-counter {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .btn-counter:hover {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+
+    /* Section Cards */
+    .sheet-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .sheet-card-header {
+      background: #0c0620;
+      border-bottom: 2px solid var(--border-dark);
+      padding: 1.1rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .sheet-card-header h2 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sheet-card-header.header-red { border-bottom-color: var(--accent-red); }
+    .sheet-card-header.header-blue { border-bottom-color: var(--accent-blue); }
+    .sheet-card-header.header-yellow { border-bottom-color: var(--accent-yellow); }
+
+    .sheet-card-body {
+      padding: 1.75rem;
+    }
+
+    /* ARC 3 Columns */
+    .arc-profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .arc-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .arc-box.box-anomaly { border-top: 4px solid var(--accent-blue); }
+    .arc-box.box-reality { border-top: 4px solid var(--accent-yellow); }
+    .arc-box.box-competency { border-top: 4px solid var(--accent-red); }
+
+    .arc-box-title {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .arc-main-val {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.85rem;
+    }
+
+    .arc-detail-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      background: #08031a;
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* 9 Quality Assurances Matrix Actions */
+    .qa-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .qa-card-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .qa-card-box:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 15px rgba(0, 85, 255, 0.2);
+    }
+
+    .qa-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .qa-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .qa-pips-container {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin: 0.75rem 0;
+    }
+
+    .qa-pip-toggle {
+      width: 26px;
+      height: 26px;
+      border: 1.5px solid var(--accent-blue);
+      border-radius: 4px;
+      background: rgba(0, 85, 255, 0.05);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .qa-pip-toggle.active {
+      background: var(--accent-blue);
+      box-shadow: 0 0 10px rgba(0, 85, 255, 0.6);
+    }
+
+    .qa-pip-toggle.active::after {
+      content: "▲";
+      font-size: 11px;
+      color: #ffffff;
+    }
+
+    .qa-action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-qa-action {
+      background: rgba(0, 85, 255, 0.15);
+      border: 1px solid var(--accent-blue);
+      color: #70a4ff;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-qa-action:hover {
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 0 10px var(--accent-blue-glow);
+    }
+
+    /* Abilities & Relationships list */
+    .ability-display-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-left: 5px solid var(--accent-blue);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .rel-display-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-left: 5px solid var(--accent-yellow);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    /* Sanctioned Behaviors Checkboxes */
+    .sb-list-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .sb-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-green);
+      cursor: pointer;
+    }
+
+    /* Dice Roller Toast Banner */
+    .toast-roll-alert {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--bg-surface-elevated);
+      border: 1.5px solid var(--accent-blue);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--accent-blue-glow);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .dossier-hero-card {
+        grid-template-columns: 1fr;
+      }
+      .metrics-bar-grid, .arc-profile-grid, .qa-matrix-grid, .grid-3col, .grid-2col {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-emblem-box">
+          <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">TRIANGLE AGENCY</div>
+          <div class="brand-tag">AGENT DOSSIER ARCHIVE // SECURE</div>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-outline">หน้าแรก</a>
+        <a href="create-character.html" class="btn btn-outline">+ สร้างตัวละครใหม่</a>
+        <button type="button" class="btn btn-primary" id="btn-logout">
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Profile Wrapper -->
+  <main class="profile-wrapper">
+
+    <!-- Dossier Hero Card (รูปถ่าย + ชื่อ + ตำแหน่ง + สถานะ + Commendations/Demerits/Burnout) -->
+    <div class="dossier-hero-card">
+      
+      <!-- กล่องรูปตัวละคร -->
+      <div class="dossier-photo-box">
+        <img id="agent-profile-avatar" src="" alt="Agent Portrait" style="display:none;">
+        <div class="dossier-placeholder" id="agent-profile-placeholder">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">FIELD AGENT ID</span>
+        </div>
+      </div>
+
+      <!-- ข้อมูลตัวตนหลัก -->
+      <div class="dossier-identity">
+        <div>
+          <div class="dossier-header-row">
+            <div>
+              <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-red); letter-spacing:0.15em;">FIELD AGENT RECORD // CLASSIFIED</div>
+              <h1 class="agent-display-name" id="profile-name">Valerie Ross</h1>
+              <div class="agent-badges-row">
+                <span class="badge-tag badge-title" id="profile-title">Trainee</span>
+                <span class="badge-tag badge-standing" id="profile-standing">Good Standing</span>
+                <span class="badge-tag" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#ffffff;" id="profile-id-code">ID-0000</span>
+              </div>
+            </div>
+
+            <a href="Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" class="btn btn-outline" style="border-color:var(--accent-yellow); color:#ffd700; background:rgba(240,171,0,0.1); font-size:0.8rem; padding:0.4rem 0.85rem;">
+              📖 เปิดอ่านคู่มือ ARC (หน้า 31 - 62)
+            </a>
+          </div>
+
+          <!-- แถบค่าสถานะสำคัญ: Commendations, Demerits, Additional Burnout -->
+          <div class="metrics-bar-grid">
+            
+            <!-- 1. Commendations -->
+            <div class="metric-item">
+              <div class="metric-label">
+                <span>🎖️ COMMENDATIONS</span>
+                <span style="font-size:0.7rem; color:var(--text-muted);">คำชมเชย</span>
+              </div>
+              <div class="metric-controls">
+                <button type="button" class="btn-counter" onclick="adjustMetric('commendations', -1)">-</button>
+                <div class="metric-value-display val-commendations" id="metric-commendations">0</div>
+                <button type="button" class="btn-counter" onclick="adjustMetric('commendations', 1)">+</button>
+              </div>
+            </div>
+
+            <!-- 2. Demerits -->
+            <div class="metric-item">
+              <div class="metric-label">
+                <span>⚠️ DEMERITS</span>
+                <span style="font-size:0.7rem; color:var(--text-muted);">แต้มลงโทษ</span>
+              </div>
+              <div class="metric-controls">
+                <button type="button" class="btn-counter" onclick="adjustMetric('demerits', -1)">-</button>
+                <div class="metric-value-display val-demerits" id="metric-demerits">0</div>
+                <button type="button" class="btn-counter" onclick="adjustMetric('demerits', 1)">+</button>
+              </div>
+            </div>
+
+            <!-- 3. Additional Burnout -->
+            <div class="metric-item">
+              <div class="metric-label">
+                <span>🔥 ADDITIONAL BURNOUT</span>
+                <span style="font-size:0.7rem; color:var(--text-muted);">หมดไฟสะสม</span>
+              </div>
+              <div class="metric-controls">
+                <button type="button" class="btn-counter" onclick="adjustMetric('burnout', -1)">-</button>
+                <div class="metric-value-display val-burnout" id="metric-burnout">0</div>
+                <button type="button" class="btn-counter" onclick="adjustMetric('burnout', 1)">+</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ARC Overview Section -->
+    <section class="sheet-card">
+      <div class="sheet-card-header header-yellow">
+        <h2>โครงสร้าง ARC ประจำตัวแทน (Anomaly, Reality, Competency)</h2>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">CORE AGENT ARCHETYPE</span>
+      </div>
+      <div class="sheet-card-body">
+        
+        <div class="arc-profile-grid">
+          <!-- Anomaly -->
+          <div class="arc-box box-anomaly">
+            <div class="arc-box-title">ANOMALY (สิ่งผิดปกติ)</div>
+            <div class="arc-main-val" id="profile-arc-anomaly">Drain</div>
+            <div class="arc-detail-text">
+              <strong style="color:#ffffff;">Visual Manifestation:</strong><br>
+              <span id="profile-arc-anomaly-manifest">-</span>
+            </div>
+          </div>
+
+          <!-- Reality -->
+          <div class="arc-box box-reality">
+            <div class="arc-box-title">REALITY (ความเป็นจริง)</div>
+            <div class="arc-main-val" id="profile-arc-reality">Caretaker</div>
+            <div class="arc-detail-text">
+              <strong style="color:#ffffff;">Reality Trigger (GM 3 Chaos):</strong><br>
+              <span id="profile-arc-reality-trigger">-</span>
+            </div>
+          </div>
+
+          <!-- Competency -->
+          <div class="arc-box box-competency">
+            <div class="arc-box-title">COMPETENCY (ความเชี่ยวชาญ)</div>
+            <div class="arc-main-val" id="profile-arc-competency">PR</div>
+            <div class="arc-detail-text">
+              <strong style="color:#ffffff;">Prime Directive (1 Demerit):</strong><br>
+              <span id="profile-arc-competency-pd">-</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2col">
+          <div class="arc-detail-text">
+            <strong style="color:var(--accent-yellow);">Burnout Release:</strong><br>
+            <span id="profile-burnout-release">-</span>
+          </div>
+          <div>
+            <strong style="font-size:0.85rem; color:var(--text-muted); display:block; margin-bottom:0.4rem;">
+              Sanctioned Behaviors (+3 โบนัสเมื่อทำครบ):
+            </strong>
+            <div id="profile-sb-list">
+              <!-- Checklist rendered dynamically -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 9 Quality Assurances Matrix & Actions -->
+    <section class="sheet-card">
+      <div class="sheet-card-header header-blue">
+        <h2>คุณสมบัติประเมินผล 9 ด้าน (Qualities 9 Actions & Ratings)</h2>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-blue);">D4 SUCCESS SYSTEM</span>
+      </div>
+      <div class="sheet-card-body">
+        <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:1.5rem;">
+          คลิกที่ปุ่มสามเหลี่ยมเพื่อเพิ่ม/ลดคะแนน QA หรือกดปุ่ม <strong>[ทอยตรวจสอบ D4]</strong> เพื่อทดสอบการทอยลูกเต๋าตามคะแนนที่คุณมี
+        </p>
+
+        <div class="qa-matrix-grid" id="profile-qa-grid">
+          <!-- 9 QA Cards Rendered Dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Anomaly Abilities Section -->
+    <section class="sheet-card" id="section-abilities">
+      <div class="sheet-card-header header-blue">
+        <h2>ทักษะความสามารถ Anomaly (Abilities)</h2>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">ACTIVE POWERS</span>
+      </div>
+      <div class="sheet-card-body" id="profile-abilities-container">
+        <!-- Abilities Rendered Dynamically -->
+      </div>
+    </section>
+
+    <!-- Networked Relationships Section -->
+    <section class="sheet-card" id="section-relationships">
+      <div class="sheet-card-header header-yellow">
+        <h2>ความสัมพันธ์และสายสัมพันธ์ (Relationships & Networked Bonds)</h2>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">CONTACTS</span>
+      </div>
+      <div class="sheet-card-body" id="profile-relationships-container">
+        <!-- Relationships Rendered Dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Dice Toast Alert -->
+  <div class="toast-roll-alert" id="toast-roll">
+    <div style="font-size:1.8rem;" id="toast-dice-icon">🎲</div>
+    <div>
+      <div style="font-family:var(--font-heading); font-weight:700; color:#ffffff; font-size:0.95rem;" id="toast-title">ทอยสำเร็จ!</div>
+      <div style="font-size:0.82rem; color:var(--text-muted);" id="toast-desc">ผลการทอย: 3, 3 (ได้ 2 Successes!)</div>
+    </div>
+  </div>
+
+  <script>
+    const QUALITIES_DATA = [
+      { id: 'attentiveness', name: 'Attentiveness', desc: 'ความช่างสังเกต ข้อมูลซับซ้อน ค้นหาความจริงที่ซ่อนอยู่' },
+      { id: 'duplicity', name: 'Duplicity', desc: 'การโกหก การหลอกลวง การสร้างภาพโน้มน้าว' },
+      { id: 'dynamism', name: 'Dynamism', desc: 'การใช้กำลัง ความดุดัน การบุกทะลวง' },
+      { id: 'empathy', name: 'Empathy', desc: 'ความเห็นอกเห็นใจ การเข้าใจจิตใจคนอื่น การเชื่อมโยง' },
+      { id: 'initiative', name: 'Initiative', desc: 'ความว่องไว การชิงลงมือก่อน การจัดการปัญหาก่อนลุกลาม' },
+      { id: 'persistence', name: 'Persistence', desc: 'ความอดทน กัดไม่ปล่อย การกดดันต่อเนื่อง' },
+      { id: 'presence', name: 'Presence', desc: 'ความน่าเกรงขาม การสั่งการ การสร้างแรงบันดาลใจ' },
+      { id: 'professionalism', name: 'Professionalism', desc: 'ความสุขุม สมาธิภายใต้ความกดดัน การต้านทานจิตใจ' },
+      { id: 'subtlety', name: 'Subtlety', desc: 'ความแนบเนียน ล่องหน ทำงานเงียบเชียบ มือเบา' }
+    ];
+
+    let currentAgent = null;
+    let currentUserKey = '';
+
+    // Load active character
+    function loadAgentProfile() {
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      currentUserKey = localStorage.getItem('triangle_current_user') || '';
+
+      if (!currentUserKey || !accounts[currentUserKey]) {
+        // Find any existing character if available
+        const keys = Object.keys(accounts);
+        if (keys.length > 0) {
+          currentUserKey = keys[keys.length - 1];
+          localStorage.setItem('triangle_current_user', currentUserKey);
+        } else {
+          alert('ไม่พบข้อมูลตัวละคร กรุณาสร้างตัวละครก่อน');
+          window.location.href = 'create-character.html';
+          return;
+        }
+      }
+
+      currentAgent = accounts[currentUserKey].character;
+
+      // Ensure metrics exist
+      if (currentAgent.commendations === undefined) currentAgent.commendations = 0;
+      if (currentAgent.demerits === undefined) currentAgent.demerits = 0;
+      if (currentAgent.burnout === undefined) currentAgent.burnout = 0;
+
+      renderProfile();
+    }
+
+    function saveAgentProfile() {
+      if (!currentUserKey) return;
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      if (accounts[currentUserKey]) {
+        accounts[currentUserKey].character = currentAgent;
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+      }
+    }
+
+    function renderProfile() {
+      if (!currentAgent) return;
+
+      // Identity & Photo
+      document.getElementById('profile-name').textContent = currentAgent.name || currentUserKey;
+      document.getElementById('profile-title').textContent = currentAgent.title || 'Trainee';
+      document.getElementById('profile-standing').textContent = currentAgent.standing || 'Good Standing';
+      document.getElementById('profile-id-code').textContent = currentAgent.id || 'ID-001';
+
+      const photoEl = document.getElementById('agent-profile-avatar');
+      const placeholderEl = document.getElementById('agent-profile-placeholder');
+      if (currentAgent.avatar) {
+        photoEl.src = currentAgent.avatar;
+        photoEl.style.display = 'block';
+        placeholderEl.style.display = 'none';
+      } else {
+        photoEl.style.display = 'none';
+        placeholderEl.style.display = 'flex';
+      }
+
+      // Metrics
+      document.getElementById('metric-commendations').textContent = currentAgent.commendations || 0;
+      document.getElementById('metric-demerits').textContent = currentAgent.demerits || 0;
+      document.getElementById('metric-burnout').textContent = currentAgent.burnout || 0;
+
+      // ARC
+      const arc = currentAgent.arc || {};
+      document.getElementById('profile-arc-anomaly').textContent = arc.anomaly || 'None';
+      document.getElementById('profile-arc-anomaly-manifest').textContent = arc.anomalyManifestation || 'ไม่มีข้อมูล';
+      document.getElementById('profile-arc-reality').textContent = arc.reality || 'None';
+      document.getElementById('profile-arc-reality-trigger').textContent = arc.realityTrigger || 'ไม่มีข้อมูล';
+      document.getElementById('profile-arc-competency').textContent = arc.competency || 'None';
+      document.getElementById('profile-arc-competency-pd').textContent = arc.primeDirective || 'ไม่มีข้อมูล';
+      document.getElementById('profile-burnout-release').textContent = arc.burnoutRelease || 'ไม่มีข้อมูล';
+
+      // Sanctioned behaviors
+      const sbContainer = document.getElementById('profile-sb-list');
+      sbContainer.innerHTML = '';
+      const sbs = arc.sanctionedBehaviors || [];
+      sbs.forEach((sb, index) => {
+        const item = document.createElement('div');
+        item.className = 'sb-list-item';
+        item.innerHTML = `
+          <input type="checkbox" class="sb-checkbox" id="sb-check-${index}" ${sb.done ? 'checked' : ''}>
+          <label for="sb-check-${index}" style="font-size:0.85rem; color:${sb.done ? 'var(--accent-green)' : '#ffffff'}; cursor:pointer;">
+            ${sb.text || `Sanctioned Rule ${index + 1}`}
+          </label>
+        `;
+        item.querySelector('input').addEventListener('change', (e) => {
+          sb.done = e.target.checked;
+          saveAgentProfile();
+          renderProfile();
+        });
+        sbContainer.appendChild(item);
+      });
+
+      // 9 Quality Assurances
+      renderQAGrid();
+
+      // Abilities
+      renderAbilities();
+
+      // Relationships
+      renderRelationships();
+    }
+
+    // Adjust Commendations / Demerits / Burnout
+    function adjustMetric(type, change) {
+      if (!currentAgent) return;
+      if (type === 'commendations') {
+        currentAgent.commendations = Math.max(0, (currentAgent.commendations || 0) + change);
+      } else if (type === 'demerits') {
+        currentAgent.demerits = Math.max(0, (currentAgent.demerits || 0) + change);
+      } else if (type === 'burnout') {
+        currentAgent.burnout = Math.max(0, (currentAgent.burnout || 0) + change);
+      }
+      saveAgentProfile();
+      renderProfile();
+    }
+
+    // Render 9 Quality Assurances with actions
+    function renderQAGrid() {
+      const container = document.getElementById('profile-qa-grid');
+      container.innerHTML = '';
+
+      if (!currentAgent.qualities) currentAgent.qualities = {};
+
+      QUALITIES_DATA.forEach(q => {
+        if (!currentAgent.qualities[q.id]) {
+          currentAgent.qualities[q.id] = { max: 0, current: 0 };
+        }
+        const val = currentAgent.qualities[q.id].max || 0;
+
+        const box = document.createElement('div');
+        box.className = 'qa-card-box';
+        box.innerHTML = `
+          <div>
+            <div class="qa-card-top">
+              <span class="qa-card-title">${q.name}</span>
+              <span style="font-family:var(--font-mono); font-size:0.82rem; font-weight:700; color:var(--accent-blue);" id="qa-val-${q.id}">${val} QA</span>
+            </div>
+            <p style="font-size:0.78rem; color:var(--text-muted); line-height:1.35;">${q.desc}</p>
+          </div>
+
+          <div class="qa-pips-container" id="pips-${q.id}"></div>
+
+          <div class="qa-action-row">
+            <span style="font-size:0.72rem; font-family:var(--font-mono); color:var(--text-muted);">Action Pip</span>
+            <button type="button" class="btn-qa-action" onclick="rollQualityAction('${q.name}', ${val})">🎲 ทอยตรวจสอบ D4</button>
+          </div>
+        `;
+
+        const pipsRow = box.querySelector(`#pips-${q.id}`);
+        for (let i = 1; i <= 5; i++) {
+          const pip = document.createElement('div');
+          pip.className = `qa-pip-toggle ${i <= val ? 'active' : ''}`;
+          pip.title = `${q.name} ${i} QA`;
+          pip.addEventListener('click', () => {
+            currentAgent.qualities[q.id].max = (val === i) ? i - 1 : i;
+            currentAgent.qualities[q.id].current = currentAgent.qualities[q.id].max;
+            saveAgentProfile();
+            renderProfile();
+          });
+          pipsRow.appendChild(pip);
+        }
+
+        container.appendChild(box);
+      });
+    }
+
+    // Roll Quality Dice (d4) Tester Action
+    function rollQualityAction(qualityName, diceCount) {
+      const dice = Math.max(1, diceCount);
+      const results = [];
+      let successCount = 0;
+
+      for (let i = 0; i < dice; i++) {
+        const roll = Math.floor(Math.random() * 4) + 1;
+        results.push(roll);
+        if (roll === 3) successCount++;
+      }
+
+      const toast = document.getElementById('toast-roll');
+      const title = document.getElementById('toast-title');
+      const desc = document.getElementById('toast-desc');
+
+      if (successCount >= 3) {
+        title.innerHTML = `🌟 TRISCENDENCE! (${qualityName})`;
+        title.style.color = '#ffd700';
+      } else if (successCount > 0) {
+        title.innerHTML = `▲ SUCCESS! (${qualityName})`;
+        title.style.color = 'var(--accent-blue)';
+      } else {
+        title.innerHTML = `✕ FAILURE / COMPLICATION (${qualityName})`;
+        title.style.color = 'var(--accent-red)';
+      }
+
+      desc.innerHTML = `ทอย ${dice}d4: <strong>[${results.join(', ')}]</strong> ➔ <strong>${successCount} Successes (หน้า 3)</strong>`;
+
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 4500);
+    }
+
+    // Render Abilities
+    function renderAbilities() {
+      const container = document.getElementById('profile-abilities-container');
+      container.innerHTML = '';
+      const abilities = currentAgent.abilities || [];
+
+      if (abilities.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-muted); font-size:0.9rem;">ยังไม่มีการบันทึก Ability พิเศษ</div>';
+        return;
+      }
+
+      abilities.forEach(ab => {
+        const card = document.createElement('div');
+        card.className = 'ability-display-card';
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <strong style="font-size:1.1rem; color:#ffffff;">${ab.name || 'Ability'}</strong>
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-blue);">${ab.quality ? 'Quality: ' + ab.quality : ''}</span>
+          </div>
+          ${ab.trigger ? `<div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;"><strong>Trigger:</strong> ${ab.trigger}</div>` : ''}
+          <div class="grid-3col">
+            ${ab.success ? `<div class="arc-detail-text" style="border-left:3px solid var(--accent-blue);"><strong style="color:var(--accent-blue);">▲ On a Success:</strong><br>${ab.success}</div>` : ''}
+            ${ab.specialSuccess ? `<div class="arc-detail-text" style="border-left:3px solid var(--accent-yellow);"><strong style="color:var(--accent-yellow);">▲▲ On a Special Success:</strong><br>${ab.specialSuccess}</div>` : ''}
+            ${ab.failure ? `<div class="arc-detail-text" style="border-left:3px solid var(--accent-red);"><strong style="color:var(--accent-red);">✕ On a Failure:</strong><br>${ab.failure}</div>` : ''}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Render Relationships
+    function renderRelationships() {
+      const container = document.getElementById('profile-relationships-container');
+      container.innerHTML = '';
+      const relationships = currentAgent.relationships || [];
+
+      if (relationships.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-muted); font-size:0.9rem;">ยังไม่มีการบันทึกสายสัมพันธ์</div>';
+        return;
+      }
+
+      relationships.forEach(rel => {
+        const card = document.createElement('div');
+        card.className = 'rel-display-card';
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+            <strong style="font-size:1.05rem; color:#ffffff;">${rel.name || 'Contact'}</strong>
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-yellow);">${rel.playedBy || 'NPC / Reality'}</span>
+          </div>
+          ${rel.bonus ? `<div style="font-size:0.82rem; color:var(--accent-green); margin-bottom:0.4rem;"><strong>Bonus:</strong> ${rel.bonus}</div>` : ''}
+          ${rel.desc ? `<div style="font-size:0.85rem; color:var(--text-muted);">${rel.desc}</div>` : ''}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Logout
+    document.getElementById('btn-logout').addEventListener('click', () => {
+      localStorage.removeItem('triangle_current_user');
+      window.location.href = 'index.html';
+    });
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAgentProfile();
+    });
+  </script>
+</body>
+</html>
