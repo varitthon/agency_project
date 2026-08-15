@@ -16,7 +16,7 @@
       --bg-base: #060312;
       --bg-surface: #0e0722;
       --bg-surface-elevated: #150d36;
-      --bg-navbar: rgba(10, 5, 28, 0.94);
+      --bg-navbar: rgba(10, 5, 28, 0.96);
       
       --border-dark: #261758;
       --border-light: rgba(255, 255, 255, 0.12);
@@ -49,7 +49,6 @@
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       background-image: 
         radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.5) 0%, transparent 65%),
         radial-gradient(circle at 85% 30%, rgba(255, 34, 56, 0.08) 0%, transparent 45%);
@@ -58,36 +57,51 @@
       line-height: 1.5;
     }
 
-    /* Top Navigation */
-    .top-navbar {
-      background-color: var(--bg-navbar);
-      border-bottom: 1px solid var(--border-dark);
-      backdrop-filter: blur(14px);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    /* Overall Layout: Left Sidebar + Main Content */
+    .app-layout {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
     }
 
-    .navbar-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0.85rem 1.5rem;
+    /* ==========================================
+       LEFT SIDEBAR NAVBAR
+       ========================================== */
+    .app-sidebar {
+      width: 270px;
+      min-width: 270px;
+      background-color: var(--bg-navbar);
+      border-right: 1.5px solid var(--border-dark);
+      backdrop-filter: blur(14px);
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: space-between;
+      padding: 1.5rem 1.25rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 100;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar-top {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
     }
 
     .brand-logo {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 0.85rem;
       text-decoration: none;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-dark);
     }
 
     .logo-emblem-box {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
       border: 1.5px solid rgba(255, 255, 255, 0.25);
       border-radius: 8px;
@@ -99,41 +113,43 @@
     }
 
     .logo-triangle-svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       filter: drop-shadow(0 0 6px var(--accent-red));
     }
 
     .brand-name {
       font-family: var(--font-heading);
       font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: 0.08em;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
       color: #ffffff;
       line-height: 1.1;
     }
 
     .brand-tag {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
       color: var(--accent-red);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
     }
 
+    /* Left Navbar Actions (ปุ่มนำทางด้านซ้าย) */
     .nav-actions {
       display: flex;
-      align-items: center;
-      gap: 1rem;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.4rem;
-      padding: 0.5rem 1.2rem;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
       font-family: var(--font-body);
       font-size: 0.92rem;
       font-weight: 600;
@@ -142,16 +158,20 @@
       cursor: pointer;
       border: 1px solid transparent;
       transition: all 0.2s ease;
+      width: 100%;
     }
 
     .btn-outline {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.03);
       color: var(--text-muted);
       border-color: var(--border-dark);
+      text-align: center;
     }
     .btn-outline:hover {
       color: #ffffff;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border-light);
+      transform: translateX(3px);
     }
 
     .btn-primary {
@@ -162,15 +182,54 @@
     .btn-primary:hover {
       background: #ff3b4f;
       box-shadow: 0 0 22px rgba(255, 34, 56, 0.6);
+      transform: translateX(3px);
     }
 
-    /* Main Container */
-    .profile-wrapper {
-      max-width: 1200px;
-      margin: 2rem auto 4rem;
-      padding: 0 1.5rem;
-      width: 100%;
+    /* Sidebar Footer Info */
+    .sidebar-bottom {
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .sidebar-doc-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: #ffd700;
+      text-decoration: none;
+      padding: 0.5rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(240, 171, 0, 0.08);
+      border: 1px solid rgba(240, 171, 0, 0.25);
+      transition: all 0.2s;
+    }
+
+    .sidebar-doc-link:hover {
+      background: rgba(240, 171, 0, 0.18);
+      border-color: var(--accent-yellow);
+    }
+
+    .sidebar-status-box {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ==========================================
+       MAIN CONTENT CONTAINER
+       ========================================== */
+    .app-main-content {
       flex: 1;
+      overflow-y: auto;
+      padding: 2rem 2.5rem 4rem;
+      max-width: 1280px;
     }
 
     /* Top Agent Dossier Card */
@@ -601,7 +660,20 @@
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
+      .app-layout {
+        flex-direction: column;
+      }
+      .app-sidebar {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem 1.5rem;
+      }
+      .app-main-content {
+        padding: 1.5rem;
+      }
       .dossier-hero-card {
         grid-template-columns: 1fr;
       }
@@ -613,214 +685,234 @@
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
-  <header class="top-navbar">
-    <div class="navbar-container">
-      <a href="index.html" class="brand-logo">
-        <div class="logo-emblem-box">
-          <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div>
-          <div class="brand-name">TRIANGLE AGENCY</div>
-          <div class="brand-tag">AGENT DOSSIER ARCHIVE // SECURE</div>
-        </div>
-      </a>
+  <div class="app-layout">
 
-      <div class="nav-actions">
-        <a href="index.html" class="btn btn-outline">หน้าแรก</a>
-        <a href="create-character.html" class="btn btn-outline">+ สร้างตัวละครใหม่</a>
-        <button type="button" class="btn btn-primary" id="btn-logout">
-          <span>ออกจากระบบ</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Profile Wrapper -->
-  <main class="profile-wrapper">
-
-    <!-- Dossier Hero Card (รูปถ่าย + ชื่อ + ตำแหน่ง + สถานะ + Commendations/Demerits/Burnout) -->
-    <div class="dossier-hero-card">
+    <!-- ==========================================
+         NAVBAR ทางด้านซ้าย (LEFT SIDEBAR NAVBAR)
+         ========================================== -->
+    <aside class="app-sidebar" aria-label="Sidebar Navigation">
       
-      <!-- กล่องรูปตัวละคร -->
-      <div class="dossier-photo-box">
-        <img id="agent-profile-avatar" src="" alt="Agent Portrait" style="display:none;">
-        <div class="dossier-placeholder" id="agent-profile-placeholder">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-          </svg>
-          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">FIELD AGENT ID</span>
-        </div>
-      </div>
-
-      <!-- ข้อมูลตัวตนหลัก -->
-      <div class="dossier-identity">
-        <div>
-          <div class="dossier-header-row">
-            <div>
-              <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-red); letter-spacing:0.15em;">FIELD AGENT RECORD // CLASSIFIED</div>
-              <h1 class="agent-display-name" id="profile-name">Valerie Ross</h1>
-              <div class="agent-badges-row">
-                <span class="badge-tag badge-title" id="profile-title">Trainee</span>
-                <span class="badge-tag badge-standing" id="profile-standing">Good Standing</span>
-                <span class="badge-tag" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#ffffff;" id="profile-id-code">ID-0000</span>
-              </div>
-            </div>
-
-            <a href="Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" class="btn btn-outline" style="border-color:var(--accent-yellow); color:#ffd700; background:rgba(240,171,0,0.1); font-size:0.8rem; padding:0.4rem 0.85rem;">
-              📖 เปิดอ่านคู่มือ ARC (หน้า 31 - 62)
-            </a>
-          </div>
-
-          <!-- แถบค่าสถานะสำคัญ: Commendations, Demerits, Additional Burnout -->
-          <div class="metrics-bar-grid">
-            
-            <!-- 1. Commendations -->
-            <div class="metric-item">
-              <div class="metric-label">
-                <span>🎖️ COMMENDATIONS</span>
-                <span style="font-size:0.7rem; color:var(--text-muted);">คำชมเชย</span>
-              </div>
-              <div class="metric-controls">
-                <button type="button" class="btn-counter" onclick="adjustMetric('commendations', -1)">-</button>
-                <div class="metric-value-display val-commendations" id="metric-commendations">0</div>
-                <button type="button" class="btn-counter" onclick="adjustMetric('commendations', 1)">+</button>
-              </div>
-            </div>
-
-            <!-- 2. Demerits -->
-            <div class="metric-item">
-              <div class="metric-label">
-                <span>⚠️ DEMERITS</span>
-                <span style="font-size:0.7rem; color:var(--text-muted);">แต้มลงโทษ</span>
-              </div>
-              <div class="metric-controls">
-                <button type="button" class="btn-counter" onclick="adjustMetric('demerits', -1)">-</button>
-                <div class="metric-value-display val-demerits" id="metric-demerits">0</div>
-                <button type="button" class="btn-counter" onclick="adjustMetric('demerits', 1)">+</button>
-              </div>
-            </div>
-
-            <!-- 3. Additional Burnout -->
-            <div class="metric-item">
-              <div class="metric-label">
-                <span>🔥 ADDITIONAL BURNOUT</span>
-                <span style="font-size:0.7rem; color:var(--text-muted);">หมดไฟสะสม</span>
-              </div>
-              <div class="metric-controls">
-                <button type="button" class="btn-counter" onclick="adjustMetric('burnout', -1)">-</button>
-                <div class="metric-value-display val-burnout" id="metric-burnout">0</div>
-                <button type="button" class="btn-counter" onclick="adjustMetric('burnout', 1)">+</button>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ARC Overview Section -->
-    <section class="sheet-card">
-      <div class="sheet-card-header header-yellow">
-        <h2>โครงสร้าง ARC ประจำตัวแทน (Anomaly, Reality, Competency)</h2>
-        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">CORE AGENT ARCHETYPE</span>
-      </div>
-      <div class="sheet-card-body">
-        
-        <div class="arc-profile-grid">
-          <!-- Anomaly -->
-          <div class="arc-box box-anomaly">
-            <div class="arc-box-title">ANOMALY (สิ่งผิดปกติ)</div>
-            <div class="arc-main-val" id="profile-arc-anomaly">Drain</div>
-            <div class="arc-detail-text">
-              <strong style="color:#ffffff;">Visual Manifestation:</strong><br>
-              <span id="profile-arc-anomaly-manifest">-</span>
-            </div>
-          </div>
-
-          <!-- Reality -->
-          <div class="arc-box box-reality">
-            <div class="arc-box-title">REALITY (ความเป็นจริง)</div>
-            <div class="arc-main-val" id="profile-arc-reality">Caretaker</div>
-            <div class="arc-detail-text">
-              <strong style="color:#ffffff;">Reality Trigger (GM 3 Chaos):</strong><br>
-              <span id="profile-arc-reality-trigger">-</span>
-            </div>
-          </div>
-
-          <!-- Competency -->
-          <div class="arc-box box-competency">
-            <div class="arc-box-title">COMPETENCY (ความเชี่ยวชาญ)</div>
-            <div class="arc-main-val" id="profile-arc-competency">PR</div>
-            <div class="arc-detail-text">
-              <strong style="color:#ffffff;">Prime Directive (1 Demerit):</strong><br>
-              <span id="profile-arc-competency-pd">-</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid-2col">
-          <div class="arc-detail-text">
-            <strong style="color:var(--accent-yellow);">Burnout Release:</strong><br>
-            <span id="profile-burnout-release">-</span>
+      <div class="sidebar-top">
+        <!-- Brand Logo & Header -->
+        <a href="index.html" class="brand-logo">
+          <div class="logo-emblem-box">
+            <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+            </svg>
           </div>
           <div>
-            <strong style="font-size:0.85rem; color:var(--text-muted); display:block; margin-bottom:0.4rem;">
-              Sanctioned Behaviors (+3 โบนัสเมื่อทำครบ):
-            </strong>
-            <div id="profile-sb-list">
-              <!-- Checklist rendered dynamically -->
+            <div class="brand-name">TRIANGLE AGENCY</div>
+            <div class="brand-tag">AGENT ARCHIVE // SECURE</div>
+          </div>
+        </a>
+
+        <!-- ชุดปุ่มนำทางทางด้านซ้าย (Nav Actions) -->
+        <div class="nav-actions">
+          <a href="index.html" class="btn btn-outline">หน้าแรก</a>
+          <a href="create-character.html" class="btn btn-outline">+ สร้างตัวละครใหม่</a>
+          <button type="button" class="btn btn-primary" id="btn-logout">
+            <span>ออกจากระบบ</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ส่วนท้ายของ Sidebar ด้านซ้าย -->
+      <div class="sidebar-bottom">
+        <a href="Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" class="sidebar-doc-link">
+          <span>📖</span>
+          <span>คู่มือ ARC (หน้า 31-62)</span>
+        </a>
+        <div class="sidebar-status-box">
+          <span>ARCHIVE ACCESS</span>
+          <span style="color:var(--accent-green);">● ONLINE</span>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ==========================================
+         MAIN CONTENT AREA (ด้านขวา)
+         ========================================== -->
+    <main class="app-main-content">
+
+      <!-- Dossier Hero Card (รูปถ่าย + ชื่อ + ตำแหน่ง + สถานะ + Commendations/Demerits/Burnout) -->
+      <div class="dossier-hero-card">
+        
+        <!-- กล่องรูปตัวละคร -->
+        <div class="dossier-photo-box">
+          <img id="agent-profile-avatar" src="" alt="Agent Portrait" style="display:none;">
+          <div class="dossier-placeholder" id="agent-profile-placeholder">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">FIELD AGENT ID</span>
+          </div>
+        </div>
+
+        <!-- ข้อมูลตัวตนหลัก -->
+        <div class="dossier-identity">
+          <div>
+            <div class="dossier-header-row">
+              <div>
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-red); letter-spacing:0.15em;">FIELD AGENT RECORD // CLASSIFIED</div>
+                <h1 class="agent-display-name" id="profile-name">Valerie Ross</h1>
+                <div class="agent-badges-row">
+                  <span class="badge-tag badge-title" id="profile-title">Trainee</span>
+                  <span class="badge-tag badge-standing" id="profile-standing">Good Standing</span>
+                  <span class="badge-tag" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#ffffff;" id="profile-id-code">ID-0000</span>
+                </div>
+              </div>
             </div>
+
+            <!-- แถบค่าสถานะสำคัญ: Commendations, Demerits, Additional Burnout -->
+            <div class="metrics-bar-grid">
+              
+              <!-- 1. Commendations -->
+              <div class="metric-item">
+                <div class="metric-label">
+                  <span>🎖️ COMMENDATIONS</span>
+                  <span style="font-size:0.7rem; color:var(--text-muted);">คำชมเชย</span>
+                </div>
+                <div class="metric-controls">
+                  <button type="button" class="btn-counter" onclick="adjustMetric('commendations', -1)">-</button>
+                  <div class="metric-value-display val-commendations" id="metric-commendations">0</div>
+                  <button type="button" class="btn-counter" onclick="adjustMetric('commendations', 1)">+</button>
+                </div>
+              </div>
+
+              <!-- 2. Demerits -->
+              <div class="metric-item">
+                <div class="metric-label">
+                  <span>⚠️ DEMERITS</span>
+                  <span style="font-size:0.7rem; color:var(--text-muted);">แต้มลงโทษ</span>
+                </div>
+                <div class="metric-controls">
+                  <button type="button" class="btn-counter" onclick="adjustMetric('demerits', -1)">-</button>
+                  <div class="metric-value-display val-demerits" id="metric-demerits">0</div>
+                  <button type="button" class="btn-counter" onclick="adjustMetric('demerits', 1)">+</button>
+                </div>
+              </div>
+
+              <!-- 3. Additional Burnout -->
+              <div class="metric-item">
+                <div class="metric-label">
+                  <span>🔥 ADDITIONAL BURNOUT</span>
+                  <span style="font-size:0.7rem; color:var(--text-muted);">หมดไฟสะสม</span>
+                </div>
+                <div class="metric-controls">
+                  <button type="button" class="btn-counter" onclick="adjustMetric('burnout', -1)">-</button>
+                  <div class="metric-value-display val-burnout" id="metric-burnout">0</div>
+                  <button type="button" class="btn-counter" onclick="adjustMetric('burnout', 1)">+</button>
+                </div>
+              </div>
+
+            </div>
+
           </div>
         </div>
 
       </div>
-    </section>
 
-    <!-- 9 Quality Assurances Matrix & Actions -->
-    <section class="sheet-card">
-      <div class="sheet-card-header header-blue">
-        <h2>คุณสมบัติประเมินผล 9 ด้าน (Qualities 9 Actions & Ratings)</h2>
-        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-blue);">D4 SUCCESS SYSTEM</span>
-      </div>
-      <div class="sheet-card-body">
-        <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:1.5rem;">
-          คลิกที่ปุ่มสามเหลี่ยมเพื่อเพิ่ม/ลดคะแนน QA หรือกดปุ่ม <strong>[ทอยตรวจสอบ D4]</strong> เพื่อทดสอบการทอยลูกเต๋าตามคะแนนที่คุณมี
-        </p>
-
-        <div class="qa-matrix-grid" id="profile-qa-grid">
-          <!-- 9 QA Cards Rendered Dynamically -->
+      <!-- ARC Overview Section -->
+      <section class="sheet-card">
+        <div class="sheet-card-header header-yellow">
+          <h2>โครงสร้าง ARC ประจำตัวแทน (Anomaly, Reality, Competency)</h2>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">CORE AGENT ARCHETYPE</span>
         </div>
-      </div>
-    </section>
+        <div class="sheet-card-body">
+          
+          <div class="arc-profile-grid">
+            <!-- Anomaly -->
+            <div class="arc-box box-anomaly">
+              <div class="arc-box-title">ANOMALY (สิ่งผิดปกติ)</div>
+              <div class="arc-main-val" id="profile-arc-anomaly">Drain</div>
+              <div class="arc-detail-text">
+                <strong style="color:#ffffff;">Visual Manifestation:</strong><br>
+                <span id="profile-arc-anomaly-manifest">-</span>
+              </div>
+            </div>
 
-    <!-- Anomaly Abilities Section -->
-    <section class="sheet-card" id="section-abilities">
-      <div class="sheet-card-header header-blue">
-        <h2>ทักษะความสามารถ Anomaly (Abilities)</h2>
-        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">ACTIVE POWERS</span>
-      </div>
-      <div class="sheet-card-body" id="profile-abilities-container">
-        <!-- Abilities Rendered Dynamically -->
-      </div>
-    </section>
+            <!-- Reality -->
+            <div class="arc-box box-reality">
+              <div class="arc-box-title">REALITY (ความเป็นจริง)</div>
+              <div class="arc-main-val" id="profile-arc-reality">Caretaker</div>
+              <div class="arc-detail-text">
+                <strong style="color:#ffffff;">Reality Trigger (GM 3 Chaos):</strong><br>
+                <span id="profile-arc-reality-trigger">-</span>
+              </div>
+            </div>
 
-    <!-- Networked Relationships Section -->
-    <section class="sheet-card" id="section-relationships">
-      <div class="sheet-card-header header-yellow">
-        <h2>ความสัมพันธ์และสายสัมพันธ์ (Relationships & Networked Bonds)</h2>
-        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">CONTACTS</span>
-      </div>
-      <div class="sheet-card-body" id="profile-relationships-container">
-        <!-- Relationships Rendered Dynamically -->
-      </div>
-    </section>
+            <!-- Competency -->
+            <div class="arc-box box-competency">
+              <div class="arc-box-title">COMPETENCY (ความเชี่ยวชาญ)</div>
+              <div class="arc-main-val" id="profile-arc-competency">PR</div>
+              <div class="arc-detail-text">
+                <strong style="color:#ffffff;">Prime Directive (1 Demerit):</strong><br>
+                <span id="profile-arc-competency-pd">-</span>
+              </div>
+            </div>
+          </div>
 
-  </main>
+          <div class="grid-2col">
+            <div class="arc-detail-text">
+              <strong style="color:var(--accent-yellow);">Burnout Release:</strong><br>
+              <span id="profile-burnout-release">-</span>
+            </div>
+            <div>
+              <strong style="font-size:0.85rem; color:var(--text-muted); display:block; margin-bottom:0.4rem;">
+                Sanctioned Behaviors (+3 โบนัสเมื่อทำครบ):
+              </strong>
+              <div id="profile-sb-list">
+                <!-- Checklist rendered dynamically -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 9 Quality Assurances Matrix & Actions -->
+      <section class="sheet-card">
+        <div class="sheet-card-header header-blue">
+          <h2>คุณสมบัติประเมินผล 9 ด้าน (Qualities 9 Actions & Ratings)</h2>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-blue);">D4 SUCCESS SYSTEM</span>
+        </div>
+        <div class="sheet-card-body">
+          <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:1.5rem;">
+            คลิกที่ปุ่มสามเหลี่ยมเพื่อเพิ่ม/ลดคะแนน QA หรือกดปุ่ม <strong>[ทอยตรวจสอบ D4]</strong> เพื่อทดสอบการทอยลูกเต๋าตามคะแนนที่คุณมี
+          </p>
+
+          <div class="qa-matrix-grid" id="profile-qa-grid">
+            <!-- 9 QA Cards Rendered Dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Anomaly Abilities Section -->
+      <section class="sheet-card" id="section-abilities">
+        <div class="sheet-card-header header-blue">
+          <h2>ทักษะความสามารถ Anomaly (Abilities)</h2>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">ACTIVE POWERS</span>
+        </div>
+        <div class="sheet-card-body" id="profile-abilities-container">
+          <!-- Abilities Rendered Dynamically -->
+        </div>
+      </section>
+
+      <!-- Networked Relationships Section -->
+      <section class="sheet-card" id="section-relationships">
+        <div class="sheet-card-header header-yellow">
+          <h2>ความสัมพันธ์และสายสัมพันธ์ (Relationships & Networked Bonds)</h2>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">CONTACTS</span>
+        </div>
+        <div class="sheet-card-body" id="profile-relationships-container">
+          <!-- Relationships Rendered Dynamically -->
+        </div>
+      </section>
+
+    </main>
+
+  </div>
 
   <!-- Floating Dice Toast Alert -->
   <div class="toast-roll-alert" id="toast-roll">
