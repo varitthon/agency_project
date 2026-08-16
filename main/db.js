@@ -14,7 +14,7 @@ const CloudDB = (function () {
   const STORAGE_KEY_API_URL = 'triangle_cloud_api_url';
   const STORAGE_KEY_AUTO_SYNC = 'triangle_cloud_auto_sync';
 
-  // Default Sheet link: https://docs.google.com/spreadsheets/d/1vzmWRsqqpFkf7nMKp5CdsZGVqHHDdNtxCaCItAbnKhM/edit
+  // Default Sheet link
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1vzmWRsqqpFkf7nMKp5CdsZGVqHHDdNtxCaCItAbnKhM/edit';
 
   function getApiUrl() {
@@ -112,14 +112,15 @@ const CloudDB = (function () {
     const apiUrl = getApiUrl();
     if (apiUrl && isAutoSyncEnabled()) {
       try {
+        const payload = JSON.stringify({
+          action: 'saveAccount',
+          account: accounts[username]
+        });
         await fetch(apiUrl, {
           method: 'POST',
-          mode: 'no-cors', // Google Apps Script Web App standard
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'saveAccount',
-            account: accounts[username]
-          })
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: payload
         });
         console.log(`[CloudDB] Synced ${username} to Google Sheets`);
       } catch (err) {
@@ -144,14 +145,15 @@ const CloudDB = (function () {
     const apiUrl = getApiUrl();
     if (apiUrl && isAutoSyncEnabled()) {
       try {
+        const payload = JSON.stringify({
+          action: 'deleteAccount',
+          username: username
+        });
         await fetch(apiUrl, {
           method: 'POST',
           mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'deleteAccount',
-            username: username
-          })
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: payload
         });
         console.log(`[CloudDB] Deleted ${username} from Google Sheets`);
       } catch (err) {
@@ -194,16 +196,20 @@ const CloudDB = (function () {
     }
 
     const accounts = getLocalAccounts();
+    const payloadStr = JSON.stringify({
+      action: 'syncAll',
+      accounts: accounts
+    });
+
     try {
+      // Send as POST
       await fetch(apiUrl, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'syncAll',
-          accounts: accounts
-        })
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: payloadStr
       });
+
       return { success: true, count: Object.keys(accounts).length };
     } catch (err) {
       return { success: false, message: err.toString() };

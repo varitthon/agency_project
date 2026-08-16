@@ -8,24 +8,44 @@
  * 2. ไปที่เมนู "ส่วนขยาย" (Extensions) > "Apps Script"
  * 3. ลบโค้ดเดิมทั้งหมดในไฟล์ Code.gs แล้ววางโค้ดชุดนี้ลงไป
  * 4. กดปุ่ม "บันทึก" (Save / ไอคอนแผ่นดิสก์)
- * 5. กดปุ่ม "ทำให้ใช้งานได้" (Deploy) > "การปรับใช้รายการใหม่" (New deployment)
+ * 5. กดปุ่ม "ทำให้ใช้งานได้" (Deploy) > "การจัดการการปรับใช้" (Manage deployments) หรือ "การปรับใช้รายการใหม่" (New deployment)
  * 6. เลือกประเภท: "เว็บแอป" (Web app)
  * 7. ตั้งค่า:
  *    - คำอธิบาย: Triangle Agency DB API
  *    - ดำเนินการในฐานะ: "ฉัน" (Me)
- *    - ผู้ที่มีสิทธิ์เข้าถึง: "ทุกคน" (Anyone)   <-- สำคัญมาก! เพื่อให้เว็บเข้าถึงได้
+ *    - ผู้ที่มีสิทธิ์เข้าถึง: "ทุกคน" (Anyone)   <-- สำคัญมาก!
  * 8. กด "ทำให้ใช้งานได้" (Deploy) แล้วคัดลอก "URL เว็บแอป" (Web app URL)
- * 9. นำ URL ที่ได้มาใส่ในโปรเจกต์เว็บ Triangle Agency
+ * 9. นำ URL ที่ได้มาวางในหน้าเว็บ Triangle Agency
  * ===================================================================
  */
 
+const TARGET_SPREADSHEET_ID = '1vzmWRsqqpFkf7nMKp5CdsZGVqHHDdNtxCaCItAbnKhM';
 const SHEET_NAME = 'Agents_Database';
 
+function getSpreadsheet() {
+  try {
+    if (TARGET_SPREADSHEET_ID) {
+      return SpreadsheetApp.openById(TARGET_SPREADSHEET_ID);
+    }
+  } catch (e) {
+    console.warn('Cannot open by ID, using active spreadsheet:', e);
+  }
+  return SpreadsheetApp.getActiveSpreadsheet();
+}
+
 function getOrCreateSheet() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getSpreadsheet();
   let sheet = ss.getSheetByName(SHEET_NAME);
+  
+  // ถ้าไม่มีแท็บ Agents_Database ให้ดูว่าแผ่นแรกว่างอยู่หรือไม่ ถ้าว่างให้เปลี่ยนชื่อแผ่นแรกเลย
   if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
+    const firstSheet = ss.getSheets()[0];
+    if (firstSheet && (firstSheet.getLastRow() === 0 || firstSheet.getName().includes('Sheet') || firstSheet.getName().includes('ชีต'))) {
+      firstSheet.setName(SHEET_NAME);
+      sheet = firstSheet;
+    } else {
+      sheet = ss.insertSheet(SHEET_NAME, 0);
+    }
   }
   
   // Headers Definition
@@ -55,15 +75,36 @@ function getOrCreateSheet() {
     headerRange.setBackground('#0d0522');
     headerRange.setFontColor('#ffd700');
     headerRange.setFontWeight('bold');
-    headerRange.setFontFamily('Space Mono');
+    headerRange.setFontFamily('Arial');
+    headerRange.setHorizontalAlignment('center');
     sheet.setFrozenRows(1);
   }
+  
   return sheet;
 }
 
-// 🟢 GET Request: อ่านข้อมูลทั้งหมด
+// 🟢 GET Request: อ่านข้อมูล หรือ รับคำสั่งผ่าน Query Param
 function doGet(e) {
   try {
+    const params = e ? e.parameter : {};
+    const action = params ? params.action : '';
+
+    // ถ้ามีคำสั่ง syncAll หรือ saveAccount ส่งมาผ่าน GET
+    if (action === 'syncAll' && params.data) {
+      const payload = JSON.parse(decodeURIComponent(params.data));
+      return handleSyncAll(payload.accounts || payload);
+    }
+
+    if (action === 'saveAccount' && params.data) {
+      const payload = JSON.parse(decodeURIComponent(params.data));
+      return handleSaveAccount(payload.account || payload);
+    }
+
+    if (action === 'deleteAccount' && params.username) {
+      return handleDeleteAccount(params.username);
+    }
+
+    // Default: ดึงรายชื่อบัญชีทั้งหมด
     const sheet = getOrCreateSheet();
     const data = sheet.getDataRange().getValues();
     const accounts = {};
@@ -107,144 +148,45 @@ function doGet(e) {
       }
     }
 
-    return ContentService.createTextOutput(JSON.stringify({
-      status: 'success',
+    return createResponse('success', 'Fetched accounts', {
       count: Object.keys(accounts).length,
       data: accounts
-    })).setMimeType(ContentService.MimeType.JSON);
+    });
 
   } catch (error) {
-    return ContentService.createTextOutput(JSON.stringify({
-      status: 'error',
-      message: error.toString()
-    })).setMimeType(ContentService.MimeType.JSON);
+    return createResponse('error', error.toString());
   }
 }
 
 // 🔵 POST Request: บันทึก / อัปเดต / ลบ ข้อมูล
 function doPost(e) {
   try {
-    const sheet = getOrCreateSheet();
-    const contents = e.postData ? e.postData.contents : '';
-    const payload = JSON.parse(contents || '{}');
-    const action = payload.action;
+    let contents = '';
+    if (e && e.postData && e.postData.contents) {
+      contents = e.postData.contents;
+    } else if (e && e.parameter && e.parameter.data) {
+      contents = e.parameter.data;
+    }
 
-    // 1. บันทึกหรืออัปเดตตัวละคร (Save / Update Account)
+    let payload = {};
+    try {
+      payload = JSON.parse(contents || '{}');
+    } catch (pe) {
+      payload = e.parameter || {};
+    }
+
+    const action = payload.action || (e && e.parameter ? e.parameter.action : '');
+
     if (action === 'saveAccount') {
-      const acc = payload.account || {};
-      const username = String(acc.username || payload.username || '').trim();
-      if (!username) {
-        return createResponse('error', 'Username is required');
-      }
-
-      const char = acc.character || {};
-      const arc = char.arc || {};
-      const password = String(acc.password || char.password || '');
-      const role = String(acc.role || 'agent');
-      const now = new Date().toISOString();
-      const jsonStr = JSON.stringify(char);
-
-      const rowValues = [
-        username,
-        password,
-        role,
-        char.id || 'ID-001',
-        char.name || username,
-        char.title || 'Trainee Field Agent',
-        char.standing || 'Good Standing',
-        arc.anomaly || '',
-        arc.reality || '',
-        arc.competency || '',
-        Number(char.commendations) || 0,
-        Number(char.demerits) || 0,
-        Number(char.burnout) || 0,
-        acc.createdAt || now,
-        now,
-        jsonStr
-      ];
-
-      // ค้นหาแถวเดิมถ้ามีอยู่แล้ว
-      const data = sheet.getDataRange().getValues();
-      let rowIndex = -1;
-      for (let i = 1; i < data.length; i++) {
-        if (String(data[i][0]).trim() === username) {
-          rowIndex = i + 1; // 1-indexed
-          break;
-        }
-      }
-
-      if (rowIndex > 0) {
-        // รักษา CreatedAt เดิมไว้
-        rowValues[13] = data[rowIndex - 1][13] || now;
-        sheet.getRange(rowIndex, 1, 1, rowValues.length).setValues([rowValues]);
-      } else {
-        sheet.appendRow(rowValues);
-      }
-
-      return createResponse('success', `Saved account ${username} successfully`);
+      return handleSaveAccount(payload.account || payload);
     }
 
-    // 2. ลบบัญชีตัวละคร (Delete Account)
     if (action === 'deleteAccount') {
-      const username = String(payload.username || '').trim();
-      if (!username) return createResponse('error', 'Username is required');
-
-      const data = sheet.getDataRange().getValues();
-      let deleted = false;
-      for (let i = 1; i < data.length; i++) {
-        if (String(data[i][0]).trim() === username) {
-          sheet.deleteRow(i + 1);
-          deleted = true;
-          break;
-        }
-      }
-
-      return createResponse('success', deleted ? `Deleted ${username}` : `Username ${username} not found`);
+      return handleDeleteAccount(payload.username || (e && e.parameter ? e.parameter.username : ''));
     }
 
-    // 3. ซิงค์ข้อมูลทั้งหมด (Bulk Sync All Accounts)
     if (action === 'syncAll') {
-      const accounts = payload.accounts || {};
-      const keys = Object.keys(accounts);
-
-      // เคลียร์แถวเดิมทั้งหมด (ยกเว้น Header)
-      const lastRow = sheet.getLastRow();
-      if (lastRow > 1) {
-        sheet.deleteRows(2, lastRow - 1);
-      }
-
-      const rowsToAdd = [];
-      const now = new Date().toISOString();
-
-      keys.forEach(k => {
-        const acc = accounts[k];
-        const char = acc.character || {};
-        const arc = char.arc || {};
-        rowsToAdd.push([
-          k,
-          String(acc.password || char.password || ''),
-          String(acc.role || 'agent'),
-          char.id || 'ID-001',
-          char.name || k,
-          char.title || 'Trainee Field Agent',
-          char.standing || 'Good Standing',
-          arc.anomaly || '',
-          arc.reality || '',
-          arc.competency || '',
-          Number(char.commendations) || 0,
-          Number(char.demerits) || 0,
-          Number(char.burnout) || 0,
-          acc.createdAt || now,
-          now,
-          JSON.stringify(char)
-        ]);
-      });
-
-      if (rowsToAdd.length > 0) {
-        sheet.getRange(2, 1, rowsToAdd.length, rowsToAdd[0].length).setValues(rowsToAdd);
-      }
-
-      return createResponse('success', `Synced ${rowsToAdd.length} accounts to database`);
+      return handleSyncAll(payload.accounts || payload);
     }
 
     return createResponse('error', `Unknown action: ${action}`);
@@ -254,9 +196,125 @@ function doPost(e) {
   }
 }
 
-function createResponse(status, message) {
-  return ContentService.createTextOutput(JSON.stringify({
-    status: status,
-    message: message
-  })).setMimeType(ContentService.MimeType.JSON);
+// 1. จัดการบันทึกบัญชีเดี่ยว
+function handleSaveAccount(acc) {
+  const sheet = getOrCreateSheet();
+  const username = String(acc.username || (acc.character && acc.character.name) || '').trim();
+  if (!username) {
+    return createResponse('error', 'Username is required');
+  }
+
+  const char = acc.character || {};
+  const arc = char.arc || {};
+  const password = String(acc.password || char.password || '');
+  const role = String(acc.role || 'agent');
+  const now = new Date().toISOString();
+  const jsonStr = JSON.stringify(char);
+
+  const rowValues = [
+    username,
+    password,
+    role,
+    char.id || 'ID-001',
+    char.name || username,
+    char.title || 'Trainee Field Agent',
+    char.standing || 'Good Standing',
+    arc.anomaly || '',
+    arc.reality || '',
+    arc.competency || '',
+    Number(char.commendations) || 0,
+    Number(char.demerits) || 0,
+    Number(char.burnout) || 0,
+    acc.createdAt || now,
+    now,
+    jsonStr
+  ];
+
+  const data = sheet.getDataRange().getValues();
+  let rowIndex = -1;
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][0]).trim() === username) {
+      rowIndex = i + 1;
+      break;
+    }
+  }
+
+  if (rowIndex > 0) {
+    rowValues[13] = data[rowIndex - 1][13] || now;
+    sheet.getRange(rowIndex, 1, 1, rowValues.length).setValues([rowValues]);
+  } else {
+    sheet.appendRow(rowValues);
+  }
+
+  return createResponse('success', `Saved account ${username} successfully`);
+}
+
+// 2. จัดการลบบัญชี
+function handleDeleteAccount(username) {
+  const sheet = getOrCreateSheet();
+  username = String(username || '').trim();
+  if (!username) return createResponse('error', 'Username is required');
+
+  const data = sheet.getDataRange().getValues();
+  let deleted = false;
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][0]).trim() === username) {
+      sheet.deleteRow(i + 1);
+      deleted = true;
+      break;
+    }
+  }
+
+  return createResponse('success', deleted ? `Deleted ${username}` : `Username ${username} not found`);
+}
+
+// 3. จัดการซิงค์ข้อมูลทั้งหมด (Bulk Sync)
+function handleSyncAll(accounts) {
+  const sheet = getOrCreateSheet();
+  const keys = Object.keys(accounts || {});
+
+  // ลบแถวข้อมูลเดิมทั้งหมด (เก็บเฉพาะหัวตาราง)
+  const lastRow = sheet.getLastRow();
+  if (lastRow > 1) {
+    sheet.deleteRows(2, lastRow - 1);
+  }
+
+  const rowsToAdd = [];
+  const now = new Date().toISOString();
+
+  keys.forEach(k => {
+    const acc = accounts[k];
+    const char = (acc && acc.character) ? acc.character : {};
+    const arc = char.arc || {};
+    rowsToAdd.push([
+      k,
+      String(acc.password || char.password || ''),
+      String(acc.role || 'agent'),
+      char.id || 'ID-001',
+      char.name || k,
+      char.title || 'Trainee Field Agent',
+      char.standing || 'Good Standing',
+      arc.anomaly || '',
+      arc.reality || '',
+      arc.competency || '',
+      Number(char.commendations) || 0,
+      Number(char.demerits) || 0,
+      Number(char.burnout) || 0,
+      acc.createdAt || now,
+      now,
+      JSON.stringify(char)
+    ]);
+  });
+
+  if (rowsToAdd.length > 0) {
+    sheet.getRange(2, 1, rowsToAdd.length, rowsToAdd[0].length).setValues(rowsToAdd);
+    sheet.autoResizeColumns(1, 15);
+  }
+
+  return createResponse('success', `Synced ${rowsToAdd.length} accounts to database`, { count: rowsToAdd.length });
+}
+
+function createResponse(status, message, extra = {}) {
+  const result = Object.assign({ status: status, message: message }, extra);
+  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
 }
