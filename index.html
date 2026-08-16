@@ -1758,6 +1758,15 @@
 
       // Initial check
       checkAuthStatus();
+
+      // Background cloud sync
+      if (typeof CloudDB !== 'undefined' && CloudDB.getApiUrl()) {
+        CloudDB.pullFromCloud().then(res => {
+          if (res && res.success) {
+            checkAuthStatus();
+          }
+        }).catch(err => console.log('[Home] Cloud auto-pull:', err));
+      }
     });
   </script>
 </body>

@@ -3732,6 +3732,14 @@
     // Initialize on DOM load
     document.addEventListener('DOMContentLoaded', () => {
       loadAgentProfile();
+
+      if (typeof CloudDB !== 'undefined' && CloudDB.getApiUrl()) {
+        CloudDB.pullFromCloud().then(res => {
+          if (res && res.success) {
+            loadAgentProfile();
+          }
+        }).catch(err => console.log('[Profile] Cloud auto-pull:', err));
+      }
     });
   </script>
 </body>

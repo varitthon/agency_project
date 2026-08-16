@@ -14,11 +14,14 @@ const CloudDB = (function () {
   const STORAGE_KEY_API_URL = 'triangle_cloud_api_url';
   const STORAGE_KEY_AUTO_SYNC = 'triangle_cloud_auto_sync';
 
-  // Default Sheet link
+  // Master Google Apps Script Web App Endpoint
+  const DEFAULT_API_URL = 'https://script.google.com/macros/s/AKfycbwmL92ft4vbkceRuxuZ1Lme5_X1X1PYTDlZngZmsFe3HEh9-cTnWkPqION-5T5_YIVa/exec';
+
+  // Google Sheet Link
   const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1vzmWRsqqpFkf7nMKp5CdsZGVqHHDdNtxCaCItAbnKhM/edit';
 
   function getApiUrl() {
-    return localStorage.getItem(STORAGE_KEY_API_URL) || '';
+    return localStorage.getItem(STORAGE_KEY_API_URL) || DEFAULT_API_URL;
   }
 
   function setApiUrl(url) {
@@ -91,7 +94,7 @@ const CloudDB = (function () {
     return accounts;
   }
 
-  // Save or update an account
+  // Save or update an account (Local + Cloud)
   async function saveAccount(account) {
     const username = account.username || (account.character && account.character.name);
     if (!username) return false;
@@ -108,7 +111,7 @@ const CloudDB = (function () {
     };
     setLocalAccounts(accounts);
 
-    // 2. Sync to Cloud if API URL is configured
+    // 2. Sync to Cloud
     const apiUrl = getApiUrl();
     if (apiUrl && isAutoSyncEnabled()) {
       try {
@@ -130,7 +133,7 @@ const CloudDB = (function () {
     return true;
   }
 
-  // Delete an account
+  // Delete an account (Local + Cloud)
   async function deleteAccount(username) {
     const accounts = getLocalAccounts();
     if (accounts[username]) {
@@ -166,7 +169,7 @@ const CloudDB = (function () {
   async function pullFromCloud() {
     const apiUrl = getApiUrl();
     if (!apiUrl) {
-      return { success: false, message: 'กรุณาระบุ Web App URL ของ Google Apps Script ก่อน' };
+      return { success: false, message: 'ไม่พบ Web App URL ของ Google Apps Script' };
     }
 
     try {
@@ -192,7 +195,7 @@ const CloudDB = (function () {
   async function pushToCloud() {
     const apiUrl = getApiUrl();
     if (!apiUrl) {
-      return { success: false, message: 'กรุณาระบุ Web App URL ของ Google Apps Script ก่อน' };
+      return { success: false, message: 'ไม่พบ Web App URL ของ Google Apps Script' };
     }
 
     const accounts = getLocalAccounts();
@@ -202,7 +205,6 @@ const CloudDB = (function () {
     });
 
     try {
-      // Send as POST
       await fetch(apiUrl, {
         method: 'POST',
         mode: 'no-cors',
@@ -217,6 +219,7 @@ const CloudDB = (function () {
   }
 
   return {
+    DEFAULT_API_URL,
     SHEET_URL,
     getApiUrl,
     setApiUrl,

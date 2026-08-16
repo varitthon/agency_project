@@ -678,6 +678,9 @@
           </div>
 
           <div class="toolbar-actions">
+            <button type="button" class="btn-tool" id="btn-refresh-live" style="background:rgba(255,215,0,0.12); border-color:#ffd700; color:#ffd700;" title="ดึงข้อมูลตัวละครล่าสุดจาก Google Sheets">
+              🔄 ซิงค์ข้อมูลล่าสุด
+            </button>
             <button type="button" class="btn-tool" id="btn-open-sheets" style="background:rgba(0,255,170,0.12); border-color:#00ffaa; color:#00ffaa;">
               📊 Google Sheets DB
             </button>
@@ -1009,6 +1012,22 @@
       const btnSaveApiUrl = document.getElementById('btn-save-api-url');
       const btnPushSheets = document.getElementById('btn-push-sheets');
       const btnPullSheets = document.getElementById('btn-pull-sheets');
+      const btnRefreshLive = document.getElementById('btn-refresh-live');
+
+      if (btnRefreshLive) {
+        btnRefreshLive.addEventListener('click', async () => {
+          btnRefreshLive.innerHTML = '<span>⏳ กำลังซิงค์...</span>';
+          btnRefreshLive.disabled = true;
+          if (typeof CloudDB !== 'undefined') {
+            const res = await CloudDB.pullFromCloud();
+            if (res.success) {
+              loadAccounts();
+            }
+          }
+          btnRefreshLive.innerHTML = '<span>🔄 ซิงค์ข้อมูลล่าสุด</span>';
+          btnRefreshLive.disabled = false;
+        });
+      }
 
       if (btnOpenSheets) {
         btnOpenSheets.addEventListener('click', () => {
@@ -1090,6 +1109,15 @@
             alert(`❌ เกิดข้อผิดพลาดในการดึงข้อมูล: ${res.message || 'ไม่สามารถดึงข้อมูลได้'}`);
           }
         });
+      }
+
+      // Auto-pull from cloud in background on page open
+      if (typeof CloudDB !== 'undefined' && CloudDB.getApiUrl()) {
+        CloudDB.pullFromCloud().then(res => {
+          if (res && res.success) {
+            loadAccounts();
+          }
+        }).catch(err => console.log('[Admin] Cloud auto-pull:', err));
       }
     });
   </script>
