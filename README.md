@@ -3,8 +3,8 @@
 เว็บแอปพลิเคชันและระบบจัดการตัวละครสำหรับเกมสวมบทบาท **Triangle Agency TTRPG**
 
 ## 📂 โครงสร้างโปรเจกต์
-- `main/` — โฟลเดอร์หน้าเว็บหลักของระบบ
-  - [index.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/main/index.html) — หน้าแรก (Home) พอร์ทัลของหน่วยงาน Triangle Agency, รายละเอียดองค์กร, ภาพ Lobby, และระบบ Login / Authentication
+- [index.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/index.html) — หน้าแรก (Home) พอร์ทัลของหน่วยงาน Triangle Agency, รายละเอียดองค์กร, ภาพ Lobby, และระบบ Login / Authentication
+- `main/` — โฟลเดอร์ระบบปฏิบัติการภายใน
   - [create-character.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/main/create-character.html) — ระบบ Onboarding & สร้างตัวละครตัวแทนภาคสนาม (Field Agent Dossier) ตามเอกสาร Character Organization Sheets
   - [profile.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/main/profile.html) — หน้าระบบแฟ้มประวัติและจัดการข้อมูลตัวละคร (Agent Profile Dossier)
   - [admin.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/main/admin.html) — หน้าพอร์ทัลผู้ดูแลระบบ (Central Directorate Management Portal)
