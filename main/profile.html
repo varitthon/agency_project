@@ -2797,7 +2797,11 @@
       const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
       if (accounts[currentUserKey]) {
         accounts[currentUserKey].character = currentAgent;
-        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+        if (typeof CloudDB !== 'undefined') {
+          CloudDB.saveAccount(accounts[currentUserKey]);
+        } else {
+          localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+        }
       }
     }
 
@@ -3699,14 +3703,18 @@
     }
 
     if (btnConfirmRetireFinal) {
-      btnConfirmRetireFinal.addEventListener('click', () => {
+      btnConfirmRetireFinal.addEventListener('click', async () => {
         btnConfirmRetireFinal.innerHTML = `<span>⏳ กำลังลบแฟ้มข้อมูล...</span>`;
         btnConfirmRetireFinal.disabled = true;
 
-        const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
-        delete accounts[currentUserKey];
-        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
-        localStorage.removeItem('triangle_current_user');
+        if (typeof CloudDB !== 'undefined') {
+          await CloudDB.deleteAccount(currentUserKey);
+        } else {
+          const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+          delete accounts[currentUserKey];
+          localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+          localStorage.removeItem('triangle_current_user');
+        }
 
         setTimeout(() => {
           window.location.href = '../index.html';
@@ -3725,5 +3733,6 @@
       loadAgentProfile();
     });
   </script>
+  <script src="db.js"></script>
 </body>
 </html>

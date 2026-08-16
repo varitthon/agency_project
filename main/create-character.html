@@ -2035,15 +2035,22 @@
         btnFinalConfirm.disabled = true;
 
         // Save to Accounts & Character Storage
-        const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
-        accounts[username] = {
+        const newAccount = {
           username: username,
           password: password,
           role: 'agent',
           character: pendingCharacterData,
           createdAt: new Date().toISOString()
         };
-        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+
+        if (typeof CloudDB !== 'undefined') {
+          CloudDB.saveAccount(newAccount);
+        } else {
+          const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+          accounts[username] = newAccount;
+          localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+          localStorage.setItem('triangle_current_user', username);
+        }
         localStorage.setItem('triangle_current_user', username);
 
         setTimeout(() => {
@@ -2057,5 +2064,6 @@
       renderQAMatrix();
     });
   </script>
+  <script src="db.js"></script>
 </body>
 </html>
