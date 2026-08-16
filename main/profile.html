@@ -1,0 +1,3655 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triangle Agency // แฟ้มประวัติพนักงาน & ตัวแทนภาคสนาม (Agent Dossier)</title>
+  <meta name="description" content="แฟ้มประวัติข้อมูลพนักงานและตัวแทนภาคสนาม Triangle Agency Human Resources & Field Operations Archive">
+  
+  <!-- Google Fonts: Inter, Poppins, Space Mono, Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&family=Prompt:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Corporate Dark Cyberpunk Theme Palette */
+      --bg-base: #060312;
+      --bg-surface: #0c0620;
+      --bg-surface-elevated: #130a30;
+      --bg-navbar: rgba(8, 4, 24, 0.97);
+      
+      --border-dark: #23154f;
+      --border-medium: #3a257a;
+      --border-light: rgba(255, 255, 255, 0.12);
+      
+      --text-main: #f8f9fe;
+      --text-muted: #9ba3cb;
+      --text-dim: #687099;
+      
+      --accent-red: #ff2238;
+      --accent-red-glow: rgba(255, 34, 56, 0.45);
+      --accent-blue: #0055ff;
+      --accent-blue-glow: rgba(0, 85, 255, 0.4);
+      --accent-yellow: #f0ab00;
+      --accent-yellow-glow: rgba(240, 171, 0, 0.4);
+      --accent-green: #00e676;
+      --accent-green-glow: rgba(0, 230, 118, 0.4);
+      --accent-cyan: #00d4ff;
+      
+      --font-heading: 'Poppins', 'Prompt', sans-serif;
+      --font-body: 'Inter', 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.55) 0%, transparent 65%),
+        radial-gradient(circle at 90% 20%, rgba(255, 34, 56, 0.08) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .app-layout {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* ==========================================
+       SIDEBAR: CORPORATE INTRANET MENU
+       ========================================== */
+    .app-sidebar {
+      width: 270px;
+      min-width: 270px;
+      background-color: var(--bg-navbar);
+      border-right: 1.5px solid var(--border-dark);
+      backdrop-filter: blur(14px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem 1.15rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 100;
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .app-sidebar.collapsed {
+      transform: translateX(-100%);
+      margin-left: -270px;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .sidebar-top {
+      display: flex;
+      flex-direction: column;
+      gap: 1.35rem;
+    }
+
+    .sidebar-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.15rem;
+      border-bottom: 1px solid var(--border-dark);
+      gap: 0.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .logo-emblem-box {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      box-shadow: 0 0 16px var(--accent-red-glow);
+      flex-shrink: 0;
+    }
+
+    .logo-triangle-svg {
+      width: 20px;
+      height: 20px;
+      filter: drop-shadow(0 0 6px var(--accent-red));
+    }
+
+    .brand-name {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.96rem;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .brand-tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .btn-sidebar-toggle {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-dark);
+      color: #ffffff;
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-sidebar-toggle:hover {
+      background: rgba(255, 34, 56, 0.2);
+      border-color: var(--accent-red);
+      box-shadow: 0 0 10px var(--accent-red-glow);
+    }
+
+    .hamburger-lines {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      width: 18px;
+      height: 14px;
+    }
+
+    .hamburger-lines span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #ffffff;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-floating-toggle {
+      position: fixed;
+      top: 1.25rem;
+      left: 1.25rem;
+      z-index: 999;
+      background: var(--bg-surface-elevated);
+      border: 1.5px solid var(--border-dark);
+      color: #ffffff;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 12px var(--accent-red-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-floating-toggle:hover {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+      transform: scale(1.05);
+    }
+
+    .app-layout.sidebar-collapsed .btn-floating-toggle {
+      display: flex;
+    }
+
+    /* Page View Selector Pills */
+    .view-selector-box {
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 0.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .btn-view-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-view-tab:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+    }
+
+    .btn-view-tab.active {
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 0 12px var(--accent-blue-glow);
+    }
+
+    .sidebar-section-title {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      padding-left: 0.4rem;
+    }
+
+    .sidebar-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      width: 100%;
+      list-style: none;
+    }
+
+    .sidebar-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.65rem 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+
+    .sidebar-nav-link:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(3px);
+    }
+
+    .sidebar-nav-link.active {
+      color: #ffffff;
+      background: rgba(255, 34, 56, 0.12);
+      font-weight: 600;
+      border-left: 3px solid var(--accent-red);
+    }
+
+    .sidebar-nav-link .nav-icon {
+      font-size: 1.05rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-bottom {
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .btn-sidebar-print {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.6rem 0.85rem;
+      border-radius: 6px;
+      background: rgba(0, 85, 255, 0.12);
+      border: 1px solid var(--accent-blue);
+      color: #8bb5ff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-sidebar-print:hover {
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 0 14px var(--accent-blue-glow);
+    }
+
+    /* ==========================================
+       MAIN CONTENT CONTAINER
+       ========================================== */
+    .app-main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 2.5rem 4rem;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .main-content-inner {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .app-layout.sidebar-collapsed .main-content-inner {
+      max-width: 1280px;
+    }
+
+    /* Top Corporate Controls & Breadcrumb */
+    .corporate-top-bar {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 0.85rem 1.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-left: 5px solid var(--accent-red);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .corp-breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .corp-breadcrumb .highlight {
+      color: var(--accent-red);
+      font-weight: 700;
+    }
+
+    .top-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-action-badge {
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.45rem 0.95rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1.5px solid transparent;
+    }
+
+    .btn-edit-dossier {
+      background: linear-gradient(135deg, rgba(0, 85, 255, 0.25), rgba(0, 85, 255, 0.08));
+      border-color: var(--accent-blue);
+      color: #8cb6ff;
+      box-shadow: 0 0 14px var(--accent-blue-glow);
+    }
+
+    .btn-edit-dossier:hover {
+      background: var(--accent-blue);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+
+
+    /* Admin Inspection Banner */
+    .admin-inspection-banner {
+      background: rgba(255, 34, 56, 0.12);
+      border: 1.5px solid var(--accent-red);
+      border-radius: 10px;
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 0 20px var(--accent-red-glow);
+    }
+
+    .btn-back-admin {
+      background: var(--accent-red);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+
+    /* =======================================================
+       MAIN DOSSIER CONTAINER (DARK THEMED EXACT REPLICA OF PDF)
+       ======================================================= */
+    .dossier-page-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 16px;
+      padding: 2.25rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.75);
+    }
+
+    /* ----------------------------------------------------
+       TOP SECTION: LANYARD ID BADGE + HEADER METRICS
+       ---------------------------------------------------- */
+    .dossier-top-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2.25rem;
+      align-items: start;
+      margin-bottom: 2rem;
+    }
+
+    /* Lanyard ID Badge */
+    .badge-card-box {
+      background: #08031a;
+      border: 2px solid var(--border-medium);
+      border-radius: 16px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .badge-card-clip-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.25rem 0.25rem;
+    }
+
+    .badge-lanyard-hole {
+      width: 55px;
+      height: 8px;
+      background: #1a0f3d;
+      border: 1px solid var(--border-medium);
+      border-radius: 8px;
+      margin: 0 auto;
+    }
+
+    .badge-barcode-lines {
+      display: flex;
+      gap: 2px;
+      height: 12px;
+      align-items: center;
+    }
+
+    .badge-barcode-lines span {
+      display: block;
+      background: var(--text-dim);
+      height: 100%;
+    }
+
+    .badge-photo-window {
+      width: 100%;
+      height: 220px;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 10px;
+      background: #060214;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+
+    .badge-photo-window:hover {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 15px var(--accent-red-glow);
+    }
+
+    .badge-photo-window img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .badge-camera-pin {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: var(--accent-red);
+      font-size: 1.1rem;
+      z-index: 2;
+    }
+
+    .badge-photo-placeholder-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--text-dim);
+      text-align: center;
+      padding: 0.75rem;
+    }
+
+    .badge-data-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .badge-data-label {
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .badge-data-value {
+      background: #0d0628;
+      border-bottom: 2px solid var(--accent-red);
+      padding: 0.3rem 0.55rem;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      min-height: 28px;
+      display: flex;
+      align-items: center;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .badge-bottom-logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 0.35rem;
+      padding: 0 0.2rem;
+    }
+
+    .badge-logo-text {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: var(--accent-red);
+      line-height: 0.95;
+      text-align: right;
+    }
+
+    .badge-instruction-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent-yellow);
+      font-weight: 600;
+      margin-top: 0.35rem;
+      text-align: center;
+      background: rgba(240, 171, 0, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      border: 1px dashed rgba(240, 171, 0, 0.25);
+    }
+
+    /* Top Right Header Fields */
+    .dossier-header-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    .header-field-row-pair {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .dossier-input-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dossier-input-label {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .dossier-input-display {
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-bottom: 2.5px solid #4a2f9b;
+      border-radius: 6px 6px 0 0;
+      padding: 0.45rem 0.85rem;
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Performance Evaluative Trackers */
+    .evaluative-metrics-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-top: 0.4rem;
+    }
+
+    .metric-eval-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .metric-eval-icon {
+      font-size: 1.35rem;
+      width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .metric-eval-box {
+      width: 55px;
+      height: 32px;
+      background: #0d0628;
+      border: 1.5px solid var(--border-medium);
+      border-bottom: 3px solid var(--accent-red);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .metric-eval-box.val-commendations { border-bottom-color: var(--accent-green); color: var(--accent-green); text-shadow: 0 0 8px rgba(0,230,118,0.4); }
+    .metric-eval-box.val-demerits { border-bottom-color: var(--accent-red); color: var(--accent-red); text-shadow: 0 0 8px rgba(255,34,56,0.4); }
+    .metric-eval-box.val-burnout { border-bottom-color: var(--accent-yellow); color: var(--accent-yellow); text-shadow: 0 0 8px rgba(240,171,0,0.4); }
+
+    .btn-metric-mini {
+      width: 26px;
+      height: 26px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-dark);
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .btn-metric-mini:hover {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+    }
+
+    .metric-eval-name {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.12rem;
+      color: #ffffff;
+    }
+
+    /* =======================================================
+       MIDDLE SECTION: QUALITY ASSURANCES (LEFT) + ARC & ABILITIES (RIGHT)
+       ======================================================= */
+    .dossier-middle-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2.25rem;
+      align-items: start;
+      margin-bottom: 2rem;
+    }
+
+    /* ----------------------------------------------------
+       LEFT COLUMN: QUALITY ASSURANCES
+       ---------------------------------------------------- */
+    .qa-column-wrapper {
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 1.25rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.05rem;
+    }
+
+    .qa-column-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--border-medium);
+      padding-bottom: 0.5rem;
+    }
+
+    .qa-column-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .qa-column-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .qa-item-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .qa-item-name-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .qa-item-max-badge {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-align: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 1.5px solid var(--accent-red);
+      background: rgba(255, 34, 56, 0.22);
+      border-radius: 6px;
+      outline: none;
+      transition: all 0.18s ease;
+      box-shadow: 0 0 8px rgba(255, 34, 56, 0.3);
+      -moz-appearance: textfield;
+      appearance: textfield;
+      cursor: text;
+    }
+
+    .qa-item-max-badge::-webkit-outer-spin-button,
+    .qa-item-max-badge::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .qa-item-max-badge:hover {
+      background: rgba(255, 34, 56, 0.35);
+      border-color: #ff4d60;
+      box-shadow: 0 0 12px var(--accent-red-glow);
+    }
+
+    .qa-item-max-badge:focus {
+      background: #120418;
+      border-color: #00d4ff;
+      box-shadow: 0 0 14px rgba(0, 212, 255, 0.6);
+      color: #ffffff;
+    }
+
+    .qa-item-label {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #ffffff;
+      flex: 1;
+    }
+
+
+
+    /* 5 Triangle Segmented Pips */
+    .qa-pips-triangle-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding-left: 30px;
+    }
+
+    .qa-pip-svg-btn {
+      width: 32px;
+      height: 24px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .qa-pip-svg-btn svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 4px rgba(0, 85, 255, 0.15));
+    }
+
+    .qa-pip-svg-btn polygon {
+      fill: rgba(255, 255, 255, 0.05);
+      stroke: #4a3485;
+      stroke-width: 2.5;
+      stroke-linejoin: round;
+      transition: all 0.15s ease;
+    }
+
+    .qa-pip-svg-btn:hover polygon {
+      fill: rgba(0, 85, 255, 0.3);
+      stroke: var(--accent-blue);
+    }
+
+    .qa-pip-svg-btn.active polygon {
+      fill: var(--accent-blue);
+      stroke: #70a4ff;
+      filter: drop-shadow(0 0 6px var(--accent-blue-glow));
+    }
+
+    /* ----------------------------------------------------
+       RIGHT COLUMN: ARC TRIANGLES + ABILITIES + DIRECTIVES
+       ---------------------------------------------------- */
+    .dossier-right-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* ARC Triangles */
+    .arc-triangles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .arc-entry-row {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .arc-triangle-symbol {
+      width: 52px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .arc-triangle-symbol svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .arc-entry-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .arc-entry-label {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .arc-entry-value {
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 6px 6px 0 0;
+      padding: 0.4rem 0.8rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #ffffff;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .arc-entry-row.arc-a .arc-entry-value { border-bottom: 3px solid var(--accent-blue); }
+    .arc-entry-row.arc-r .arc-entry-value { border-bottom: 3px solid var(--accent-yellow); }
+    .arc-entry-row.arc-c .arc-entry-value { border-bottom: 3px solid var(--accent-red); }
+
+    /* ----------------------------------------------------
+       ANOMALY ABILITIES (Matches Image 6 in PDF)
+       ---------------------------------------------------- */
+    .abilities-section-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .abilities-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.15rem;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+    }
+
+    .ability-sheet-card {
+      background: #08031a;
+      border: 1.5px solid var(--accent-blue);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 85, 255, 0.12);
+      margin-bottom: 1rem;
+    }
+
+    .ability-card-header-bar {
+      background: rgba(0, 85, 255, 0.15);
+      border-bottom: 1.5px solid rgba(0, 85, 255, 0.35);
+      padding: 0.55rem 1.1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.78rem;
+      color: #8bb5ff;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .ability-card-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      padding: 1.1rem;
+      gap: 1.35rem;
+    }
+
+    .ability-col-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      border-right: 1px dashed var(--border-dark);
+      padding-right: 1.1rem;
+    }
+
+    .ability-col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .ability-row-title {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .ability-row-title.success { color: var(--accent-blue); }
+    .ability-row-title.failure { color: var(--accent-red); }
+    .ability-row-title.special { color: var(--accent-yellow); }
+
+    .ability-description-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.86rem;
+      color: var(--text-main);
+      line-height: 1.45;
+      min-height: 48px;
+    }
+
+    .ability-metadata-box {
+      background: #050212;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 0.65rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .ability-metadata-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .practice-pips-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .practice-pip {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid var(--border-medium);
+      border-radius: 4px;
+      background: #09041a;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .practice-pip.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 8px var(--accent-blue-glow);
+    }
+
+    /* ----------------------------------------------------
+       TRIGGERS & DIRECTIVES (Matches Image 7 in PDF)
+       ---------------------------------------------------- */
+    .triggers-directives-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .directive-box-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      position: relative;
+    }
+
+    .directive-box-card.yellow-border {
+      border-left: 4px solid var(--accent-yellow);
+      padding-left: 1rem;
+    }
+
+    .directive-box-card.red-border {
+      border-left: 4px solid var(--accent-red);
+      padding-left: 1rem;
+    }
+
+    .directive-head-title {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.18rem;
+    }
+
+    .directive-head-title.yellow { color: var(--accent-yellow); text-shadow: 0 0 8px var(--accent-yellow-glow); }
+    .directive-head-title.red { color: var(--accent-red); text-shadow: 0 0 8px var(--accent-red-glow); }
+
+    .directive-head-subtext {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .directive-textbox {
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 48px;
+    }
+
+    /* Sanctioned Behaviors Checklist */
+    .sanctioned-behavior-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sb-row-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 0.65rem 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .sb-triangle-btn {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.15rem;
+      color: var(--accent-red);
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+    }
+
+    .sb-target-content {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      flex: 1;
+    }
+
+    .sb-target-content.done {
+      text-decoration: line-through;
+      color: var(--text-dim);
+    }
+
+    /* =======================================================
+       BOTTOM SECTION: RELATIONSHIPS (Matches Image 8 in PDF)
+       ======================================================= */
+    .relationships-section-block {
+      border-top: 2px solid var(--border-dark);
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .relationships-main-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 1.45rem;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .relationships-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .relationship-entry-box {
+      background: #08031a;
+      border: 1.5px solid var(--border-medium);
+      border-top: 3px solid var(--accent-yellow);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .rel-card-top-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1rem;
+    }
+
+    .rel-data-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rel-data-label {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.78rem;
+      color: var(--accent-yellow);
+    }
+
+    .rel-data-value {
+      background: #0d0628;
+      border-bottom: 1.5px solid var(--border-medium);
+      padding: 0.25rem 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #ffffff;
+      min-height: 24px;
+    }
+
+    /* Relationship 0-9 Track Bar */
+    .rel-network-track {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin: 0.35rem 0;
+    }
+
+    .rel-track-nodes {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      padding: 0 4px;
+    }
+
+    .rel-track-bar-line {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      top: 50%;
+      height: 2px;
+      background: var(--border-dark);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .rel-node-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #0e0724;
+      border: 2px solid var(--border-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      transition: all 0.15s;
+    }
+
+    .rel-node-circle:hover {
+      transform: scale(1.15);
+      border-color: var(--accent-yellow);
+      color: #ffffff;
+    }
+
+    .rel-node-circle.active {
+      background: var(--accent-yellow);
+      color: #0c0620;
+      border-color: #ffd700;
+      box-shadow: 0 0 10px var(--accent-yellow-glow);
+    }
+
+    .rel-node-circle.networked-marker {
+      border-radius: 6px;
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    .rel-node-circle.networked-marker.active {
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+      color: #ffffff;
+      box-shadow: 0 0 12px var(--accent-red-glow);
+    }
+
+    .rel-networked-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--accent-yellow);
+      text-align: right;
+      letter-spacing: 0.08em;
+    }
+
+    .rel-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.25rem;
+    }
+
+    .rel-active-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent-yellow);
+    }
+
+    /* =======================================================
+       PAGE 2: ประวัติตัวพนักงาน (EMPLOYEE BACKGROUND DOSSIER)
+       ======================================================= */
+    .page-2-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .page-2-header-title {
+      text-align: center;
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 2.1rem;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      padding-bottom: 0.85rem;
+      border-bottom: 2px solid var(--border-dark);
+    }
+
+    .page-2-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 0.85rem 1.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .q-card-item {
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 10px;
+      padding: 1.15rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .q-card-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .q-card-answer {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      background: #0e0724;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      min-height: 44px;
+    }
+
+    .page-2-retire-bar {
+      background: rgba(255, 34, 56, 0.06);
+      border: 1.5px dashed rgba(255, 34, 56, 0.35);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn-retire-action {
+      background: var(--accent-red);
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.6rem 1.3rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 0 15px var(--accent-red-glow);
+    }
+
+    .btn-retire-action:hover {
+      background: #ff3c50;
+      transform: scale(1.03);
+    }
+
+    /* ==========================================
+       TOAST NOTIFICATION ALERT
+       ========================================== */
+    .toast-roll-alert {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--bg-surface-elevated);
+      border: 1.5px solid var(--accent-blue);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--accent-blue-glow);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      animation: toastFadeIn 0.3s ease;
+      color: #ffffff;
+    }
+
+    @keyframes toastFadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-recharge-qas {
+      background: rgba(0, 85, 255, 0.12);
+      border: 1px solid var(--accent-blue);
+      color: #70a4ff;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-recharge-qas:hover {
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 0 10px var(--accent-blue-glow);
+    }
+
+    /* ==========================================
+       EDIT PROFILE MODAL
+       ========================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(4, 2, 14, 0.92);
+      backdrop-filter: blur(14px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-medium);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 85, 255, 0.2);
+      overflow: hidden;
+      color: var(--text-main);
+    }
+
+    .modal-header {
+      background: #090418;
+      border-bottom: 1.5px solid var(--border-dark);
+      padding: 1.2rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .modal-tabs {
+      display: flex;
+      background: #070314;
+      border-bottom: 1.5px solid var(--border-dark);
+      padding: 0 1rem;
+      overflow-x: auto;
+      flex-shrink: 0;
+      gap: 0.25rem;
+    }
+
+    .modal-tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2.5px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .modal-tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .modal-tab-btn.active {
+      color: #ffffff;
+      border-bottom-color: var(--accent-blue);
+      background: rgba(0, 85, 255, 0.08);
+    }
+
+    .modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-tab-pane {
+      display: none;
+    }
+
+    .modal-tab-pane.active {
+      display: block;
+      animation: modalFadeIn 0.2s ease;
+    }
+
+    .modal-footer {
+      background: #070314;
+      border-top: 1.5px solid var(--border-dark);
+      padding: 1.15rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group label span.sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-left: 0.35rem;
+    }
+
+    .input-field {
+      width: 100%;
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-field:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 15px var(--accent-blue-glow);
+    }
+
+    .input-textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .edit-item-card {
+      background: #08031a;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 1.15rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-add-item {
+      background: rgba(0, 85, 255, 0.12);
+      border: 1px dashed var(--accent-blue);
+      color: #8bb5ff;
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-add-item:hover {
+      background: rgba(0, 85, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .btn-del-item {
+      background: transparent;
+      border: 1px solid rgba(255, 34, 56, 0.4);
+      color: var(--accent-red);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-del-item:hover {
+      background: var(--accent-red);
+      color: #ffffff;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border: 1px solid var(--accent-blue);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 0 14px var(--accent-blue-glow);
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #1a68ff;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border-medium);
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.65rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-close-modal:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .app-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+      }
+      .btn-floating-toggle {
+        display: flex;
+      }
+      .app-main-content {
+        padding: 4.5rem 1rem 3rem;
+      }
+      .dossier-top-grid, .dossier-middle-grid, .relationships-card-grid {
+        grid-template-columns: 1fr;
+      }
+      .dossier-page-card {
+        padding: 1.5rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout" id="app-layout">
+
+    <!-- Floating Toggle Button for Collapsed Sidebar -->
+    <button type="button" class="btn-floating-toggle" id="btn-floating-toggle" title="เปิดเมนูนำทาง (Expand Menu)">
+      <div class="hamburger-lines">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+
+    <!-- ==========================================
+         LEFT SIDEBAR NAVIGATION
+         ========================================== -->
+    <aside class="app-sidebar" id="app-sidebar" aria-label="Corporate Intranet Navigation">
+      
+      <div class="sidebar-top">
+        <!-- Logo & Collapse Button -->
+        <div class="sidebar-header-row">
+          <a href="index.html" class="brand-logo">
+            <div class="logo-emblem-box">
+              <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,5 95,85 5,85" fill="#ff2238" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="brand-name">TRIANGLE AGENCY</div>
+              <div class="brand-tag">AGENT DOSSIER ARCHIVE</div>
+            </div>
+          </a>
+
+          <button type="button" class="btn-sidebar-toggle" id="btn-sidebar-toggle" title="หุบเมนูนำทาง (Collapse Navbar)">
+            <div class="hamburger-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Page View Selector (Page 1 vs Page 2) -->
+        <div>
+          <div class="sidebar-section-title">DOSSIER SECTIONS</div>
+          <div class="view-selector-box">
+            <button type="button" class="btn-view-tab active" data-view="page-1" id="btn-tab-p1">
+              <span>📄</span>
+              <span>หน้า 1: แฟ้มสมรรถนะตัวแทน</span>
+            </button>
+            <button type="button" class="btn-view-tab" data-view="page-2" id="btn-tab-p2">
+              <span>📑</span>
+              <span>หน้า 2: ประวัติตัวพนักงาน</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- General Navigation Links -->
+        <div>
+          <div class="sidebar-section-title">PORTAL NAVIGATION</div>
+          <nav class="sidebar-nav-list">
+            <a href="admin.html" class="sidebar-nav-link" id="sidebar-admin-link" style="display:none; color:#ff7080;">
+              <span class="nav-icon">🛡️</span>
+              <span>แผงควบคุม Admin</span>
+            </a>
+            <a href="index.html" class="sidebar-nav-link">
+              <span class="nav-icon">⌂</span>
+              <span>หน้าแรก (Home Lobby)</span>
+            </a>
+            <a href="create-character.html" class="sidebar-nav-link">
+              <span class="nav-icon">＋</span>
+              <span>ลงทะเบียนตัวแทนใหม่</span>
+            </a>
+            <button type="button" class="sidebar-nav-link" id="btn-sidebar-edit-open">
+              <span class="nav-icon">✏️</span>
+              <span>แก้ไขแฟ้มข้อมูล (Edit Profile)</span>
+            </button>
+            <button type="button" class="sidebar-nav-link" id="btn-logout" style="color:#ff8591;">
+              <span class="nav-icon">⎋</span>
+              <span>ออกจากระบบ (Logout)</span>
+            </button>
+          </nav>
+        </div>
+
+      </div>
+
+      <!-- Sidebar Bottom Utilities -->
+      <div class="sidebar-bottom">
+        <button type="button" class="btn-sidebar-print" onclick="window.print()">
+          <span>🖨️</span>
+          <span>พิมพ์เอกสาร / ส่งออก PDF</span>
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- ==========================================
+         MAIN CONTENT AREA (CHARACTER SHEETS)
+         ========================================== -->
+    <main class="app-main-content">
+      <div class="main-content-inner">
+
+        <!-- Admin Inspection Banner -->
+        <div class="admin-inspection-banner" id="admin-inspection-banner">
+          <div>
+            <span style="color:var(--accent-red); font-weight:800; font-family:var(--font-mono); font-size:0.8rem;">[DIRECTORATE AUDIT]</span>
+            <span style="font-size:0.9rem; margin-left:0.5rem; color:#ffffff;">กำลังตรวจสอบแฟ้มประวัติของ: <strong id="admin-inspecting-user" style="color:#ffd700;">-</strong></span>
+          </div>
+          <a href="admin.html" class="btn-back-admin">
+            <span>⬅️ กลับสู่หน้าสารบบ Admin</span>
+          </a>
+        </div>
+
+        <!-- Corporate Top Bar -->
+        <div class="corporate-top-bar">
+          <div class="corp-breadcrumb">
+            <span>TRIANGLE AGENCY</span>
+            <span>/</span>
+            <span>PERSONNEL ARCHIVE</span>
+            <span>/</span>
+            <span class="highlight" id="breadcrumb-current-view">PAGE 1: AGENT DOSSIER</span>
+          </div>
+
+          <div class="top-actions-group">
+            <button type="button" class="btn-action-badge btn-edit-dossier" id="btn-open-edit-profile" style="display:none;">
+              <span>✏️</span>
+              <span>แก้ไขแฟ้มข้อมูล (Edit Profile)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- =======================================================
+             PAGE 1: AGENT CHARACTER SHEET (Matches PDF Page 1)
+             ======================================================= -->
+        <div id="page-1-wrapper">
+          <div class="dossier-page-card" id="sheet-page-1">
+
+            <!-- Top Row: Left Badge + Right Header Fields -->
+            <div class="dossier-top-grid">
+
+              <!-- Left: Lanyard Badge Card -->
+              <div class="badge-card-box">
+                <!-- Badge Lanyard & Barcode -->
+                <div class="badge-card-clip-bar">
+                  <div class="badge-lanyard-hole"></div>
+                  <div class="badge-barcode-lines">
+                    <span style="width:2px;"></span>
+                    <span style="width:1px;"></span>
+                    <span style="width:3px;"></span>
+                    <span style="width:1px;"></span>
+                    <span style="width:2px;"></span>
+                    <span style="width:4px;"></span>
+                    <span style="width:1px;"></span>
+                  </div>
+                </div>
+
+                <!-- Badge Photo Box -->
+                <div class="badge-photo-window" id="badge-photo-clicker" title="คลิกเพื่อเปลี่ยนรูปภาพ">
+                  <span class="badge-camera-pin">📷</span>
+                  <img id="badge-agent-photo" src="" alt="Agent Photo" style="display:none;">
+                  <div class="badge-photo-placeholder-text" id="badge-photo-placeholder">
+                    <span style="font-size:2rem; color:var(--text-dim);">👤</span>
+                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">EMPLOYEE PHOTO</span>
+                  </div>
+                </div>
+
+                <!-- Name Field -->
+                <div class="badge-data-field">
+                  <div class="badge-data-label">Name</div>
+                  <div class="badge-data-value" id="badge-name-display">-</div>
+                </div>
+
+                <!-- ID Field (Replaced Pronouns with ID: as requested) -->
+                <div class="badge-data-field">
+                  <div class="badge-data-label">ID :</div>
+                  <div class="badge-data-value" id="badge-id-display">-</div>
+                </div>
+
+                <!-- Bottom Agency Logo -->
+                <div class="badge-bottom-logo">
+                  <div></div>
+                  <div class="badge-logo-text">
+                    TRIANGLE<br>AGENCY
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Header Fields & Performance Trackers -->
+              <div class="dossier-header-fields">
+                
+                <!-- Row 1: Character Name & ID -->
+                <div class="header-field-row-pair">
+                  <div class="dossier-input-block">
+                    <div class="dossier-input-label">Character Name</div>
+                    <div class="dossier-input-display" id="header-name-display">-</div>
+                  </div>
+                  <div class="dossier-input-block">
+                    <div class="dossier-input-label">ID</div>
+                    <div class="dossier-input-display" id="header-id-display">-</div>
+                  </div>
+                </div>
+
+                <!-- Row 2: Agency Title -->
+                <div class="dossier-input-block">
+                  <div class="dossier-input-label">Agency Title</div>
+                  <div class="dossier-input-display" id="header-title-display">-</div>
+                </div>
+
+                <!-- Row 3: Agency Standing -->
+                <div class="dossier-input-block">
+                  <div class="dossier-input-label">Agency Standing</div>
+                  <div class="dossier-input-display" id="header-standing-display">-</div>
+                </div>
+
+                <!-- Row 4: Evaluative Trackers (Commendations, Demerits, Additional Burnout) -->
+                <div class="evaluative-metrics-row">
+                  
+                  <!-- Commendations -->
+                  <div class="metric-eval-row">
+                    <div class="metric-eval-icon" title="Commendations">🎖️</div>
+                    <div class="metric-eval-box val-commendations" id="metric-box-commendations">0</div>
+                    <button type="button" class="btn-metric-mini" onclick="adjustMetric('commendations', -1)">-</button>
+                    <button type="button" class="btn-metric-mini" onclick="adjustMetric('commendations', 1)">+</button>
+                    <div class="metric-eval-name" style="color:var(--accent-green);">Commendations</div>
+                  </div>
+
+                  <!-- Demerits -->
+                  <div class="metric-eval-row">
+                    <div class="metric-eval-icon" title="Demerits">🔨</div>
+                    <div class="metric-eval-box val-demerits" id="metric-box-demerits">0</div>
+                    <button type="button" class="btn-metric-mini" onclick="adjustMetric('demerits', -1)">-</button>
+                    <button type="button" class="btn-metric-mini" onclick="adjustMetric('demerits', 1)">+</button>
+                    <div class="metric-eval-name" style="color:var(--accent-red);">Demerits</div>
+                  </div>
+
+                  <!-- Additional Burnout -->
+                  <div class="metric-eval-row">
+                    <div class="metric-eval-icon" title="Additional Burnout">🔥</div>
+                    <div class="metric-eval-box val-burnout" id="metric-box-burnout">0</div>
+                    <button type="button" class="btn-metric-mini" onclick="adjustMetric('burnout', -1)">-</button>
+                    <button type="button" class="btn-metric-mini" onclick="adjustMetric('burnout', 1)">+</button>
+                    <div class="metric-eval-name" style="color:var(--accent-yellow);">Additional Burnout</div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Middle Row: Left QA Column + Right ARC & Abilities & Triggers -->
+            <div class="dossier-middle-grid">
+
+              <!-- Left: Quality Assurances Column -->
+              <div class="qa-column-wrapper">
+                
+                <div class="qa-column-header">
+                  <div>
+                    <div class="qa-column-title">Quality<br>Assurances</div>
+                    <button type="button" class="btn-recharge-qas" onclick="rechargeAllQAs()" title="ฟื้นฟูแต้ม QA ทั้งหมดสู่ระดับสูงสุด (Full Recharged)" style="margin-top:0.4rem;">
+                      <span>🔄 ฟื้นฟู QA ทั้งหมด</span>
+                    </button>
+                  </div>
+                  <div class="qa-column-icon">
+                    <svg viewBox="0 0 100 100" fill="none" style="width:30px; height:30px;">
+                      <circle cx="50" cy="50" r="40" stroke="#ff2238" stroke-width="8"/>
+                      <polygon points="50,22 80,72 20,72" fill="#ff2238"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div id="sheet-qa-list" style="display:flex; flex-direction:column; gap:0.9rem;">
+                  <!-- 9 Qualities with Triangle Pips Rendered Dynamically -->
+                </div>
+
+              </div>
+
+              <!-- Right: ARC Triangles + Anomaly Abilities + Triggers & Directives -->
+              <div class="dossier-right-content">
+
+                <!-- 1. ARC Triangles Block -->
+                <div class="arc-triangles-list">
+                  
+                  <!-- Anomaly (Blue Triangle) -->
+                  <div class="arc-entry-row arc-a">
+                    <div class="arc-triangle-symbol">
+                      <svg viewBox="0 0 100 86" fill="none">
+                        <polygon points="50,4 96,82 4,82" fill="#0055ff"/>
+                        <text x="50" y="66" fill="#ffffff" font-family="sans-serif" font-weight="900" font-size="46" text-anchor="middle">A</text>
+                      </svg>
+                    </div>
+                    <div class="arc-entry-content">
+                      <div class="arc-entry-label">Anomaly</div>
+                      <div class="arc-entry-value" id="arc-anomaly-display">-</div>
+                    </div>
+                  </div>
+
+                  <!-- Reality (Yellow Triangle) -->
+                  <div class="arc-entry-row arc-r">
+                    <div class="arc-triangle-symbol">
+                      <svg viewBox="0 0 100 86" fill="none">
+                        <polygon points="50,4 96,82 4,82" fill="#f0ab00"/>
+                        <text x="50" y="66" fill="#ffffff" font-family="sans-serif" font-weight="900" font-size="46" text-anchor="middle">R</text>
+                      </svg>
+                    </div>
+                    <div class="arc-entry-content">
+                      <div class="arc-entry-label">Reality</div>
+                      <div class="arc-entry-value" id="arc-reality-display">-</div>
+                    </div>
+                  </div>
+
+                  <!-- Competency (Red Triangle) -->
+                  <div class="arc-entry-row arc-c">
+                    <div class="arc-triangle-symbol">
+                      <svg viewBox="0 0 100 86" fill="none">
+                        <polygon points="50,4 96,82 4,82" fill="#ff2238"/>
+                        <text x="50" y="66" fill="#ffffff" font-family="sans-serif" font-weight="900" font-size="46" text-anchor="middle">C</text>
+                      </svg>
+                    </div>
+                    <div class="arc-entry-content">
+                      <div class="arc-entry-label">Competency</div>
+                      <div class="arc-entry-value" id="arc-competency-display">-</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- 2. ANOMALY ABILITIES Table / Card -->
+                <div class="abilities-section-block">
+                  <div class="abilities-section-header">
+                    <span>ANOMALY ABILITIES</span>
+                    <button type="button" class="btn-action-badge btn-edit-dossier" id="btn-quick-add-ability" style="font-size:0.75rem; padding:0.25rem 0.65rem;">
+                      ＋ เพิ่ม Ability
+                    </button>
+                  </div>
+
+                  <div id="sheet-abilities-container">
+                    <!-- Abilities cards rendered dynamically -->
+                  </div>
+                </div>
+
+                <!-- 3. Triggers & Directives -->
+                <div class="triggers-directives-wrapper">
+                  
+                  <!-- Reality Trigger -->
+                  <div class="directive-box-card yellow-border">
+                    <div class="directive-head-title yellow">
+                      <span>▶</span>
+                      <span>Reality Trigger</span>
+                    </div>
+                    <div class="directive-head-subtext">Your GM may trigger this by spending 3 Chaos.</div>
+                    <div class="directive-textbox" id="reality-trigger-display">-</div>
+                  </div>
+
+                  <!-- Burnout Release -->
+                  <div class="directive-box-card yellow-border">
+                    <div class="directive-head-title yellow">
+                      <span>▶</span>
+                      <span>Burnout Release</span>
+                    </div>
+                    <div class="directive-head-subtext">Check this to see if you can cancel your burnout.</div>
+                    <div class="directive-textbox" id="burnout-release-display">-</div>
+                  </div>
+
+                  <!-- Prime Directive -->
+                  <div class="directive-box-card red-border">
+                    <div class="directive-head-title red">
+                      <span>▶</span>
+                      <span>Prime Directive</span>
+                    </div>
+                    <div class="directive-head-subtext">Receive 1 Demerit if you:</div>
+                    <div class="directive-textbox" id="prime-directive-display">-</div>
+                  </div>
+
+                  <!-- Sanctioned Behaviors -->
+                  <div class="directive-box-card red-border">
+                    <div class="directive-head-title red">
+                      <span>▶</span>
+                      <span>Sanctioned Behaviors</span>
+                    </div>
+                    <div class="directive-head-subtext">Receive 1 Commendation when you do one of these:</div>
+                    
+                    <div class="sanctioned-behavior-container" id="sanctioned-behaviors-list">
+                      <!-- 3 Checklist targets rendered dynamically -->
+                    </div>
+
+                    <div style="font-size:0.78rem; color:var(--text-muted); font-weight:600; margin-top:0.35rem;">
+                      If you do all 3 in a single mission, receive 3 bonus commendations.
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Bottom Row: Relationships -->
+            <div class="relationships-section-block">
+              <div class="relationships-main-title">
+                <span>Relationships</span>
+                <button type="button" class="btn-action-badge btn-edit-dossier" id="btn-quick-add-relationship" style="font-size:0.75rem; padding:0.25rem 0.65rem;">
+                  ＋ เพิ่ม Relationship
+                </button>
+              </div>
+
+              <div class="relationships-card-grid" id="sheet-relationships-grid">
+                <!-- Relationship cards rendered dynamically -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- =======================================================
+             PAGE 2: ประวัติตัวพนักงาน (Matches PDF Page 2)
+             ======================================================= -->
+        <div id="page-2-wrapper" style="display:none;">
+          <div class="dossier-page-card" id="sheet-page-2">
+            
+            <div class="page-2-header-title">ประวัติตัวพนักงาน</div>
+
+            <div class="page-2-banner" style="margin-top:1rem; margin-bottom:1.5rem;">
+              <span>TRIANGLE AGENCY // HUMAN RESOURCES ARCHIVE</span>
+              <span>RESTRICTED PERSONNEL FILE</span>
+            </div>
+
+            <!-- General Employment Info -->
+            <div class="dossier-top-grid" style="margin-bottom:1.5rem;">
+              <div class="dossier-input-block">
+                <div class="dossier-input-label">ผู้ติดต่อฉุกเฉิน (Emergency Contact)</div>
+                <div class="dossier-input-display" id="p2-emergency-contact">-</div>
+              </div>
+              <div class="header-field-row-pair">
+                <div class="dossier-input-block">
+                  <div class="dossier-input-label">ความสัมพันธ์ (Relationship)</div>
+                  <div class="dossier-input-display" id="p2-relationship">-</div>
+                </div>
+                <div class="dossier-input-block">
+                  <div class="dossier-input-label">เงินเดือนประจำปี (Salary)</div>
+                  <div class="dossier-input-display" id="p2-salary">-</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- HR Onboarding Questionnaire (Q1 - Q7) -->
+            <div style="display:flex; flex-direction:column; gap:1.15rem;">
+              
+              <div class="q-card-item">
+                <div class="q-card-title">1. How did you come in contact with your Anomaly? (การสัมผัส Anomaly ครั้งแรก)</div>
+                <div class="q-card-answer" id="p2-q1">-</div>
+              </div>
+
+              <div class="q-card-item">
+                <div class="q-card-title">2. How did the Agency find you? (องค์กรค้นพบและทาบทามคุณได้อย่างไร)</div>
+                <div class="q-card-answer" id="p2-q2">-</div>
+              </div>
+
+              <div class="q-card-item">
+                <div class="q-card-title">3. Visual manifestation of powers? (ลักษณะและรูปแบบการปรากฏของพลัง Anomaly)</div>
+                <div class="q-card-answer" id="p2-q3">-</div>
+              </div>
+
+              <div class="q-card-item">
+                <div class="q-card-title">4. How do you take your coffee? (รูปแบบเครื่องดื่มหรือกาแฟประจำตัว)</div>
+                <div class="q-card-answer" id="p2-q4">-</div>
+              </div>
+
+              <div class="q-card-item">
+                <div class="q-card-title">5. Prior work experience (ประสบการณ์การทำงานและอาชีพก่อนหน้า)</div>
+                <div class="q-card-answer" id="p2-q5">-</div>
+              </div>
+
+              <div class="q-card-item">
+                <div class="q-card-title">6. What is your level of familiarity with Adobe, Excel, and Google Suite? (ทักษะโปรแกรมสำนักงาน)</div>
+                <div class="q-card-answer" id="p2-q6">-</div>
+              </div>
+
+              <div class="q-card-item">
+                <div class="q-card-title">7. What value do you bring to collaborative team operations? (สิ่งที่คุณนำมาเสริมทีม)</div>
+                <div class="q-card-answer" id="p2-q7">-</div>
+              </div>
+
+              <div class="q-card-item">
+                <div class="q-card-title">Additional Field & Psychological Notes (บันทึกพิเศษฝ่ายบุคคล & บันทึกภาคสนาม)</div>
+                <div class="q-card-answer" id="p2-notes" style="min-height:70px;">-</div>
+              </div>
+
+            </div>
+
+            <!-- Danger Zone: Retire Agent -->
+            <div class="page-2-retire-bar">
+              <div>
+                <strong style="color:var(--accent-red); font-size:0.95rem; display:block;">การถอนสถานะตัวแทน (Retire / Terminate Agent Dossier)</strong>
+                <span style="font-size:0.82rem; color:var(--text-muted);">ลบข้อมูลตัวแทนเจ้าหน้าที่คนนี้ออกจากฐานข้อมูลในระบบเบราว์เซอร์อย่างถาวร</span>
+              </div>
+              <button type="button" class="btn-retire-action" id="btn-retire-agent">
+                🗑️ ลบตัวละครนี้ (Retire Agent)
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Floating Notification Toast -->
+  <div class="toast-roll-alert" id="toast-roll">
+    <div style="font-size:1.8rem;" id="toast-dice-icon">🔔</div>
+    <div>
+      <div style="font-family:var(--font-heading); font-weight:700; color:#ffffff; font-size:0.95rem;" id="toast-title">แจ้งเตือนระบบ</div>
+      <div style="font-size:0.82rem; color:var(--text-muted);" id="toast-desc">บันทึกข้อมูลเรียบร้อยแล้ว</div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       EDIT PROFILE MODAL
+       ========================================== -->
+  <div class="modal-overlay" id="edit-profile-modal" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+    <div class="modal-card">
+      
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <div class="logo-emblem-box" style="width:32px; height:32px;">
+            <svg class="logo-triangle-svg" viewBox="0 0 100 90" fill="none" style="width:18px; height:18px;">
+              <polygon points="50,5 95,85 5,85" fill="#0055ff" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <div style="font-family:var(--font-mono); font-size:0.65rem; color:var(--accent-blue); font-weight:700; letter-spacing:0.15em;">AGENT DOSSIER EDITOR</div>
+            <h2 id="edit-modal-title" style="font-family:var(--font-heading); font-size:1.15rem; font-weight:700; color:#ffffff; margin:0;">
+              แก้ไขแฟ้มข้อมูลตัวละคร: <span id="edit-modal-agent-name" style="color:var(--accent-blue);">-</span>
+            </h2>
+          </div>
+        </div>
+        <button type="button" class="btn-close-modal" id="btn-close-edit-modal" aria-label="Close Modal">✕</button>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="modal-tabs">
+        <button type="button" class="modal-tab-btn active" data-tab="tab-edit-identity">👤 ข้อมูลพื้นฐาน</button>
+        <button type="button" class="modal-tab-btn" data-tab="tab-edit-arc">🔺 โครงสร้าง ARC</button>
+        <button type="button" class="modal-tab-btn" data-tab="tab-edit-qa">⚙️ สมรรถนะ 9 ด้าน (QA)</button>
+        <button type="button" class="modal-tab-btn" data-tab="tab-edit-abilities">⚡ ทักษะ & สายสัมพันธ์</button>
+        <button type="button" class="modal-tab-btn" data-tab="tab-edit-hr">📋 บันทึก HR หน้า 2</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        
+        <!-- Tab 1: Identity -->
+        <div class="modal-tab-pane active" id="tab-edit-identity">
+          <div class="form-grid-2col">
+            <div class="form-group">
+              <label>Agent Title <span class="sub">(ตำแหน่งองค์กร)</span></label>
+              <input type="text" id="edit-agent-title" class="input-field" placeholder="เช่น Field Agent, Trainee, Senior Specialist">
+            </div>
+            <div class="form-group">
+              <label>Agent Standing <span class="sub">(สถานภาพ)</span></label>
+              <input type="text" id="edit-agent-standing" class="input-field" placeholder="เช่น Good Standing, Executive Standing">
+            </div>
+          </div>
+
+          <div class="form-grid-2col">
+            <div class="form-group">
+              <label>Agent ID Code <span class="sub">(รหัสประจำตัว)</span></label>
+              <input type="text" id="edit-agent-id" class="input-field" placeholder="เช่น ID-001, AGT-4402">
+            </div>
+            <div class="form-group">
+              <label>รหัสผ่านเข้าสู่ระบบ <span class="sub">(Password)</span></label>
+              <input type="text" id="edit-agent-password" class="input-field" placeholder="แก้ไขรหัสผ่านของบัญชีนี้">
+            </div>
+          </div>
+
+          <!-- Photo Upload -->
+          <div class="form-group" style="background:#08031a; border:1px solid var(--border-dark); border-radius:10px; padding:1rem;">
+            <label>รูปภาพประจำตัวเจ้าหน้าที่ (Agent Photo)</label>
+            <div style="display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap;">
+              <div style="width:70px; height:80px; background:#0e0724; border:1.5px solid var(--border-dark); border-radius:6px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                <img id="edit-preview-avatar" style="width:100%; height:100%; object-fit:cover; display:none;">
+                <span id="edit-preview-placeholder" style="font-size:1.4rem; color:var(--text-dim);">👤</span>
+              </div>
+              <div style="flex:1; min-width:200px;">
+                <input type="file" id="edit-photo-file" accept="image/*" style="display:none;">
+                <button type="button" class="btn-outline" onclick="document.getElementById('edit-photo-file').click()" style="padding:0.45rem 1rem; font-size:0.84rem;">
+                  📷 เลือกไฟล์ภาพใหม่...
+                </button>
+                <button type="button" class="btn-del-item" id="btn-edit-clear-photo" style="margin-left:0.5rem; display:none;">
+                  ลบรูปภาพ
+                </button>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">รองรับไฟล์ JPG, PNG, WebP ขนาดไม่เกิน 3MB</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metrics Adjuster -->
+          <div style="background:#08031a; border:1px solid var(--border-dark); border-radius:10px; padding:1rem;">
+            <label style="font-family:var(--font-heading); font-size:0.88rem; font-weight:700; color:#ffffff; margin-bottom:0.75rem; display:block;">
+              ปรับค่าตัวนับและแต้มสถานะ (Evaluative Metrics)
+            </label>
+            <div class="form-grid-3col">
+              <div class="form-group" style="margin-bottom:0;">
+                <label>🎖️ Commendations</label>
+                <input type="number" id="edit-metric-commendations" class="input-field" min="0" value="0">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>⚠️ Demerits</label>
+                <input type="number" id="edit-metric-demerits" class="input-field" min="0" value="0">
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label>🔥 Burnout Index</label>
+                <input type="number" id="edit-metric-burnout" class="input-field" min="0" value="0">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: ARC -->
+        <div class="modal-tab-pane" id="tab-edit-arc">
+          <div class="form-grid-3col">
+            <div class="form-group">
+              <label>Anomaly <span class="sub">(สิ่งผิดปกติ)</span></label>
+              <input type="text" id="edit-arc-anomaly" class="input-field" placeholder="เช่น Drain, Blink, Shaper">
+            </div>
+            <div class="form-group">
+              <label>Reality <span class="sub">(ฉากหน้าชีวิตจริง)</span></label>
+              <input type="text" id="edit-arc-reality" class="input-field" placeholder="เช่น Caretaker, Academic, Artist">
+            </div>
+            <div class="form-group">
+              <label>Competency <span class="sub">(แผนกความเชี่ยวชาญ)</span></label>
+              <input type="text" id="edit-arc-competency" class="input-field" placeholder="เช่น PR, R&D, Field Ops, HR">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Visual Manifestation of Anomaly <span class="sub">(ลักษณะการปรากฏตัวของพลัง)</span></label>
+            <textarea id="edit-arc-manifest" class="input-field input-textarea" placeholder="บรรยายลักษณะเวลาใช้งานพลัง Anomaly..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Reality Trigger <span class="sub">(เงื่อนไขกระทบชีวิตจริง GM 3 Chaos)</span></label>
+            <textarea id="edit-arc-reality-trigger" class="input-field input-textarea" placeholder="เงื่อนไขที่ชีวิตจริงถูกแทรกแซง..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Prime Directive <span class="sub">(กฎข้อห้ามเคร่งครัด - ละเมิดรับ 1 Demerit)</span></label>
+            <textarea id="edit-arc-prime-directive" class="input-field input-textarea" placeholder="กฎเหล็กของแผนกประจำตัว..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Burnout Release Protocol <span class="sub">(เงื่อนไขล้างสภาวะหมดไฟ)</span></label>
+            <input type="text" id="edit-arc-burnout-release" class="input-field" placeholder="สิ่งที่ต้องทำเพื่อล้างค่า Burnout...">
+          </div>
+
+          <!-- Sanctioned Behaviors -->
+          <div style="background:#08031a; border:1px solid var(--border-dark); border-radius:10px; padding:1rem;">
+            <label style="font-family:var(--font-heading); font-size:0.88rem; font-weight:700; color:#ffffff; margin-bottom:0.75rem; display:block;">
+              เป้าหมายองค์กร (Sanctioned Behaviors)
+            </label>
+            <div class="form-group">
+              <label style="font-size:0.8rem;">Target 1:</label>
+              <div style="display:flex; gap:0.6rem; align-items:center;">
+                <input type="checkbox" id="edit-sb-done-0" style="width:18px; height:18px; accent-color:var(--accent-green);">
+                <input type="text" id="edit-sb-text-0" class="input-field" placeholder="เป้าหมายที่ 1">
+              </div>
+            </div>
+            <div class="form-group">
+              <label style="font-size:0.8rem;">Target 2:</label>
+              <div style="display:flex; gap:0.6rem; align-items:center;">
+                <input type="checkbox" id="edit-sb-done-1" style="width:18px; height:18px; accent-color:var(--accent-green);">
+                <input type="text" id="edit-sb-text-1" class="input-field" placeholder="เป้าหมายที่ 2">
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="font-size:0.8rem;">Target 3:</label>
+              <div style="display:flex; gap:0.6rem; align-items:center;">
+                <input type="checkbox" id="edit-sb-done-2" style="width:18px; height:18px; accent-color:var(--accent-green);">
+                <input type="text" id="edit-sb-text-2" class="input-field" placeholder="เป้าหมายที่ 3">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: QA Matrix -->
+        <div class="modal-tab-pane" id="tab-edit-qa">
+          <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1.25rem;">
+            กำหนดระดับคะแนนสมรรถนะ Quality Assurances (0 ถึง 9 แต้ม):
+          </p>
+          <div class="form-grid-3col" id="edit-qa-container">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Tab 4: Abilities & Relationships -->
+        <div class="modal-tab-pane" id="tab-edit-abilities">
+          <div style="margin-bottom:2rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <strong style="color:#ffffff; font-size:0.95rem;">⚡ ทักษะและอำนาจ Anomaly (Abilities)</strong>
+            </div>
+            <div id="edit-abilities-list"></div>
+            <button type="button" class="btn-add-item" id="btn-add-edit-ability">＋ เพิ่ม Ability ใหม่</button>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <strong style="color:#ffffff; font-size:0.95rem;">🤝 สายสัมพันธ์และผู้ติดต่อ (Relationships)</strong>
+            </div>
+            <div id="edit-relationships-list"></div>
+            <button type="button" class="btn-add-item" id="btn-add-edit-relationship">＋ เพิ่ม Relationship ใหม่</button>
+          </div>
+        </div>
+
+        <!-- Tab 5: HR Questionnaire -->
+        <div class="modal-tab-pane" id="tab-edit-hr">
+          <div class="form-grid-3col">
+            <div class="form-group">
+              <label>ผู้ติดต่อฉุกเฉิน (Emergency Contact)</label>
+              <input type="text" id="edit-q-contact" class="input-field" placeholder="ชื่อผู้ติดต่อ">
+            </div>
+            <div class="form-group">
+              <label>ความสัมพันธ์ (Relationship)</label>
+              <input type="text" id="edit-q-relation" class="input-field" placeholder="เช่น พี่น้อง, เพื่อนสนิท">
+            </div>
+            <div class="form-group">
+              <label>เงินเดือนประจำปี (Salary)</label>
+              <input type="text" id="edit-q-salary" class="input-field" placeholder="เช่น ฿850,000 / ปี">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>1. การสัมผัส Anomaly ครั้งแรก (Contact with Anomaly)</label>
+            <textarea id="edit-q-1" class="input-field input-textarea"></textarea>
+          </div>
+          <div class="form-group">
+            <label>2. องค์กรค้นพบคุณได้อย่างไร (Agency Found You)</label>
+            <textarea id="edit-q-2" class="input-field input-textarea"></textarea>
+          </div>
+          <div class="form-group">
+            <label>3. รูปแบบการปรากฏของพลัง (Visual Manifestation)</label>
+            <textarea id="edit-q-3" class="input-field input-textarea"></textarea>
+          </div>
+          <div class="form-group">
+            <label>4. กาแฟหรือเครื่องดื่มประจำ (Coffee Preferences)</label>
+            <input type="text" id="edit-q-4" class="input-field">
+          </div>
+          <div class="form-group">
+            <label>5. ประสบการณ์การทำงานก่อนหน้า (Prior Work Experience)</label>
+            <textarea id="edit-q-5" class="input-field input-textarea"></textarea>
+          </div>
+          <div class="form-group">
+            <label>6. ทักษะโปรแกรมสำนักงาน (Office Software)</label>
+            <input type="text" id="edit-q-6" class="input-field">
+          </div>
+          <div class="form-group">
+            <label>7. สิ่งที่คุณนำมาเสริมทีม (Team Value)</label>
+            <textarea id="edit-q-7" class="input-field input-textarea"></textarea>
+          </div>
+          <div class="form-group">
+            <label>บันทึกพิเศษฝ่ายบุคคล (HR Psychological Notes)</label>
+            <textarea id="edit-q-notes" class="input-field input-textarea"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn-outline" id="btn-cancel-edit-modal">ยกเลิก (Cancel)</button>
+        <button type="button" class="btn-primary" id="btn-save-edit-profile">
+          <span>💾 บันทึกการแก้ไข (Save Changes)</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================
+       RETIRE CONFIRMATION MODAL
+       ========================================== -->
+  <div class="modal-overlay" id="retire-modal" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width:480px;">
+      <div class="modal-header">
+        <h2 style="font-family:var(--font-heading); font-size:1.1rem; color:#ff5e6c; margin:0;">
+          ⚠️ ยืนยันการถอนสถานะตัวแทน
+        </h2>
+        <button type="button" class="btn-close-modal" id="btn-close-retire-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.9rem; color:var(--text-main); line-height:1.5; margin-bottom:0.75rem;">
+          คุณกำลังจะลบแฟ้มประวัติและถอนสถานะของเจ้าหน้าที่ <strong id="retire-target-name" style="color:#ffd700;">-</strong> ออกจากสารบบ Triangle Agency อย่างถาวร
+        </p>
+        <p style="font-size:0.82rem; color:var(--text-muted);">
+          ข้อมูลแต้ม สมรรถนะ และสายสัมพันธ์ทั้งหมดจะถูกลบออกจากเครื่องของคุณ
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-outline" id="btn-cancel-retire">ยกเลิก</button>
+        <button type="button" class="btn-retire-action" id="btn-confirm-retire-final">🗑️ ยืนยันลบตัวละคร</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       JAVASCRIPT DOSSIER ENGINE
+       ========================================== -->
+  <script>
+    const QUALITIES_DATA = [
+      { id: 'attentiveness', name: 'Attentiveness', desc: 'ความช่างสังเกต ข้อมูลซับซ้อน ค้นหาความจริง' },
+      { id: 'duplicity', name: 'Duplicity', desc: 'การโกหก การหลอกลวง การสร้างภาพโน้มน้าว' },
+      { id: 'dynamism', name: 'Dynamism', desc: 'การใช้กำลัง ความดุดัน การบุกทะลวง' },
+      { id: 'empathy', name: 'Empathy', desc: 'ความเห็นอกเห็นใจ การเข้าใจจิตใจคนอื่น' },
+      { id: 'initiative', name: 'Initiative', desc: 'ความว่องไว การชิงลงมือก่อน แก้ปัญหารวดเร็ว' },
+      { id: 'persistence', name: 'Persistence', desc: 'ความอดทน กัดไม่ปล่อย การกดดันต่อเนื่อง' },
+      { id: 'presence', name: 'Presence', desc: 'ความน่าเกรงขาม การสั่งการ การสร้างแรงบันดาลใจ' },
+      { id: 'professionalism', name: 'Professionalism', desc: 'ความสุขุม สมาธิภายใต้ความกดดัน ต้านทานจิตใจ' },
+      { id: 'subtlety', name: 'Subtlety', desc: 'ความแนบเนียน ล่องหน ทำงานเงียบเชียบ มือเบา' }
+    ];
+
+    let currentAgent = null;
+    let currentUserKey = '';
+    let editAvatarBase64 = '';
+
+    // Sidebar & View Switcher Elements
+    const appLayout = document.getElementById('app-layout');
+    const appSidebar = document.getElementById('app-sidebar');
+    const btnSidebarToggle = document.getElementById('btn-sidebar-toggle');
+    const btnFloatingToggle = document.getElementById('btn-floating-toggle');
+
+    function toggleSidebar() {
+      const isCollapsed = appSidebar.classList.toggle('collapsed');
+      appLayout.classList.toggle('sidebar-collapsed', isCollapsed);
+      localStorage.setItem('triangle_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+    }
+
+    if (btnSidebarToggle) btnSidebarToggle.addEventListener('click', toggleSidebar);
+    if (btnFloatingToggle) btnFloatingToggle.addEventListener('click', toggleSidebar);
+
+    if (localStorage.getItem('triangle_sidebar_collapsed') === 'true') {
+      appSidebar.classList.add('collapsed');
+      appLayout.classList.add('sidebar-collapsed');
+    }
+
+    // View Switcher (Page 1 vs Page 2 vs Dual)
+    const page1Wrapper = document.getElementById('page-1-wrapper');
+    const page2Wrapper = document.getElementById('page-2-wrapper');
+    const breadcrumbView = document.getElementById('breadcrumb-current-view');
+
+    function switchDossierView(viewMode) {
+      document.querySelectorAll('.btn-view-tab').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.querySelector(`.btn-view-tab[data-view="${viewMode}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (viewMode === 'page-1') {
+        page1Wrapper.style.display = 'block';
+        page2Wrapper.style.display = 'none';
+        breadcrumbView.textContent = 'PAGE 1: AGENT DOSSIER';
+      } else if (viewMode === 'page-2') {
+        page1Wrapper.style.display = 'none';
+        page2Wrapper.style.display = 'block';
+        breadcrumbView.textContent = 'PAGE 2: ประวัติตัวพนักงาน';
+      } else {
+        page1Wrapper.style.display = 'block';
+        page2Wrapper.style.display = 'block';
+        breadcrumbView.textContent = 'FULL DOSSIER (2-PAGE VIEW)';
+      }
+    }
+
+    document.querySelectorAll('.btn-view-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        switchDossierView(btn.dataset.view);
+      });
+    });
+
+    // Check Permissions
+    function isCurrentUserAllowedToEdit() {
+      const loggedInUser = localStorage.getItem('triangle_current_user') || '';
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      const isOwner = loggedInUser && (loggedInUser === currentUserKey);
+      const isAdmin = loggedInUser === 'admin' || (accounts[loggedInUser] && accounts[loggedInUser].role === 'admin');
+      return { isOwner, isAdmin, canEdit: isOwner || isAdmin };
+    }
+
+    // Load Agent Profile
+    function loadAgentProfile() {
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      const loggedInUser = localStorage.getItem('triangle_current_user') || '';
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const userParam = urlParams.get('user') || urlParams.get('agent');
+
+      if (userParam && accounts[userParam]) {
+        currentUserKey = userParam;
+        const adminBanner = document.getElementById('admin-inspection-banner');
+        if (adminBanner && loggedInUser !== userParam) {
+          adminBanner.style.display = 'flex';
+          document.getElementById('admin-inspecting-user').textContent = `${currentUserKey} (${accounts[currentUserKey].character?.name || currentUserKey})`;
+        }
+      } else if (loggedInUser && accounts[loggedInUser]) {
+        currentUserKey = loggedInUser;
+      } else {
+        const keys = Object.keys(accounts);
+        if (keys.length > 0) {
+          currentUserKey = keys[0];
+        } else {
+          alert('ไม่พบข้อมูลตัวละครในสารบบ กรุณาสร้างตัวละครก่อน');
+          window.location.href = 'create-character.html';
+          return;
+        }
+      }
+
+      if (loggedInUser === 'admin' || (accounts[loggedInUser] && accounts[loggedInUser].role === 'admin')) {
+        const adminLink = document.getElementById('sidebar-admin-link');
+        if (adminLink) adminLink.style.display = 'flex';
+      }
+
+      currentAgent = (accounts[currentUserKey] && accounts[currentUserKey].character) ? accounts[currentUserKey].character : {};
+
+      if (currentAgent.commendations === undefined) currentAgent.commendations = 0;
+      if (currentAgent.demerits === undefined) currentAgent.demerits = 0;
+      if (currentAgent.burnout === undefined) currentAgent.burnout = 0;
+
+      if (!currentAgent.qualities) currentAgent.qualities = {};
+      QUALITIES_DATA.forEach(q => {
+        if (!currentAgent.qualities[q.id]) {
+          currentAgent.qualities[q.id] = { max: 0, current: 0 };
+        } else if (typeof currentAgent.qualities[q.id] === 'number') {
+          const val = currentAgent.qualities[q.id];
+          currentAgent.qualities[q.id] = { max: val, current: val };
+        } else {
+          const maxVal = (currentAgent.qualities[q.id].max !== undefined) ? currentAgent.qualities[q.id].max : 0;
+          const currVal = (currentAgent.qualities[q.id].current !== undefined) ? currentAgent.qualities[q.id].current : maxVal;
+          currentAgent.qualities[q.id].max = maxVal;
+          currentAgent.qualities[q.id].current = currVal;
+        }
+      });
+
+      renderProfile();
+    }
+
+    function saveAgentProfile() {
+      if (!currentUserKey) return;
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      if (accounts[currentUserKey]) {
+        accounts[currentUserKey].character = currentAgent;
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+      }
+    }
+
+    // Render Character Sheet Page 1 & Page 2
+    function renderProfile() {
+      if (!currentAgent) return;
+      const { canEdit } = isCurrentUserAllowedToEdit();
+
+      const btnEdit = document.getElementById('btn-open-edit-profile');
+      const btnSidebarEdit = document.getElementById('btn-sidebar-edit-open');
+      if (btnEdit) btnEdit.style.display = canEdit ? 'inline-flex' : 'none';
+      if (btnSidebarEdit) btnSidebarEdit.style.display = canEdit ? 'flex' : 'none';
+
+      document.querySelectorAll('.btn-metric-mini, #btn-quick-add-ability, #btn-quick-add-relationship').forEach(btn => {
+        btn.style.display = canEdit ? 'inline-flex' : 'none';
+      });
+
+      const dangerZone = document.querySelector('.page-2-retire-bar');
+      if (dangerZone) dangerZone.style.display = canEdit ? 'flex' : 'none';
+
+      // 1. Badge & Identity
+      const displayName = currentAgent.name || currentUserKey;
+      const displayID = currentAgent.id || 'ID-001';
+
+      document.getElementById('badge-name-display').textContent = displayName;
+      document.getElementById('badge-id-display').textContent = displayID;
+      document.getElementById('header-name-display').textContent = displayName;
+      document.getElementById('header-id-display').textContent = displayID;
+      document.getElementById('header-title-display').textContent = currentAgent.title || 'Trainee Field Agent';
+      document.getElementById('header-standing-display').textContent = currentAgent.standing || 'Good Standing';
+
+      // Badge Avatar
+      const badgePhoto = document.getElementById('badge-agent-photo');
+      const badgePlaceholder = document.getElementById('badge-photo-placeholder');
+      if (currentAgent.avatar) {
+        badgePhoto.src = currentAgent.avatar;
+        badgePhoto.style.display = 'block';
+        badgePlaceholder.style.display = 'none';
+      } else {
+        badgePhoto.style.display = 'none';
+        badgePlaceholder.style.display = 'flex';
+      }
+
+      // Quick photo click upload
+      const photoClicker = document.getElementById('badge-photo-clicker');
+      if (photoClicker && canEdit) {
+        photoClicker.onclick = () => openEditProfileModal('tab-edit-identity');
+      }
+
+      // 2. Metrics Boxes
+      document.getElementById('metric-box-commendations').textContent = currentAgent.commendations || 0;
+      document.getElementById('metric-box-demerits').textContent = currentAgent.demerits || 0;
+      document.getElementById('metric-box-burnout').textContent = currentAgent.burnout || 0;
+
+      // 3. QA Matrix Column (9 Qualities with Triangle Pips)
+      renderQAMatrix(canEdit);
+
+      // 4. ARC Blocks
+      const arc = currentAgent.arc || {};
+      document.getElementById('arc-anomaly-display').textContent = arc.anomaly || 'None';
+      document.getElementById('arc-reality-display').textContent = arc.reality || 'None';
+      document.getElementById('arc-competency-display').textContent = arc.competency || 'None';
+
+      // 5. Anomaly Abilities
+      renderAbilities(canEdit);
+
+      // 6. Directives & Triggers
+      document.getElementById('reality-trigger-display').textContent = arc.realityTrigger || 'ไม่มีข้อมูล Reality Trigger';
+      document.getElementById('burnout-release-display').textContent = arc.burnoutRelease || 'ไม่มีข้อมูล Burnout Release';
+      document.getElementById('prime-directive-display').textContent = arc.primeDirective || 'ไม่มีข้อมูล Prime Directive';
+
+      // Sanctioned Behaviors
+      const sbContainer = document.getElementById('sanctioned-behaviors-list');
+      sbContainer.innerHTML = '';
+      const sbs = arc.sanctionedBehaviors || [];
+      sbs.forEach((sb, idx) => {
+        const row = document.createElement('div');
+        row.className = 'sb-row-item';
+        row.innerHTML = `
+          <span class="sb-triangle-btn" title="คลิกเพื่อทำเครื่องหมาย">${sb.done ? '▶' : '▷'}</span>
+          <span class="sb-target-content ${sb.done ? 'done' : ''}">${sb.text || `Sanctioned Target ${idx + 1}`}</span>
+        `;
+        if (canEdit) {
+          row.style.cursor = 'pointer';
+          row.onclick = () => {
+            sb.done = !sb.done;
+            saveAgentProfile();
+            renderProfile();
+          };
+        }
+        sbContainer.appendChild(row);
+      });
+
+      // 7. Relationships
+      renderRelationships(canEdit);
+
+      // 8. Page 2 (HR Questionnaire)
+      renderPage2HR();
+    }
+
+    // Render 9 QA Items with Triangle SVG Pips
+    function renderQAMatrix(canEdit) {
+      const container = document.getElementById('sheet-qa-list');
+      container.innerHTML = '';
+
+      if (!currentAgent.qualities) currentAgent.qualities = {};
+
+      QUALITIES_DATA.forEach(q => {
+        if (!currentAgent.qualities[q.id]) {
+          currentAgent.qualities[q.id] = { max: 0, current: 0 };
+        }
+        let maxQA = parseInt(currentAgent.qualities[q.id].max);
+        if (isNaN(maxQA) || maxQA < 0) maxQA = 0;
+        if (maxQA > 9) maxQA = 9;
+
+        let currentQA = parseInt(currentAgent.qualities[q.id].current);
+        if (isNaN(currentQA) || currentQA < 0) currentQA = 0;
+        if (currentQA > maxQA) currentQA = maxQA;
+
+        currentAgent.qualities[q.id].max = maxQA;
+        currentAgent.qualities[q.id].current = currentQA;
+
+        const isBurnout = (currentQA === 0);
+
+        const item = document.createElement('div');
+        item.className = 'qa-item-row';
+        item.id = `qa-row-${q.id}`;
+
+        let pipsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          const isActive = (i <= currentQA);
+          pipsHtml += `
+            <div class="qa-pip-svg-btn ${isActive ? 'active' : ''}" data-idx="${i}" title="${q.name}: แต้ม QA คงเหลือ ${i} (จาก ${maxQA})">
+              <svg viewBox="0 0 100 80" fill="none">
+                <polygon points="50,6 94,74 6,74"/>
+              </svg>
+            </div>
+          `;
+        }
+
+        item.innerHTML = `
+          <div class="qa-item-name-bar">
+            <input type="number" min="0" max="9" class="qa-item-max-badge" value="${maxQA}" ${canEdit ? '' : 'disabled'} title="กำหนดคะแนน QA (0 - 9)" aria-label="Max QA for ${q.name}">
+            <div class="qa-item-label" style="display:flex; align-items:center; gap:0.4rem;">
+              <span>${q.name}</span>
+              <span class="qa-burnout-badge" style="display:${isBurnout ? 'inline-block' : 'none'}; font-family:var(--font-mono); font-size:0.62rem; color:var(--accent-red); background:rgba(255,34,56,0.15); padding:0.1rem 0.35rem; border-radius:3px; border:1px solid rgba(255,34,56,0.4);" title="0 QA: สภาวะ Burnout ทำงาน">🔥 BURNOUT</span>
+            </div>
+          </div>
+          <div class="qa-pips-triangle-row">
+            ${pipsHtml}
+          </div>
+        `;
+
+        if (canEdit) {
+          const maxInput = item.querySelector('.qa-item-max-badge');
+          if (maxInput) {
+            maxInput.addEventListener('focus', () => {
+              maxInput.select();
+            });
+
+            maxInput.addEventListener('input', (e) => {
+              let parsed = parseInt(e.target.value);
+              if (isNaN(parsed)) return;
+              if (parsed < 0) parsed = 0;
+              if (parsed > 9) parsed = 9;
+              
+              currentAgent.qualities[q.id].max = parsed;
+              currentAgent.qualities[q.id].current = parsed;
+              saveAgentProfile();
+
+              // Live update pips immediately in the DOM
+              item.querySelectorAll('.qa-pip-svg-btn').forEach(pip => {
+                const idx = parseInt(pip.dataset.idx);
+                if (idx <= parsed) pip.classList.add('active');
+                else pip.classList.remove('active');
+              });
+
+              // Live update burnout badge
+              const bBadge = item.querySelector('.qa-burnout-badge');
+              if (bBadge) {
+                bBadge.style.display = (parsed === 0) ? 'inline-block' : 'none';
+              }
+            });
+
+            maxInput.addEventListener('blur', (e) => {
+              let parsed = parseInt(e.target.value);
+              if (isNaN(parsed) || parsed < 0) parsed = 0;
+              if (parsed > 9) parsed = 9;
+              currentAgent.qualities[q.id].max = parsed;
+              currentAgent.qualities[q.id].current = parsed;
+              saveAgentProfile();
+              renderProfile();
+            });
+
+            maxInput.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') {
+                maxInput.blur();
+              }
+            });
+          }
+
+          // Direct Click on Pips (Toggles remaining QA)
+          item.querySelectorAll('.qa-pip-svg-btn').forEach(pip => {
+            pip.addEventListener('click', (e) => {
+              const targetIdx = parseInt(pip.dataset.idx);
+              const curr = currentAgent.qualities[q.id].current || 0;
+              const nextVal = (curr === targetIdx) ? targetIdx - 1 : targetIdx;
+              currentAgent.qualities[q.id].current = nextVal;
+              currentAgent.qualities[q.id].max = Math.max(currentAgent.qualities[q.id].max || 0, nextVal);
+              saveAgentProfile();
+              renderProfile();
+            });
+          });
+        }
+
+        container.appendChild(item);
+      });
+    }
+
+    // Render Abilities Matching Image 6
+    function renderAbilities(canEdit) {
+      const container = document.getElementById('sheet-abilities-container');
+      container.innerHTML = '';
+      const abilities = currentAgent.abilities || [];
+
+      if (abilities.length === 0) {
+        container.innerHTML = `
+          <div style="background:#08031a; border:1px dashed var(--border-dark); border-radius:8px; padding:1rem; text-align:center; color:var(--text-muted); font-size:0.85rem;">
+            ยังไม่มีการบันทึก Ability (คลิกที่ปุ่ม "+ เพิ่ม Ability" เพื่อเพิ่มทักษะ)
+          </div>
+        `;
+        return;
+      }
+
+      abilities.forEach((ab, idx) => {
+        const card = document.createElement('div');
+        card.className = 'ability-sheet-card';
+        card.innerHTML = `
+          <div class="ability-card-header-bar">
+            <div><strong>ABILITY:</strong> ${ab.name || 'Ability'}</div>
+            <div><strong>TRIGGER:</strong> ${ab.trigger || '-'}</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div><strong>QUALITY:</strong> ${ab.quality || '-'}</div>
+              ${canEdit ? `<button type="button" class="btn-del-item" onclick="deleteAbility(${idx})" style="padding:0 0.4rem; font-size:0.7rem;">✕</button>` : ''}
+            </div>
+          </div>
+          <div class="ability-card-grid">
+            <div class="ability-col-left">
+              <div>
+                <div class="ability-row-title success">▲ On a success,</div>
+                <div class="ability-description-box">${ab.success || 'ไม่มีข้อมูล'}</div>
+              </div>
+              <div>
+                <div class="ability-row-title special">★ Special Success / Upgrade,</div>
+                <div class="ability-description-box">${ab.specialSuccess || 'ไม่มีข้อมูล'}</div>
+              </div>
+            </div>
+            <div class="ability-col-right">
+              <div>
+                <div class="ability-row-title failure">✖ On a failure,</div>
+                <div class="ability-description-box">${ab.failure || 'ไม่มีข้อมูล'}</div>
+              </div>
+              <div class="ability-metadata-box">
+                <div class="ability-metadata-row">
+                  <span>Q: ${ab.quality || '-'}</span>
+                  <span>PRACTICED? <input type="checkbox" ${ab.practiced ? 'checked' : ''} ${canEdit ? '' : 'disabled'} onchange="toggleAbilityPracticed(${idx}, this.checked)"></span>
+                </div>
+                <div class="ability-metadata-row">
+                  <span>A: ${ab.trigger || '-'}</span>
+                  <div class="practice-pips-group">
+                    <span class="practice-pip ${ab.p1 ? 'active' : ''}" onclick="toggleAbilityPip(${idx}, 'p1')"></span>
+                    <span class="practice-pip ${ab.p2 ? 'active' : ''}" onclick="toggleAbilityPip(${idx}, 'p2')"></span>
+                    <span class="practice-pip ${ab.p3 ? 'active' : ''}" onclick="toggleAbilityPip(${idx}, 'p3')"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleAbilityPracticed(idx, val) {
+      if (!currentAgent.abilities[idx]) return;
+      currentAgent.abilities[idx].practiced = val;
+      saveAgentProfile();
+    }
+
+    function toggleAbilityPip(idx, pipKey) {
+      const { canEdit } = isCurrentUserAllowedToEdit();
+      if (!canEdit || !currentAgent.abilities[idx]) return;
+      currentAgent.abilities[idx][pipKey] = !currentAgent.abilities[idx][pipKey];
+      saveAgentProfile();
+      renderProfile();
+    }
+
+    function deleteAbility(idx) {
+      if (!confirm('ต้องการลบ Ability นี้หรือไม่?')) return;
+      currentAgent.abilities.splice(idx, 1);
+      saveAgentProfile();
+      renderProfile();
+    }
+
+    // Render Relationships Matching Image 8
+    function renderRelationships(canEdit) {
+      const container = document.getElementById('sheet-relationships-grid');
+      container.innerHTML = '';
+      const relationships = currentAgent.relationships || [];
+
+      if (relationships.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column:1/-1; background:#08031a; border:1.5px dashed var(--border-medium); border-radius:8px; padding:1.25rem; text-align:center; color:var(--accent-yellow); font-size:0.88rem;">
+            ยังไม่มีข้อมูลสายสัมพันธ์ (คลิก "+ เพิ่ม Relationship" เพื่อเพิ่มผู้ติดต่อ)
+          </div>
+        `;
+        return;
+      }
+
+      relationships.forEach((rel, relIdx) => {
+        const level = rel.level || 0;
+        const card = document.createElement('div');
+        card.className = 'relationship-entry-box';
+
+        let nodesHtml = '';
+        for (let i = 0; i <= 9; i++) {
+          const isNetworked = (i === 9);
+          const isActive = (i <= level);
+          nodesHtml += `
+            <div class="rel-node-circle ${isNetworked ? 'networked-marker' : ''} ${isActive ? 'active' : ''}" 
+                 data-node="${i}" title="Bond Level ${i}">
+              ${i}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="rel-card-top-row">
+            <div class="rel-data-item">
+              <span class="rel-data-label">Name</span>
+              <div class="rel-data-value">${rel.name || 'Contact Name'}</div>
+            </div>
+            <div class="rel-data-item">
+              <span class="rel-data-label">Played by</span>
+              <div class="rel-data-value">${rel.playedBy || 'NPC / Reality'}</div>
+            </div>
+          </div>
+
+          <div class="rel-data-item">
+            <span class="rel-data-label">Description</span>
+            <div class="rel-data-value" style="font-size:0.82rem; font-weight:500; color:var(--text-muted);">${rel.desc || '-'}</div>
+          </div>
+
+          <div class="rel-network-track">
+            <div class="rel-track-nodes">
+              <div class="rel-track-bar-line"></div>
+              ${nodesHtml}
+            </div>
+            <div class="rel-networked-tag">${level >= 9 ? '▲ NETWORKED' : 'NETWORKED ▲'}</div>
+          </div>
+
+          <div class="rel-footer-row">
+            <div style="font-size:0.82rem; color:var(--accent-yellow); font-weight:700;">
+              Connection Bonus: <span style="color:#ffffff; font-weight:600;">${rel.bonus || '-'}</span>
+            </div>
+            <label class="rel-active-toggle">
+              <input type="checkbox" ${rel.active ? 'checked' : ''} ${canEdit ? '' : 'disabled'} onchange="toggleRelActive(${relIdx}, this.checked)">
+              Active
+            </label>
+          </div>
+          ${canEdit ? `<button type="button" class="btn-del-item" onclick="deleteRelationship(${relIdx})" style="position:absolute; top:10px; right:10px; padding:0 0.4rem; font-size:0.7rem;">✕</button>` : ''}
+        `;
+
+        if (canEdit) {
+          card.querySelectorAll('.rel-node-circle').forEach(node => {
+            node.onclick = () => {
+              const nodeVal = parseInt(node.dataset.node);
+              rel.level = (rel.level === nodeVal) ? nodeVal - 1 : nodeVal;
+              saveAgentProfile();
+              renderProfile();
+            };
+          });
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    function toggleRelActive(idx, val) {
+      if (!currentAgent.relationships[idx]) return;
+      currentAgent.relationships[idx].active = val;
+      saveAgentProfile();
+    }
+
+    function deleteRelationship(idx) {
+      if (!confirm('ต้องการลบ Relationship นี้หรือไม่?')) return;
+      currentAgent.relationships.splice(idx, 1);
+      saveAgentProfile();
+      renderProfile();
+    }
+
+    // Render Page 2 (HR Questionnaire & Background)
+    function renderPage2HR() {
+      const q = currentAgent.questionnaire || {};
+      document.getElementById('p2-emergency-contact').textContent = q.emergencyContact || 'ไม่มีข้อมูล';
+      document.getElementById('p2-relationship').textContent = q.relationship || 'ไม่มีข้อมูล';
+      document.getElementById('p2-salary').textContent = q.salary || 'ไม่มีข้อมูล';
+
+      document.getElementById('p2-q1').textContent = q.q1_anomalyContact || 'ไม่มีบันทึกข้อมูล';
+      document.getElementById('p2-q2').textContent = q.q2_agencyFound || 'ไม่มีบันทึกข้อมูล';
+      document.getElementById('p2-q3').textContent = q.q3_manifestation || currentAgent.arc?.anomalyManifestation || 'ไม่มีบันทึกข้อมูล';
+      document.getElementById('p2-q4').textContent = q.q4_coffee || 'ไม่มีบันทึกข้อมูล';
+      document.getElementById('p2-q5').textContent = q.q5_experience || 'ไม่มีบันทึกข้อมูล';
+      document.getElementById('p2-q6').textContent = q.q6_software || 'ไม่มีบันทึกข้อมูล';
+      document.getElementById('p2-q7').textContent = q.q7_teamValue || 'ไม่มีบันทึกข้อมูล';
+      document.getElementById('p2-notes').textContent = q.notes || 'ไม่มีบันทึกพิเศษฝ่ายบุคคล';
+    }
+
+    // Metrics Adjustment Handler
+    function adjustMetric(metricKey, change) {
+      const { canEdit } = isCurrentUserAllowedToEdit();
+      if (!canEdit || !currentAgent) return;
+
+      if (metricKey === 'commendations') {
+        currentAgent.commendations = Math.max(0, (currentAgent.commendations || 0) + change);
+      } else if (metricKey === 'demerits') {
+        currentAgent.demerits = Math.max(0, (currentAgent.demerits || 0) + change);
+      } else if (metricKey === 'burnout') {
+        currentAgent.burnout = Math.max(0, (currentAgent.burnout || 0) + change);
+      }
+      saveAgentProfile();
+      renderProfile();
+    }
+
+    function rechargeAllQAs() {
+      if (!currentAgent || !currentAgent.qualities) return;
+      Object.keys(currentAgent.qualities).forEach(k => {
+        const maxVal = currentAgent.qualities[k].max || 0;
+        currentAgent.qualities[k].current = maxVal;
+      });
+      saveAgentProfile();
+      renderProfile();
+
+      const toast = document.getElementById('toast-roll');
+      const title = document.getElementById('toast-title');
+      const desc = document.getElementById('toast-desc');
+      if (toast && title && desc) {
+        title.innerHTML = `🔄 ฟื้นฟูแต้ม QA สำเร็จ!`;
+        title.style.color = 'var(--accent-blue)';
+        desc.innerHTML = `แต้ม Quality Assurances ทั้งหมดได้รับการเติมเต็มสู่ระดับสูงสุด (Full Recharged) พร้อมสำหรับภารกิจใหม่`;
+        toast.style.display = 'flex';
+        setTimeout(() => { toast.style.display = 'none'; }, 3500);
+      }
+    }
+
+    // ==========================================
+    // EDIT MODAL LOGIC
+    // ==========================================
+    const editModal = document.getElementById('edit-profile-modal');
+    const btnOpenEditProfile = document.getElementById('btn-open-edit-profile');
+    const btnSidebarEditOpen = document.getElementById('btn-sidebar-edit-open');
+    const btnCloseEditModal = document.getElementById('btn-close-edit-modal');
+    const btnCancelEditModal = document.getElementById('btn-cancel-edit-modal');
+    const btnSaveEditProfile = document.getElementById('btn-save-edit-profile');
+
+    function openEditProfileModal(defaultTab = 'tab-edit-identity') {
+      const { canEdit } = isCurrentUserAllowedToEdit();
+      if (!canEdit || !currentAgent) return;
+
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      const account = accounts[currentUserKey] || {};
+
+      document.getElementById('edit-modal-agent-name').textContent = currentAgent.name || currentUserKey;
+
+      // 1. Identity Tab
+      document.getElementById('edit-agent-title').value = currentAgent.title || '';
+      document.getElementById('edit-agent-standing').value = currentAgent.standing || '';
+      document.getElementById('edit-agent-id').value = currentAgent.id || '';
+      document.getElementById('edit-agent-password').value = account.password || '';
+
+      editAvatarBase64 = currentAgent.avatar || '';
+      updateEditAvatarPreview();
+
+      document.getElementById('edit-metric-commendations').value = currentAgent.commendations || 0;
+      document.getElementById('edit-metric-demerits').value = currentAgent.demerits || 0;
+      document.getElementById('edit-metric-burnout').value = currentAgent.burnout || 0;
+
+      // 2. ARC Tab
+      const arc = currentAgent.arc || {};
+      document.getElementById('edit-arc-anomaly').value = arc.anomaly || '';
+      document.getElementById('edit-arc-reality').value = arc.reality || '';
+      document.getElementById('edit-arc-competency').value = arc.competency || '';
+      document.getElementById('edit-arc-manifest').value = arc.anomalyManifestation || '';
+      document.getElementById('edit-arc-reality-trigger').value = arc.realityTrigger || '';
+      document.getElementById('edit-arc-prime-directive').value = arc.primeDirective || '';
+      document.getElementById('edit-arc-burnout-release').value = arc.burnoutRelease || '';
+
+      const sbs = arc.sanctionedBehaviors || [];
+      for (let i = 0; i < 3; i++) {
+        const sb = sbs[i] || { text: '', done: false };
+        const textInput = document.getElementById(`edit-sb-text-${i}`);
+        const checkInput = document.getElementById(`edit-sb-done-${i}`);
+        if (textInput) textInput.value = sb.text || '';
+        if (checkInput) checkInput.checked = !!sb.done;
+      }
+
+      // 3. QA Tab
+      renderEditQATab();
+
+      // 4. Abilities & Relationships Tab
+      renderEditAbilitiesList();
+      renderEditRelationshipsList();
+
+      // 5. HR Tab
+      const q = currentAgent.questionnaire || {};
+      document.getElementById('edit-q-contact').value = q.emergencyContact || '';
+      document.getElementById('edit-q-relation').value = q.relationship || '';
+      document.getElementById('edit-q-salary').value = q.salary || '';
+      document.getElementById('edit-q-1').value = q.q1_anomalyContact || '';
+      document.getElementById('edit-q-2').value = q.q2_agencyFound || '';
+      document.getElementById('edit-q-3').value = q.q3_manifestation || arc.anomalyManifestation || '';
+      document.getElementById('edit-q-4').value = q.q4_coffee || '';
+      document.getElementById('edit-q-5').value = q.q5_experience || '';
+      document.getElementById('edit-q-6').value = q.q6_software || '';
+      document.getElementById('edit-q-7').value = q.q7_teamValue || '';
+      document.getElementById('edit-q-notes').value = q.notes || '';
+
+      // Set Active Tab
+      document.querySelectorAll('.modal-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.modal-tab-pane').forEach(p => p.classList.remove('active'));
+      const activeTabBtn = document.querySelector(`.modal-tab-btn[data-tab="${defaultTab}"]`);
+      if (activeTabBtn) activeTabBtn.classList.add('active');
+      const activePane = document.getElementById(defaultTab);
+      if (activePane) activePane.classList.add('active');
+
+      editModal.classList.add('active');
+    }
+
+    function closeEditProfileModal() {
+      editModal.classList.remove('active');
+    }
+
+    if (btnOpenEditProfile) btnOpenEditProfile.addEventListener('click', () => openEditProfileModal());
+    if (btnSidebarEditOpen) btnSidebarEditOpen.addEventListener('click', () => openEditProfileModal());
+    if (btnCloseEditModal) btnCloseEditModal.addEventListener('click', closeEditProfileModal);
+    if (btnCancelEditModal) btnCancelEditModal.addEventListener('click', closeEditProfileModal);
+    if (editModal) {
+      editModal.addEventListener('click', (e) => {
+        if (e.target === editModal) closeEditProfileModal();
+      });
+    }
+
+    // Modal Tab Navigation
+    document.querySelectorAll('.modal-tabs .modal-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.modal-tabs .modal-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.modal-body .modal-tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const target = document.getElementById(btn.dataset.tab);
+        if (target) target.classList.add('active');
+      });
+    });
+
+    // Avatar preview update
+    function updateEditAvatarPreview() {
+      const img = document.getElementById('edit-preview-avatar');
+      const placeholder = document.getElementById('edit-preview-placeholder');
+      const clearBtn = document.getElementById('btn-edit-clear-photo');
+
+      if (editAvatarBase64) {
+        img.src = editAvatarBase64;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+        if (clearBtn) clearBtn.style.display = 'inline-block';
+      } else {
+        img.src = '';
+        img.style.display = 'none';
+        placeholder.style.display = 'block';
+        if (clearBtn) clearBtn.style.display = 'none';
+      }
+    }
+
+    // Photo input change handler
+    const editPhotoFile = document.getElementById('edit-photo-file');
+    if (editPhotoFile) {
+      editPhotoFile.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          if (file.size > 3 * 1024 * 1024) {
+            alert('ขนาดไฟล์เกิน 3MB กรุณาเลือกภาพที่มีขนาดเล็กลง');
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            editAvatarBase64 = evt.target.result;
+            updateEditAvatarPreview();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    const btnClearPhoto = document.getElementById('btn-edit-clear-photo');
+    if (btnClearPhoto) {
+      btnClearPhoto.addEventListener('click', () => {
+        editAvatarBase64 = '';
+        updateEditAvatarPreview();
+      });
+    }
+
+    // QA Tab in Edit Modal
+    function renderEditQATab() {
+      const container = document.getElementById('edit-qa-container');
+      container.innerHTML = '';
+      const qualities = currentAgent.qualities || {};
+
+      QUALITIES_DATA.forEach(q => {
+        const currentVal = (qualities[q.id] && qualities[q.id].max !== undefined) ? qualities[q.id].max : 0;
+        const box = document.createElement('div');
+        box.className = 'form-group';
+        box.style.cssText = 'background:#08031a; border:1px solid var(--border-dark); border-radius:8px; padding:0.9rem;';
+        box.innerHTML = `
+          <label style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+            <span>${q.name}</span>
+            <span style="color:var(--accent-blue); font-family:var(--font-mono); font-weight:700;" id="edit-qa-label-${q.id}">${currentVal} QA</span>
+          </label>
+          <input type="range" min="0" max="9" value="${currentVal}" id="edit-qa-input-${q.id}" class="input-field" style="padding:0; height:32px; accent-color:var(--accent-blue);">
+        `;
+
+        box.querySelector('input').addEventListener('input', (e) => {
+          box.querySelector(`#edit-qa-label-${q.id}`).textContent = `${e.target.value} QA`;
+        });
+
+        container.appendChild(box);
+      });
+    }
+
+    // Abilities editor in Modal
+    function renderEditAbilitiesList() {
+      const container = document.getElementById('edit-abilities-list');
+      container.innerHTML = '';
+      const abilities = currentAgent.abilities || [];
+      abilities.forEach(ab => addEditAbilityCard(ab));
+    }
+
+    function addEditAbilityCard(ab = {}) {
+      const container = document.getElementById('edit-abilities-list');
+      const card = document.createElement('div');
+      card.className = 'edit-item-card';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+          <strong style="color:var(--accent-blue); font-size:0.88rem;">Ability Entry</strong>
+          <button type="button" class="btn-del-item" onclick="this.closest('.edit-item-card').remove()">ลบ</button>
+        </div>
+        <div class="form-grid-2col" style="margin-bottom:0.6rem;">
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">ชื่อ Ability</label>
+            <input type="text" class="input-field edit-ab-name" value="${ab.name || ''}" placeholder="ชื่อทักษะ...">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">Quality ที่เกี่ยวข้อง</label>
+            <input type="text" class="input-field edit-ab-quality" value="${ab.quality || ''}" placeholder="เช่น Duplicity, Presence">
+          </div>
+        </div>
+        <div style="margin-bottom:0.6rem;">
+          <label style="font-size:0.78rem; color:var(--text-muted);">Trigger (เงื่อนไขใช้งาน)</label>
+          <input type="text" class="input-field edit-ab-trigger" value="${ab.trigger || ''}" placeholder="เงื่อนไขการเปิดใช้งาน...">
+        </div>
+        <div class="form-grid-3col">
+          <div>
+            <label style="font-size:0.75rem; color:var(--accent-blue);">Success (หน้า 3)</label>
+            <textarea class="input-field input-textarea edit-ab-success" style="min-height:50px;">${ab.success || ''}</textarea>
+          </div>
+          <div>
+            <label style="font-size:0.75rem; color:var(--accent-yellow);">Special Success (หน้า 3 สองตัวขึ้นไป)</label>
+            <textarea class="input-field input-textarea edit-ab-special" style="min-height:50px;">${ab.specialSuccess || ''}</textarea>
+          </div>
+          <div>
+            <label style="font-size:0.75rem; color:var(--accent-red);">Failure (ไม่มีหน้า 3)</label>
+            <textarea class="input-field input-textarea edit-ab-failure" style="min-height:50px;">${ab.failure || ''}</textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+
+    const btnAddEditAbility = document.getElementById('btn-add-edit-ability');
+    if (btnAddEditAbility) btnAddEditAbility.addEventListener('click', () => addEditAbilityCard());
+
+    const btnQuickAddAbility = document.getElementById('btn-quick-add-ability');
+    if (btnQuickAddAbility) btnQuickAddAbility.addEventListener('click', () => openEditProfileModal('tab-edit-abilities'));
+
+    // Relationships editor in Modal
+    function renderEditRelationshipsList() {
+      const container = document.getElementById('edit-relationships-list');
+      container.innerHTML = '';
+      const relationships = currentAgent.relationships || [];
+      relationships.forEach(rel => addEditRelationshipCard(rel));
+    }
+
+    function addEditRelationshipCard(rel = {}) {
+      const container = document.getElementById('edit-relationships-list');
+      const card = document.createElement('div');
+      card.className = 'edit-item-card';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+          <strong style="color:var(--accent-yellow); font-size:0.88rem;">Relationship Contact</strong>
+          <button type="button" class="btn-del-item" onclick="this.closest('.edit-item-card').remove()">ลบ</button>
+        </div>
+        <div class="form-grid-3col" style="margin-bottom:0.6rem;">
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">ชื่อบุคคล / Contact Name</label>
+            <input type="text" class="input-field edit-rel-name" value="${rel.name || ''}" placeholder="ชื่อผู้ติดต่อ...">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">Played By / Reality</label>
+            <input type="text" class="input-field edit-rel-played" value="${rel.playedBy || ''}" placeholder="เช่น เพื่อนร่วมงาน, ญาติ">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; color:var(--text-muted);">Connection Bonus</label>
+            <input type="text" class="input-field edit-rel-bonus" value="${rel.bonus || ''}" placeholder="โบนัสความร่วมมือ...">
+          </div>
+        </div>
+        <div>
+          <label style="font-size:0.78rem; color:var(--text-muted);">Description (รายละเอียดความสัมพันธ์)</label>
+          <textarea class="input-field input-textarea edit-rel-desc" style="min-height:50px;">${rel.desc || ''}</textarea>
+        </div>
+      `;
+      container.appendChild(card);
+    }
+
+    const btnAddEditRel = document.getElementById('btn-add-edit-relationship');
+    if (btnAddEditRel) btnAddEditRel.addEventListener('click', () => addEditRelationshipCard());
+
+    const btnQuickAddRel = document.getElementById('btn-quick-add-relationship');
+    if (btnQuickAddRel) btnQuickAddRel.addEventListener('click', () => openEditProfileModal('tab-edit-abilities'));
+
+    // Save All Changes in Edit Modal
+    if (btnSaveEditProfile) {
+      btnSaveEditProfile.addEventListener('click', () => {
+        const { canEdit } = isCurrentUserAllowedToEdit();
+        if (!canEdit || !currentAgent) return;
+
+        const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+        if (!accounts[currentUserKey]) return;
+
+        currentAgent.title = document.getElementById('edit-agent-title').value.trim();
+        currentAgent.standing = document.getElementById('edit-agent-standing').value.trim();
+        currentAgent.id = document.getElementById('edit-agent-id').value.trim();
+        currentAgent.avatar = editAvatarBase64;
+
+        currentAgent.commendations = parseInt(document.getElementById('edit-metric-commendations').value) || 0;
+        currentAgent.demerits = parseInt(document.getElementById('edit-metric-demerits').value) || 0;
+        currentAgent.burnout = parseInt(document.getElementById('edit-metric-burnout').value) || 0;
+
+        const newPassword = document.getElementById('edit-agent-password').value;
+        if (newPassword) {
+          accounts[currentUserKey].password = newPassword;
+        }
+
+        if (!currentAgent.arc) currentAgent.arc = {};
+        currentAgent.arc.anomaly = document.getElementById('edit-arc-anomaly').value.trim();
+        currentAgent.arc.reality = document.getElementById('edit-arc-reality').value.trim();
+        currentAgent.arc.competency = document.getElementById('edit-arc-competency').value.trim();
+        currentAgent.arc.anomalyManifestation = document.getElementById('edit-arc-manifest').value.trim();
+        currentAgent.arc.realityTrigger = document.getElementById('edit-arc-reality-trigger').value.trim();
+        currentAgent.arc.primeDirective = document.getElementById('edit-arc-prime-directive').value.trim();
+        currentAgent.arc.burnoutRelease = document.getElementById('edit-arc-burnout-release').value.trim();
+
+        currentAgent.arc.sanctionedBehaviors = [
+          { text: document.getElementById('edit-sb-text-0').value.trim(), done: document.getElementById('edit-sb-done-0').checked },
+          { text: document.getElementById('edit-sb-text-1').value.trim(), done: document.getElementById('edit-sb-done-1').checked },
+          { text: document.getElementById('edit-sb-text-2').value.trim(), done: document.getElementById('edit-sb-done-2').checked }
+        ];
+
+        if (!currentAgent.qualities) currentAgent.qualities = {};
+        QUALITIES_DATA.forEach(q => {
+          const inputEl = document.getElementById(`edit-qa-input-${q.id}`);
+          const val = inputEl ? parseInt(inputEl.value) || 0 : 0;
+          currentAgent.qualities[q.id] = { max: val, current: val };
+        });
+
+        const newAbilities = [];
+        document.querySelectorAll('#edit-abilities-list .edit-item-card').forEach(card => {
+          newAbilities.push({
+            name: card.querySelector('.edit-ab-name')?.value.trim() || '',
+            quality: card.querySelector('.edit-ab-quality')?.value.trim() || '',
+            trigger: card.querySelector('.edit-ab-trigger')?.value.trim() || '',
+            success: card.querySelector('.edit-ab-success')?.value.trim() || '',
+            specialSuccess: card.querySelector('.edit-ab-special')?.value.trim() || '',
+            failure: card.querySelector('.edit-ab-failure')?.value.trim() || ''
+          });
+        });
+        currentAgent.abilities = newAbilities;
+
+        const newRelationships = [];
+        document.querySelectorAll('#edit-relationships-list .edit-item-card').forEach(card => {
+          newRelationships.push({
+            name: card.querySelector('.edit-rel-name')?.value.trim() || '',
+            playedBy: card.querySelector('.edit-rel-played')?.value.trim() || '',
+            bonus: card.querySelector('.edit-rel-bonus')?.value.trim() || '',
+            desc: card.querySelector('.edit-rel-desc')?.value.trim() || ''
+          });
+        });
+        currentAgent.relationships = newRelationships;
+
+        currentAgent.questionnaire = {
+          emergencyContact: document.getElementById('edit-q-contact').value.trim(),
+          relationship: document.getElementById('edit-q-relation').value.trim(),
+          salary: document.getElementById('edit-q-salary').value.trim(),
+          q1_anomalyContact: document.getElementById('edit-q-1').value.trim(),
+          q2_agencyFound: document.getElementById('edit-q-2').value.trim(),
+          q3_manifestation: document.getElementById('edit-q-3').value.trim(),
+          q4_coffee: document.getElementById('edit-q-4').value.trim(),
+          q5_experience: document.getElementById('edit-q-5').value.trim(),
+          q6_software: document.getElementById('edit-q-6').value.trim(),
+          q7_teamValue: document.getElementById('edit-q-7').value.trim(),
+          notes: document.getElementById('edit-q-notes').value.trim()
+        };
+
+        accounts[currentUserKey].character = currentAgent;
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+
+        closeEditProfileModal();
+        renderProfile();
+
+        const toast = document.getElementById('toast-roll');
+        const title = document.getElementById('toast-title');
+        const desc = document.getElementById('toast-desc');
+        if (toast && title && desc) {
+          title.innerHTML = `💾 บันทึกข้อมูลสำเร็จ!`;
+          title.style.color = 'var(--accent-green)';
+          desc.innerHTML = `แฟ้มประวัติของตัวแทน <strong>${currentAgent.name || currentUserKey}</strong> ได้รับการอัปเดตเรียบร้อยแล้ว`;
+          toast.style.display = 'flex';
+          setTimeout(() => { toast.style.display = 'none'; }, 3500);
+        }
+      });
+    }
+
+    // Retire Modal Logic
+    const retireModal = document.getElementById('retire-modal');
+    const btnRetireAgent = document.getElementById('btn-retire-agent');
+    const btnCloseRetireModal = document.getElementById('btn-close-retire-modal');
+    const btnCancelRetire = document.getElementById('btn-cancel-retire');
+    const btnConfirmRetireFinal = document.getElementById('btn-confirm-retire-final');
+    const retireTargetName = document.getElementById('retire-target-name');
+
+    function openRetireModal() {
+      if (retireTargetName) retireTargetName.textContent = `"${currentUserKey}"`;
+      if (retireModal) retireModal.classList.add('active');
+    }
+
+    function closeRetireModal() {
+      if (retireModal) retireModal.classList.remove('active');
+    }
+
+    if (btnRetireAgent) btnRetireAgent.addEventListener('click', openRetireModal);
+    if (btnCloseRetireModal) btnCloseRetireModal.addEventListener('click', closeRetireModal);
+    if (btnCancelRetire) btnCancelRetire.addEventListener('click', closeRetireModal);
+    if (retireModal) {
+      retireModal.addEventListener('click', (e) => {
+        if (e.target === retireModal) closeRetireModal();
+      });
+    }
+
+    if (btnConfirmRetireFinal) {
+      btnConfirmRetireFinal.addEventListener('click', () => {
+        btnConfirmRetireFinal.innerHTML = `<span>⏳ กำลังลบแฟ้มข้อมูล...</span>`;
+        btnConfirmRetireFinal.disabled = true;
+
+        const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+        delete accounts[currentUserKey];
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+        localStorage.removeItem('triangle_current_user');
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 400);
+      });
+    }
+
+    // Logout
+    document.getElementById('btn-logout').addEventListener('click', () => {
+      localStorage.removeItem('triangle_current_user');
+      window.location.href = 'index.html';
+    });
+
+    // Initialize on DOM load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAgentProfile();
+    });
+  </script>
+</body>
+</html>

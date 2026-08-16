@@ -4,34 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Triangle Agency // สร้างตัวละคร (Agent Registration & Onboarding)</title>
-  <meta name="description" content="ระบบสร้างตัวละคร Triangle Agency ตามเอกสาร Character Organization Sheets">
+  <meta name="description" content="ระบบลงทะเบียนและสร้างตัวละคร Triangle Agency ตามเอกสาร Character Organization Sheets และ Agent Dossier">
   
-  <!-- Google Fonts: Inter, Poppins, Space Mono -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Google Fonts: Inter, Poppins, Space Mono, Prompt -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800;900&family=Prompt:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
+      /* Corporate Dark Theme Palette */
       --bg-base: #060312;
-      --bg-surface: #0e0722;
-      --bg-surface-elevated: #150d36;
-      --bg-navbar: rgba(10, 5, 28, 0.94);
+      --bg-surface: #0c0620;
+      --bg-surface-elevated: #130a30;
+      --bg-surface-glass: rgba(12, 6, 32, 0.75);
+      --bg-navbar: rgba(8, 4, 24, 0.94);
       
-      --border-dark: #261758;
+      --border-dark: #23154f;
+      --border-medium: #3a257a;
       --border-light: rgba(255, 255, 255, 0.12);
       
       --text-main: #f8f9fe;
       --text-muted: #9ba3cb;
+      --text-dim: #687099;
       
       --accent-red: #ff2238;
       --accent-red-glow: rgba(255, 34, 56, 0.45);
       --accent-blue: #0055ff;
+      --accent-blue-glow: rgba(0, 85, 255, 0.4);
       --accent-yellow: #f0ab00;
+      --accent-yellow-glow: rgba(240, 171, 0, 0.4);
       --accent-green: #00e676;
+      --accent-green-glow: rgba(0, 230, 118, 0.4);
+      --accent-cyan: #00d4ff;
       
-      --font-heading: 'Poppins', sans-serif;
-      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-heading: 'Poppins', 'Prompt', sans-serif;
+      --font-body: 'Inter', 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
 
@@ -49,31 +57,39 @@
       display: flex;
       flex-direction: column;
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.5) 0%, transparent 65%),
-        radial-gradient(circle at 85% 30%, rgba(255, 34, 56, 0.08) 0%, transparent 45%);
+        radial-gradient(circle at 50% 0%, rgba(42, 27, 94, 0.6) 0%, transparent 65%),
+        radial-gradient(circle at 90% 20%, rgba(255, 34, 56, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 10% 60%, rgba(0, 85, 255, 0.08) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
       background-attachment: fixed;
       -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
+      line-height: 1.55;
+      overflow-x: hidden;
     }
 
     /* Top Navigation */
     .top-navbar {
       background-color: var(--bg-navbar);
-      border-bottom: 1px solid var(--border-dark);
-      backdrop-filter: blur(14px);
+      border-bottom: 1.5px solid var(--border-dark);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+      width: 100%;
     }
 
     .navbar-container {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
       padding: 0.85rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1rem;
     }
 
     .brand-logo {
@@ -93,7 +109,7 @@
       align-items: center;
       justify-content: center;
       padding: 6px;
-      box-shadow: 0 0 16px var(--accent-red-glow);
+      box-shadow: 0 0 18px var(--accent-red-glow);
     }
 
     .logo-triangle-svg {
@@ -105,94 +121,121 @@
     .brand-name {
       font-family: var(--font-heading);
       font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: 0.08em;
+      font-size: 1.22rem;
+      letter-spacing: 0.05em;
       color: #ffffff;
       line-height: 1.1;
     }
 
     .brand-tag {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 700;
       color: var(--accent-red);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.4rem;
-      padding: 0.5rem 1.2rem;
-      font-family: var(--font-body);
-      font-size: 0.92rem;
+      gap: 0.45rem;
+      padding: 0.55rem 1.25rem;
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
       font-weight: 600;
-      border-radius: 6px;
+      border-radius: 8px;
       text-decoration: none;
       cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
+      border: 1.5px solid transparent;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .btn-outline {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.03);
       color: var(--text-muted);
       border-color: var(--border-dark);
     }
+
     .btn-outline:hover {
       color: #ffffff;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border-medium);
+      transform: translateY(-1px);
     }
 
     .btn-primary {
       background: var(--accent-red);
       color: #ffffff;
-      box-shadow: 0 0 14px var(--accent-red-glow);
+      box-shadow: 0 0 16px var(--accent-red-glow);
     }
+
     .btn-primary:hover {
       background: #ff3b4f;
-      box-shadow: 0 0 22px rgba(255, 34, 56, 0.6);
+      box-shadow: 0 0 24px rgba(255, 34, 56, 0.65);
+      transform: translateY(-1px);
     }
 
     /* Main Container */
     .creator-wrapper {
       max-width: 1200px;
-      margin: 2rem auto 4rem;
+      margin: 2rem auto 5rem;
       padding: 0 1.5rem;
       width: 100%;
       flex: 1;
     }
 
-    /* Page Header Title */
+    /* Page Header Banner */
     .page-title-banner {
       background: var(--bg-surface);
-      border: 1px solid var(--border-dark);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 1.6rem 2rem;
       margin-bottom: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.25rem;
       border-left: 6px solid var(--accent-red);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
     }
 
-    .page-title-banner h1 {
+    .page-title-banner::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 300px;
+      background: linear-gradient(90deg, transparent, rgba(255, 34, 56, 0.04));
+      pointer-events: none;
+    }
+
+    .banner-title-text h1 {
       font-family: var(--font-heading);
       font-size: 1.6rem;
+      font-weight: 800;
       color: #ffffff;
+      letter-spacing: -0.01em;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
+    }
+
+    .banner-title-text p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 0.3rem;
     }
 
     .stamp-badge {
@@ -202,26 +245,32 @@
       color: var(--accent-red);
       background: rgba(255, 34, 56, 0.12);
       border: 1px solid var(--accent-red);
-      padding: 0.3rem 0.75rem;
+      padding: 0.35rem 0.85rem;
       border-radius: 4px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      box-shadow: 0 0 12px var(--accent-red-glow);
     }
 
-    /* Sections / Cards */
+    /* Section Step Cards */
     .sheet-card {
       background: var(--bg-surface);
-      border: 1px solid var(--border-dark);
-      border-radius: 12px;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 14px;
       margin-bottom: 2rem;
       overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.25s;
+    }
+
+    .sheet-card:focus-within {
+      border-color: rgba(0, 85, 255, 0.5);
     }
 
     .sheet-card-header {
-      background: #0c0620;
+      background: #09041a;
       border-bottom: 2px solid var(--border-dark);
-      padding: 1rem 1.75rem;
+      padding: 1.15rem 1.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -231,72 +280,100 @@
 
     .sheet-card-header h2 {
       font-family: var(--font-heading);
-      font-size: 1.15rem;
+      font-size: 1.18rem;
+      font-weight: 700;
       color: #ffffff;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
 
-    .sheet-card-header.header-red {
-      border-bottom-color: var(--accent-red);
-    }
-    .sheet-card-header.header-blue {
-      border-bottom-color: var(--accent-blue);
-    }
-    .sheet-card-header.header-yellow {
-      border-bottom-color: var(--accent-yellow);
-    }
+    .sheet-card-header.header-red { border-bottom-color: var(--accent-red); }
+    .sheet-card-header.header-blue { border-bottom-color: var(--accent-blue); }
+    .sheet-card-header.header-yellow { border-bottom-color: var(--accent-yellow); }
 
     .sheet-card-body {
-      padding: 1.75rem;
+      padding: 2rem;
     }
 
-    /* Section 1 Layout: Left Avatar Photo Area + Right Details */
+    /* Section 1: Live Lanyard ID Badge Card Preview & Inputs */
     .section-account-layout {
       display: grid;
       grid-template-columns: 260px 1fr;
-      gap: 2rem;
-      align-items: stretch;
+      gap: 2.5rem;
+      align-items: start;
     }
 
-    .agent-photo-upload-container {
+    /* Authentic Lanyard ID Card Preview (Matches profile.html & PDF) */
+    .badge-card-container {
       display: flex;
       flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .badge-card-box {
+      background: #08031a;
+      border: 2px solid var(--border-medium);
+      border-radius: 16px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .badge-card-clip-bar {
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1.5px dashed var(--border-dark);
-      border-radius: 10px;
-      padding: 1.5rem 1.25rem;
-      text-align: center;
-      transition: all 0.2s ease;
-      height: 100%;
-      min-height: 280px;
+      padding: 0 0.25rem 0.25rem;
     }
 
-    .agent-photo-upload-container:hover {
-      border-color: var(--accent-red);
-      background: rgba(255, 34, 56, 0.04);
-    }
-
-    .agent-photo-preview-box {
-      width: 100%;
-      max-width: 210px;
-      height: 220px;
-      background: #08031a;
-      border: 1.5px solid var(--border-dark);
+    .badge-lanyard-hole {
+      width: 55px;
+      height: 8px;
+      background: #1a0f3d;
+      border: 1px solid var(--border-medium);
       border-radius: 8px;
+      margin: 0 auto;
+    }
+
+    .badge-barcode-lines {
+      display: flex;
+      gap: 2px;
+      height: 12px;
+      align-items: center;
+    }
+
+    .badge-barcode-lines span {
+      display: block;
+      background: var(--text-dim);
+      height: 100%;
+    }
+
+    .badge-photo-window {
+      width: 100%;
+      height: 220px;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 10px;
+      background: #060214;
+      position: relative;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0.5rem 0 1rem;
-      position: relative;
-      box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
     }
 
-    .agent-photo-preview-box img {
+    .badge-photo-window:hover {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 15px var(--accent-red-glow);
+    }
+
+    .badge-photo-window img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -304,44 +381,89 @@
       display: none;
     }
 
-    .agent-photo-placeholder {
+    .badge-camera-pin {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: var(--accent-red);
+      font-size: 1.1rem;
+      z-index: 2;
+    }
+
+    .badge-photo-placeholder-text {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      gap: 0.35rem;
+      color: var(--text-dim);
+      text-align: center;
+      padding: 0.75rem;
+    }
+
+    .badge-data-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .badge-data-label {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 800;
       color: var(--text-muted);
-      gap: 0.6rem;
-      padding: 1rem;
+      margin-bottom: 2px;
     }
 
-    .agent-photo-placeholder svg {
-      width: 56px;
-      height: 56px;
-      fill: var(--text-muted);
-      opacity: 0.6;
-    }
-
-    .agent-photo-placeholder span {
-      font-size: 0.75rem;
-      font-family: var(--font-mono);
-      letter-spacing: 0.08em;
-      color: #9ba3cb;
-    }
-
-    .photo-controls-group {
-      width: 100%;
+    .badge-data-value {
+      background: #0d0628;
+      border-bottom: 2px solid var(--accent-red);
+      padding: 0.3rem 0.55rem;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      min-height: 28px;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      border-radius: 3px 3px 0 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge-bottom-logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 0.35rem;
+      padding: 0 0.2rem;
+    }
+
+    .badge-logo-text {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 0.88rem;
+      color: var(--accent-red);
+      line-height: 0.95;
+      text-align: right;
+    }
+
+    .badge-instruction-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent-yellow);
+      font-weight: 600;
+      margin-top: 0.2rem;
+      text-align: center;
     }
 
     .btn-choose-photo {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-light);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-medium);
       color: #ffffff;
-      font-size: 0.85rem;
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
       font-weight: 600;
-      padding: 0.5rem 1rem;
+      padding: 0.45rem 1rem;
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.2s;
@@ -363,28 +485,28 @@
       background: transparent;
       border: none;
       color: var(--accent-red);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-family: var(--font-mono);
       cursor: pointer;
-      margin-top: 0.5rem;
       text-decoration: underline;
+      text-align: center;
     }
 
     /* Form Layout Grids */
     .grid-2col {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
+      gap: 1.35rem;
     }
 
     .grid-3col {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      gap: 1.35rem;
     }
 
     .form-group {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.35rem;
     }
 
     .form-group label {
@@ -393,43 +515,42 @@
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-main);
-      margin-bottom: 0.4rem;
-      letter-spacing: 0.02em;
+      margin-bottom: 0.45rem;
+      letter-spacing: 0.01em;
     }
 
     .form-group label span.sub {
       color: var(--text-muted);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 400;
     }
 
     .input-field {
       width: 100%;
-      padding: 0.65rem 0.9rem;
+      padding: 0.75rem 1rem;
       background: #08031a;
-      border: 1px solid var(--border-dark);
-      border-radius: 6px;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 8px;
       color: #ffffff;
       font-family: var(--font-body);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       transition: all 0.2s ease;
+      outline: none;
     }
 
     .input-field:focus {
-      outline: none;
-      border-color: var(--accent-red);
-      box-shadow: 0 0 0 3px rgba(255, 34, 56, 0.2);
-      background: #0f0729;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 15px var(--accent-blue-glow);
+      background: #0d0628;
     }
 
-    /* Styled Select Dropdown */
     select.input-field {
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff2238'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230055ff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
       background-repeat: no-repeat;
-      background-position: right 0.75rem center;
+      background-position: right 0.85rem center;
       background-size: 1.2rem;
       cursor: pointer;
       padding-right: 2.2rem;
@@ -442,61 +563,77 @@
     }
 
     textarea.input-field {
-      min-height: 80px;
+      min-height: 85px;
       resize: vertical;
       line-height: 1.5;
     }
 
-    /* ARC Box Grid */
+    /* ARC Box Grid with Triangle Emblem Icons */
     .arc-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      gap: 1.5rem;
       margin-bottom: 1.5rem;
     }
 
     .arc-column-card {
       background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-dark);
-      border-radius: 8px;
-      padding: 1.25rem;
-      border-top: 4px solid var(--border-dark);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .arc-column-card.col-anomaly { border-top-color: var(--accent-blue); }
-    .arc-column-card.col-reality { border-top-color: var(--accent-yellow); }
-    .arc-column-card.col-competency { border-top-color: var(--accent-red); }
+    .arc-column-card.col-anomaly { border-top: 4px solid var(--accent-blue); }
+    .arc-column-card.col-reality { border-top: 4px solid var(--accent-yellow); }
+    .arc-column-card.col-competency { border-top: 4px solid var(--accent-red); }
 
     .arc-col-title {
       font-family: var(--font-heading);
-      font-size: 0.95rem;
-      font-weight: 700;
+      font-size: 0.98rem;
+      font-weight: 800;
       color: #ffffff;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    /* 9 Quality Assurances Matrix */
+    .arc-triangle-badge-mini {
+      width: 28px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arc-triangle-badge-mini svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 9 Quality Assurances Matrix with SVG Triangles */
     .qa-matrix-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      gap: 1.35rem;
     }
 
     .qa-item-box {
       background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-dark);
-      border-radius: 8px;
-      padding: 1rem;
+      border: 1.5px solid var(--border-dark);
+      border-radius: 12px;
+      padding: 1.25rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: all 0.2s ease;
     }
 
     .qa-item-box:hover {
-      border-color: rgba(255, 34, 56, 0.4);
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 18px rgba(0, 85, 255, 0.2);
     }
 
     .qa-box-header {
@@ -504,98 +641,160 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 0.35rem;
+      gap: 0.5rem;
+    }
+
+    .qa-box-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .qa-item-max-badge {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-align: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 1.5px solid var(--accent-red);
+      background: rgba(255, 34, 56, 0.22);
+      border-radius: 6px;
+      outline: none;
+      transition: all 0.18s ease;
+      box-shadow: 0 0 8px rgba(255, 34, 56, 0.3);
+      -moz-appearance: textfield;
+      appearance: textfield;
+      cursor: text;
+    }
+
+    .qa-item-max-badge::-webkit-outer-spin-button,
+    .qa-item-max-badge::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .qa-item-max-badge:hover {
+      background: rgba(255, 34, 56, 0.35);
+      border-color: #ff4d60;
+      box-shadow: 0 0 12px var(--accent-red-glow);
+    }
+
+    .qa-item-max-badge:focus {
+      background: #120418;
+      border-color: #00d4ff;
+      box-shadow: 0 0 14px rgba(0, 212, 255, 0.6);
+      color: #ffffff;
     }
 
     .qa-box-name {
       font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 1rem;
+      font-weight: 800;
+      font-size: 1.05rem;
       color: #ffffff;
     }
 
     .qa-box-desc {
       font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 0.75rem;
-      line-height: 1.35;
+      margin-bottom: 0.95rem;
+      line-height: 1.4;
     }
 
     .qa-pips-row {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       align-items: center;
     }
 
-    .qa-pip-box {
-      width: 24px;
+    .qa-pip-btn {
+      width: 32px;
       height: 24px;
-      border: 1.5px solid var(--accent-blue);
-      border-radius: 4px;
-      background: rgba(0, 85, 255, 0.05);
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.15s;
+      transition: all 0.15s ease;
+      background: transparent;
+      border: none;
+      padding: 0;
     }
 
-    .qa-pip-box.active {
-      background: var(--accent-blue);
-      box-shadow: 0 0 10px rgba(0, 85, 255, 0.6);
+    .qa-pip-btn svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 4px rgba(0, 85, 255, 0.15));
     }
 
-    .qa-pip-box.active::after {
-      content: "▲";
-      font-size: 10px;
-      color: #ffffff;
+    .qa-pip-btn polygon {
+      fill: rgba(255, 255, 255, 0.05);
+      stroke: #4a3485;
+      stroke-width: 2.5;
+      stroke-linejoin: round;
+      transition: all 0.15s ease;
     }
 
-    /* Entry Cards (Abilities & Relationships) */
+    .qa-pip-btn:hover polygon {
+      fill: rgba(0, 85, 255, 0.3);
+      stroke: var(--accent-blue);
+    }
+
+    .qa-pip-btn.active polygon {
+      fill: var(--accent-blue);
+      stroke: #70a4ff;
+      filter: drop-shadow(0 0 6px var(--accent-blue-glow));
+    }
+
+    /* Abilities & Relationships Cards */
     .ability-entry-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-dark);
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
       border-left: 5px solid var(--accent-blue);
-      border-radius: 8px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
+      border-radius: 12px;
+      padding: 1.35rem;
+      margin-bottom: 1.25rem;
       position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
     .relationship-entry-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-dark);
+      background: #08031a;
+      border: 1.5px solid var(--border-dark);
       border-left: 5px solid var(--accent-yellow);
-      border-radius: 8px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
+      border-radius: 12px;
+      padding: 1.35rem;
+      margin-bottom: 1.25rem;
       position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
     .entry-card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.85rem;
-      padding-bottom: 0.5rem;
+      margin-bottom: 0.95rem;
+      padding-bottom: 0.6rem;
       border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
     }
 
     .entry-card-title {
       font-family: var(--font-heading);
-      font-size: 0.88rem;
+      font-size: 0.95rem;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.45rem;
     }
 
     .btn-delete-card {
       background: rgba(255, 34, 56, 0.1);
       border: 1px solid rgba(255, 34, 56, 0.35);
       color: #ff5e6c;
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 5px;
+      font-size: 0.78rem;
       font-family: var(--font-mono);
       cursor: pointer;
       transition: all 0.2s;
@@ -607,11 +806,11 @@
       box-shadow: 0 0 10px var(--accent-red-glow);
     }
 
-    /* Save Action Sticky Footer */
+    /* Bottom Sticky Action Bar */
     .save-action-bar {
       background: var(--bg-surface-elevated);
       border: 1.5px solid var(--border-dark);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 1.25rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -619,7 +818,8 @@
       position: sticky;
       bottom: 1.5rem;
       z-index: 90;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--accent-red-glow);
+      box-shadow: 0 12px 45px rgba(0, 0, 0, 0.85), 0 0 25px var(--accent-red-glow);
+      backdrop-filter: blur(14px);
     }
 
     /* Confirmation Modal Styling */
@@ -629,9 +829,9 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(4, 2, 14, 0.88);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(4, 2, 14, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       z-index: 10000;
       display: none;
       align-items: center;
@@ -652,10 +852,10 @@
     .confirm-modal-card {
       background: var(--bg-surface);
       border: 1.5px solid var(--accent-red);
-      border-radius: 14px;
+      border-radius: 16px;
       width: 100%;
-      max-width: 520px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 30px var(--accent-red-glow);
+      max-width: 580px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 35px var(--accent-red-glow);
       overflow: hidden;
       position: relative;
     }
@@ -663,7 +863,7 @@
     .confirm-modal-header {
       background: #090418;
       border-bottom: 1.5px solid var(--border-dark);
-      padding: 1.25rem 1.5rem;
+      padding: 1.35rem 1.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -676,15 +876,15 @@
     }
 
     .confirm-icon-box {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       background: rgba(255, 34, 56, 0.15);
       border: 1px solid var(--accent-red);
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 12px var(--accent-red-glow);
+      box-shadow: 0 0 14px var(--accent-red-glow);
     }
 
     .confirm-tag {
@@ -698,8 +898,8 @@
 
     .confirm-heading {
       font-family: var(--font-heading);
-      font-size: 1.15rem;
-      font-weight: 700;
+      font-size: 1.2rem;
+      font-weight: 800;
       color: #ffffff;
       margin: 0;
     }
@@ -725,11 +925,11 @@
     }
 
     .confirm-modal-body {
-      padding: 1.5rem;
+      padding: 1.75rem;
     }
 
     .confirm-desc {
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       color: var(--text-main);
       line-height: 1.55;
       margin-bottom: 1.25rem;
@@ -738,19 +938,19 @@
     .confirm-summary-box {
       background: #080318;
       border: 1px solid var(--border-dark);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      padding: 1.15rem 1.35rem;
       margin-bottom: 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.65rem;
     }
 
     .summary-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       gap: 1rem;
     }
 
@@ -770,11 +970,11 @@
     }
 
     .confirm-alert-note {
-      background: rgba(240, 171, 0, 0.1);
+      background: rgba(240, 171, 0, 0.08);
       border: 1px solid rgba(240, 171, 0, 0.3);
-      border-radius: 6px;
-      padding: 0.75rem 1rem;
-      font-size: 0.82rem;
+      border-radius: 8px;
+      padding: 0.85rem 1.15rem;
+      font-size: 0.84rem;
       color: #ffd24d;
       line-height: 1.45;
     }
@@ -782,20 +982,20 @@
     .confirm-modal-actions {
       background: #070314;
       border-top: 1px solid var(--border-dark);
-      padding: 1.15rem 1.5rem;
+      padding: 1.25rem 1.75rem;
       display: flex;
-      gap: 0.85rem;
+      gap: 1rem;
       justify-content: flex-end;
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .section-account-layout {
         grid-template-columns: 1fr;
       }
-      .agent-photo-preview-box {
-        max-width: 180px;
-        height: 200px;
+      .badge-card-container {
+        max-width: 260px;
+        margin: 0 auto;
       }
       .grid-3col, .grid-2col, .arc-grid, .qa-matrix-grid {
         grid-template-columns: 1fr;
@@ -803,6 +1003,7 @@
       .save-action-bar {
         flex-direction: column;
         gap: 1rem;
+        text-align: center;
       }
       .confirm-modal-actions {
         flex-direction: column;
@@ -826,6 +1027,12 @@
           <div class="brand-tag">AGENT ONBOARDING // REV 1.2</div>
         </div>
       </a>
+
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-outline">
+          <span>⌂ หน้าแรก (Home Lobby)</span>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -834,12 +1041,12 @@
 
     <!-- Banner -->
     <div class="page-title-banner">
-      <div>
+      <div class="banner-title-text">
         <h1>
-          <span>FORM ARC-01: FIELD AGENT DOSSIER</span>
+          <span>FORM ARC-01: FIELD AGENT DOSSIER REGISTRATION</span>
         </h1>
-        <p style="color:var(--text-muted); font-size:0.9rem; margin-top:0.35rem;">
-          กรอกข้อมูลสร้างตัวละครและประวัติสำหรับหน่วยงาน Triangle Agency ตามแบบฟอร์มทางการ
+        <p>
+          ระบบลงทะเบียนตัวแทนภาคสนาม Triangle Agency พร้อมบันทึกเข้าสู่สารบบแฟ้มประวัติพนักงาน
         </p>
       </div>
       <span class="stamp-badge">CONFIDENTIAL ONBOARDING</span>
@@ -848,65 +1055,105 @@
     <form id="character-creator-form">
 
       <!-- =======================================================
-           SECTION 1: ข้อมูลบัญชีผู้ใช้ & รูปภาพประจำตัว
+           SECTION 1: ข้อมูลประจำตัวและบัตรพนักงานห้อยคอ (LANYARD ID BADGE)
            ======================================================= -->
       <section class="sheet-card">
         <div class="sheet-card-header header-red">
-          <h2>1. รหัสผ่านความปลอดภัย & ข้อมูลประจำตัว (Account & Identification)</h2>
-          <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--text-muted);">FOR SECURITY ARCHIVES</span>
+          <h2>1. ข้อมูลประจำตัวและบัตรเจ้าหน้าที่ (Agent ID & Identification)</h2>
+          <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--text-muted);">DOSSIER ID & CREDENTIALS</span>
         </div>
         <div class="sheet-card-body">
           
           <div class="section-account-layout">
             
-            <!-- ส่วนใส่รูปภาพและแสดงตัวอย่างภาพ -->
-            <div class="agent-photo-upload-container">
-              <label style="font-size:0.82rem; font-family:var(--font-heading); color:var(--text-main); font-weight:700;">
-                Agent Photo <span style="color:var(--text-muted); font-size:0.72rem; font-weight:400;">(รูปภาพประจำตัว)</span>
-              </label>
-
-              <div class="agent-photo-preview-box" id="photo-preview-box">
-                <img id="agent-photo-preview" src="" alt="Agent Photo Preview">
-                <div class="agent-photo-placeholder" id="photo-placeholder">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                  <span>NO PHOTO FILE</span>
-                  <span style="font-size:0.65rem; color:var(--text-muted);">คลิกปุ่มด้านล่างเพื่ออัปโหลด</span>
+            <!-- Live Lanyard ID Badge Card Preview (Matches profile.html & PDF) -->
+            <div class="badge-card-container">
+              <div class="badge-card-box">
+                
+                <div class="badge-card-clip-bar">
+                  <div class="badge-lanyard-hole"></div>
+                  <div class="badge-barcode-lines">
+                    <span style="width:2px;"></span>
+                    <span style="width:1px;"></span>
+                    <span style="width:3px;"></span>
+                    <span style="width:1px;"></span>
+                    <span style="width:2px;"></span>
+                    <span style="width:4px;"></span>
+                    <span style="width:1px;"></span>
+                  </div>
                 </div>
+
+                <div class="badge-photo-window" id="badge-photo-clicker" title="คลิกเพื่อเลือกไฟล์รูปภาพ">
+                  <span class="badge-camera-pin">📷</span>
+                  <img id="badge-agent-photo" src="" alt="Agent Photo Preview">
+                  <div class="badge-photo-placeholder-text" id="badge-photo-placeholder">
+                    <span style="font-size:2rem; color:var(--text-dim);">👤</span>
+                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">EMPLOYEE PHOTO</span>
+                    <span style="font-size:0.68rem; color:var(--accent-blue);">คลิกเพื่ออัปโหลด</span>
+                  </div>
+                </div>
+
+                <div class="badge-data-field">
+                  <div class="badge-data-label">Name</div>
+                  <div class="badge-data-value" id="preview-badge-name">-</div>
+                </div>
+
+                <div class="badge-data-field">
+                  <div class="badge-data-label">ID :</div>
+                  <div class="badge-data-value" id="preview-badge-id">ID-001</div>
+                </div>
+
+                <div class="badge-bottom-logo">
+                  <div></div>
+                  <div class="badge-logo-text">
+                    TRIANGLE<br>AGENCY
+                  </div>
+                </div>
+
               </div>
 
               <div class="photo-controls-group">
                 <button type="button" class="btn-choose-photo" id="btn-browse-photo">
-                  📷 เลือกรูปภาพตัวละคร
+                  📷 อัปโหลดรูปภาพตัวแทน...
                 </button>
                 <input type="file" id="agent-photo-input" accept="image/*" style="display:none;">
                 <button type="button" class="btn-remove-photo" id="btn-remove-photo">ลบรูปภาพ</button>
               </div>
             </div>
 
-            <!-- ส่วนกรอกข้อมูลประจำตัว -->
+            <!-- ฟิลด์ข้อมูลประจำตัว -->
             <div>
               <div class="grid-2col">
                 <div class="form-group">
-                  <label for="create-username">Username <span class="sub">(ชื่อตัวละคร / Agent Codename ที่ใช้ Login) *</span></label>
+                  <label for="create-username">Character Name <span class="sub">(ชื่อตัวละคร / Codename ที่ใช้ Login) *</span></label>
                   <input type="text" id="create-username" class="input-field" placeholder="เช่น Valerie Ross, Vance Sterling" required>
                 </div>
                 <div class="form-group">
-                  <label for="create-password">Security Password <span class="sub">(รหัสผ่านสำหรับเข้าสู่ระบบ) *</span></label>
+                  <label for="create-password">Security Password <span class="sub">(รหัสผ่านเข้าสู่ระบบ) *</span></label>
                   <input type="password" id="create-password" class="input-field" placeholder="กำหนดรหัสผ่าน (อย่างน้อย 4 ตัวอักษร)" required minlength="4">
                 </div>
               </div>
 
-              <div class="grid-2col">
+              <div class="grid-3col">
+                <div class="form-group">
+                  <label for="agent-id">ID Code <span class="sub">(รหัสประจำตัวพนักงาน)</span></label>
+                  <input type="text" id="agent-id" class="input-field" value="ID-001" placeholder="เช่น ID-001, AGT-4402">
+                </div>
                 <div class="form-group">
                   <label for="agent-title">Agency Title <span class="sub">(ตำแหน่งองค์กร)</span></label>
-                  <input type="text" id="agent-title" class="input-field" value="Trainee" placeholder="เช่น Trainee, Associate, Director">
+                  <input type="text" id="agent-title" class="input-field" value="Trainee Field Agent" placeholder="เช่น Trainee, Associate, Director">
                 </div>
                 <div class="form-group">
-                  <label for="agent-standing">Agency Standing <span class="sub">(สถานะในองค์กร)</span></label>
-                  <input type="text" id="agent-standing" class="input-field" value="Good Standing" placeholder="Good Standing, Probation">
+                  <label for="agent-standing">Agency Standing <span class="sub">(สถานภาพ)</span></label>
+                  <input type="text" id="agent-standing" class="input-field" value="Good Standing" placeholder="Good Standing, Executive Standing">
                 </div>
+              </div>
+
+              <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-dark); border-radius:8px; padding:0.85rem 1rem; margin-top:0.5rem;">
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-green); font-weight:700;">● INITIAL EVALUATIVE METRICS:</span>
+                <span style="font-size:0.82rem; color:var(--text-muted); margin-left:0.5rem;">
+                  Commendations: <strong>0</strong> | Demerits: <strong>0</strong> | Additional Burnout: <strong>0</strong>
+                </span>
               </div>
             </div>
 
@@ -916,7 +1163,7 @@
       </section>
 
       <!-- =======================================================
-           SECTION 2: ARC (พร้อมปุ่มเปิดอ่านคู่มือหน้า 31 ถึงหน้า 62)
+           SECTION 2: โครงสร้าง ARC (Anomaly, Reality, Competency)
            ======================================================= -->
       <section class="sheet-card">
         <div class="sheet-card-header header-yellow">
@@ -925,8 +1172,7 @@
             <span style="font-size:0.75rem; font-family:var(--font-mono); color:var(--text-muted);">CORE FRAMEWORK // OFFICIAL DOSSIER</span>
           </div>
 
-          <!-- ปุ่มเปิดคู่มือหนังสือ PDF หน้า 31 ถึง 62 -->
-          <a href="Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" class="btn btn-outline" style="border-color:var(--accent-yellow); color:#ffd700; background:rgba(240,171,0,0.1); font-size:0.85rem; padding:0.45rem 1rem;">
+          <a href="../asset/Triangle_Agency_-_Spreads_1_2.pdf#page=31" target="_blank" class="btn btn-outline" style="border-color:var(--accent-yellow); color:#ffd700; background:rgba(240,171,0,0.1); font-size:0.82rem; padding:0.4rem 0.9rem;">
             📖 เปิดอ่านคู่มือ ARC ในหนังสือ (หน้า 31 - 62)
           </a>
         </div>
@@ -936,8 +1182,16 @@
             <!-- Anomaly (9 ชนิดทางการ) -->
             <div class="arc-column-card col-anomaly">
               <div class="arc-col-title">
-                <span>ANOMALY (สิ่งผิดปกติ)</span>
-                <span style="font-size:0.75rem; color:var(--accent-blue);">[PARANORMAL]</span>
+                <span style="display:flex; align-items:center; gap:0.45rem;">
+                  <span class="arc-triangle-badge-mini">
+                    <svg viewBox="0 0 100 86" fill="none">
+                      <polygon points="50,4 96,82 4,82" fill="#0055ff"/>
+                      <text x="50" y="66" fill="#ffffff" font-family="sans-serif" font-weight="900" font-size="46" text-anchor="middle">A</text>
+                    </svg>
+                  </span>
+                  <span>ANOMALY (สิ่งผิดปกติ)</span>
+                </span>
+                <span style="font-size:0.72rem; color:var(--accent-blue); font-family:var(--font-mono);">[PARANORMAL]</span>
               </div>
               <div class="form-group">
                 <label for="arc-anomaly">Anomaly Type <span class="sub">(เลือกจาก 9 สายทางการ)</span></label>
@@ -956,8 +1210,8 @@
                 </select>
                 <input type="text" id="arc-anomaly-custom" class="input-field" placeholder="ระบุ Anomaly Type ของคุณ..." style="display:none; margin-top:0.4rem;">
               </div>
-              <div class="form-group">
-                <label for="arc-anomaly-manifest">Visual Manifestation</label>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="arc-anomaly-manifest">Visual Manifestation <span class="sub">(ลักษณะการปรากฏ)</span></label>
                 <textarea id="arc-anomaly-manifest" class="input-field" placeholder="ลักษณะการแสดงออกทางกายภาพ/ไอพลัง..."></textarea>
               </div>
             </div>
@@ -965,8 +1219,16 @@
             <!-- Reality (9 สายทางการ) -->
             <div class="arc-column-card col-reality">
               <div class="arc-col-title">
-                <span>REALITY (ความเป็นจริง)</span>
-                <span style="font-size:0.75rem; color:var(--accent-yellow);">[MUNDANE LIFE]</span>
+                <span style="display:flex; align-items:center; gap:0.45rem;">
+                  <span class="arc-triangle-badge-mini">
+                    <svg viewBox="0 0 100 86" fill="none">
+                      <polygon points="50,4 96,82 4,82" fill="#f0ab00"/>
+                      <text x="50" y="66" fill="#ffffff" font-family="sans-serif" font-weight="900" font-size="46" text-anchor="middle">R</text>
+                    </svg>
+                  </span>
+                  <span>REALITY (ความเป็นจริง)</span>
+                </span>
+                <span style="font-size:0.72rem; color:var(--accent-yellow); font-family:var(--font-mono);">[MUNDANE LIFE]</span>
               </div>
               <div class="form-group">
                 <label for="arc-reality">Reality Anchor <span class="sub">(เลือกจาก 9 สายทางการ)</span></label>
@@ -985,17 +1247,25 @@
                 </select>
                 <input type="text" id="arc-reality-custom" class="input-field" placeholder="ระบุ Reality Anchor ของคุณ..." style="display:none; margin-top:0.4rem;">
               </div>
-              <div class="form-group">
+              <div class="form-group" style="margin-bottom:0;">
                 <label for="arc-reality-trigger">Reality Trigger <span class="sub">(GM จ่าย 3 Chaos)</span></label>
                 <textarea id="arc-reality-trigger" class="input-field" placeholder="เหตุการณ์ความจริงทางโลกที่แทรกแซงภารกิจ..."></textarea>
               </div>
             </div>
 
-            <!-- Competency (9 สายทางการในกฎ Official Rulebook หน้า 68-77) -->
+            <!-- Competency (9 สายทางการ) -->
             <div class="arc-column-card col-competency">
               <div class="arc-col-title">
-                <span>COMPETENCY (ความเชี่ยวชาญ)</span>
-                <span style="font-size:0.75rem; color:var(--accent-red);">[DEPARTMENT]</span>
+                <span style="display:flex; align-items:center; gap:0.45rem;">
+                  <span class="arc-triangle-badge-mini">
+                    <svg viewBox="0 0 100 86" fill="none">
+                      <polygon points="50,4 96,82 4,82" fill="#ff2238"/>
+                      <text x="50" y="66" fill="#ffffff" font-family="sans-serif" font-weight="900" font-size="46" text-anchor="middle">C</text>
+                    </svg>
+                  </span>
+                  <span>COMPETENCY (ความเชี่ยวชาญ)</span>
+                </span>
+                <span style="font-size:0.72rem; color:var(--accent-red); font-family:var(--font-mono);">[DEPARTMENT]</span>
               </div>
               <div class="form-group">
                 <label for="arc-competency">Competency Role <span class="sub">(9 แผนกทางการในคู่มือ)</span></label>
@@ -1014,7 +1284,7 @@
                 </select>
                 <input type="text" id="arc-competency-custom" class="input-field" placeholder="ระบุ Competency Role ของคุณ..." style="display:none; margin-top:0.4rem;">
               </div>
-              <div class="form-group">
+              <div class="form-group" style="margin-bottom:0;">
                 <label for="arc-prime-directive">Prime Directive <span class="sub">(ผิดกฎรับ 1 Demerit)</span></label>
                 <textarea id="arc-prime-directive" class="input-field" placeholder="ข้อห้ามเคร่งครัดขององค์กร..."></textarea>
               </div>
@@ -1038,7 +1308,7 @@
       </section>
 
       <!-- =======================================================
-           SECTION 3: QUALITY ASSURANCES (THE 9 QUALITIES - DEFAULT 0 QA)
+           SECTION 3: คุณสมบัติประเมินผล 9 ด้าน (QUALITY ASSURANCES)
            ======================================================= -->
       <section class="sheet-card">
         <div class="sheet-card-header header-blue">
@@ -1047,11 +1317,11 @@
         </div>
         <div class="sheet-card-body">
           <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:1.5rem;">
-            คลิกที่กล่องสามเหลี่ยมเพื่อกำหนดค่าความเชี่ยวชาญเริ่มต้น (Quality Assurances Rating) ประจำตัวละคร (เริ่มต้นที่ 0 QA)
+            คลิกที่ปุ่มสามเหลี่ยมเพื่อกำหนดระดับคะแนนเริ่มต้น (0 ถึง 5 แต้ม) สำหรับการทอยเต๋า D4 ประจำตัวละคร
           </p>
 
           <div class="qa-matrix-grid" id="qa-matrix-inputs">
-            <!-- 9 Qualities Generated Dynamically with 0 QA Default -->
+            <!-- 9 Qualities Generated Dynamically with Triangle Pips -->
           </div>
         </div>
       </section>
@@ -1061,7 +1331,7 @@
            ======================================================= -->
       <section class="sheet-card">
         <div class="sheet-card-header">
-          <h2>4. แบบสอบถามรับเข้าทำงาน (Welcome, Agent! Questionnaire)</h2>
+          <h2>4. แบบสอบถามรับเข้าทำงาน (Welcome, Agent! Questionnaire - หน้า 2)</h2>
           <span class="stamp-badge">HR ONBOARDING</span>
         </div>
         <div class="sheet-card-body">
@@ -1081,34 +1351,34 @@
           </div>
 
           <div class="form-group">
-            <label for="q-1">1. How did you come in contact with your Anomaly? <span class="sub">(คุณสัมผัสหรือได้รับ Anomaly มาอย่างไร?)</span></label>
+            <label for="q-1">1. How did you come in contact with your Anomaly? <span class="sub">(การสัมผัส Anomaly ครั้งแรก)</span></label>
             <textarea id="q-1" class="input-field" placeholder="บรรยายเหตุการณ์ครั้งแรกที่คุณพบหรือได้รับพลัง Anomaly..."></textarea>
           </div>
 
           <div class="form-group">
-            <label for="q-2">2. How did the Agency find you? <span class="sub">(องค์กร Triangle Agency ค้นพบคุณได้อย่างไร?)</span></label>
+            <label for="q-2">2. How did the Agency find you? <span class="sub">(องค์กรค้นพบคุณได้อย่างไร)</span></label>
             <textarea id="q-2" class="input-field" placeholder="บรรยายการถูกตามรอยหรือการถูกทาบทามเข้าทำงาน..."></textarea>
           </div>
 
           <div class="grid-2col">
             <div class="form-group">
-              <label for="q-3">3. Do your powers have a unique visual manifestation? <span class="sub">(พลังมีลักษณะปรากฏเฉพาะตัวอย่างไร?)</span></label>
+              <label for="q-3">3. Do your powers have a unique visual manifestation? <span class="sub">(ลักษณะการปรากฏของพลัง)</span></label>
               <textarea id="q-3" class="input-field" placeholder="ลักษณะแสง สี หรือปรากฏการณ์ทางสายตา..."></textarea>
             </div>
             <div class="form-group">
-              <label for="q-4">4. How do you take your coffee? <span class="sub">(คุณดื่มกาแฟแบบไหน?)</span></label>
+              <label for="q-4">4. How do you take your coffee? <span class="sub">(เครื่องดื่มหรือกาแฟประจำตัว)</span></label>
               <input type="text" id="q-4" class="input-field" placeholder="เช่น Black no sugar, Double Espresso, Latte...">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="q-5">5. Please describe your prior work experience. <span class="sub">(ประสบการณ์การทำงานก่อนหน้านี้ของคุณ)</span></label>
+            <label for="q-5">5. Please describe your prior work experience. <span class="sub">(ประสบการณ์การทำงานก่อนหน้า)</span></label>
             <textarea id="q-5" class="input-field" placeholder="อาชีพเดิม ทักษะ หรือหน้าที่การงานในโลกมนุษย์..."></textarea>
           </div>
 
           <div class="grid-2col">
             <div class="form-group">
-              <label for="q-6">6. Level of familiarity with Adobe, Excel, and Google Suite? <span class="sub">(ความคุ้นเคยกับโปรแกรมสำนักงาน)</span></label>
+              <label for="q-6">6. Level of familiarity with Adobe, Excel, and Google Suite? <span class="sub">(ทักษะโปรแกรมสำนักงาน)</span></label>
               <input type="text" id="q-6" class="input-field" placeholder="เช่น Excel Master, Basic Google Suite, Photoshop...">
             </div>
             <div class="form-group">
@@ -1118,19 +1388,19 @@
           </div>
 
           <div class="form-group">
-            <label for="q-notes">Additional Notes <span class="sub">(บันทึกเพิ่มเติม)</span></label>
+            <label for="q-notes">Additional Notes <span class="sub">(บันทึกพิเศษฝ่ายบุคคล)</span></label>
             <textarea id="q-notes" class="input-field" placeholder="ข้อสังเกตทางจิตวิทยา หรือบันทึกพิเศษ..."></textarea>
           </div>
         </div>
       </section>
 
       <!-- =======================================================
-           SECTION 5: ANOMALY ABILITIES (พร้อมช่อง On a Success เงื่อนไขพิเศษ)
+           SECTION 5: ANOMALY ABILITIES
            ======================================================= -->
       <section class="sheet-card">
         <div class="sheet-card-header header-blue">
           <h2>5. ทักษะความสามารถ Anomaly (Anomaly Abilities)</h2>
-          <button type="button" class="btn btn-outline" id="btn-add-ability" style="font-size:0.8rem;">+ เพิ่ม Ability</button>
+          <button type="button" class="btn btn-outline" id="btn-add-ability" style="font-size:0.8rem; padding:0.4rem 0.85rem;">+ เพิ่ม Ability</button>
         </div>
         <div class="sheet-card-body" id="abilities-container">
           <!-- Ability 1 (Default) -->
@@ -1159,11 +1429,11 @@
                 <textarea class="input-field ab-success" placeholder="ผลลัพธ์เมื่อทอยสำเร็จ..." style="min-height:60px;"></textarea>
               </div>
               <div class="form-group" style="margin-bottom:0;">
-                <label style="color:var(--accent-yellow);">▲▲ On a Success <span class="sub">(เงื่อนไขพิเศษ)</span></label>
+                <label style="color:var(--accent-yellow);">★ Special Success / Upgrade</label>
                 <textarea class="input-field ab-special-success" placeholder="ผลสำเร็จเมื่อตรงเงื่อนไขพิเศษ..." style="min-height:60px;"></textarea>
               </div>
               <div class="form-group" style="margin-bottom:0;">
-                <label style="color:var(--accent-red);">✕ On a Failure</label>
+                <label style="color:var(--accent-red);">✖ On a Failure</label>
                 <textarea class="input-field ab-failure" placeholder="ผลข้างเคียงเมื่อล้มเหลว..." style="min-height:60px;"></textarea>
               </div>
             </div>
@@ -1172,15 +1442,15 @@
       </section>
 
       <!-- =======================================================
-           SECTION 6: RELATIONSHIPS & BONDS (พร้อมปุ่มลบการ์ด)
+           SECTION 6: RELATIONSHIPS & BONDS
            ======================================================= -->
       <section class="sheet-card">
         <div class="sheet-card-header header-yellow">
           <h2>6. ความสัมพันธ์และสายสัมพันธ์ (Relationships & Networked Bonds)</h2>
-          <button type="button" class="btn btn-outline" id="btn-add-relationship" style="font-size:0.8rem;">+ เพิ่มความสัมพันธ์</button>
+          <button type="button" class="btn btn-outline" id="btn-add-relationship" style="font-size:0.8rem; padding:0.4rem 0.85rem;">+ เพิ่มความสัมพันธ์</button>
         </div>
         <div class="sheet-card-body" id="relationships-container">
-          <!-- Relationship 1 (Default) พร้อมปุ่มลบ -->
+          <!-- Relationship 1 (Default) -->
           <div class="relationship-entry-card">
             <div class="entry-card-header">
               <span class="entry-card-title" style="color:var(--accent-yellow);">✦ สายสัมพันธ์ (Relationship)</span>
@@ -1211,12 +1481,16 @@
       <!-- Bottom Sticky Action Bar -->
       <div class="save-action-bar">
         <div>
-          <div style="font-family:var(--font-heading); font-weight:700; color:#ffffff; font-size:1.05rem;">พร้อมบรรจุตัวแทนเข้าสู่ระบบองค์กร?</div>
-          <div style="font-size:0.82rem; color:var(--text-muted);">ข้อมูลจะถูกบันทึกเข้าสู่ระบบสารบบพนักงาน Triangle Agency Personnel Archive</div>
+          <div style="font-family:var(--font-heading); font-weight:800; color:#ffffff; font-size:1.1rem; letter-spacing:0.02em;">
+            พร้อมบรรจุตัวแทนเข้าสู่สารบบ Triangle Agency?
+          </div>
+          <div style="font-size:0.84rem; color:var(--text-muted);">
+            ข้อมูลจะถูกบันทึกและนำเข้าสู่ระบบแฟ้มประวัติพนักงาน (Form ARC-01 Dossier) ทันที
+          </div>
         </div>
-        <div style="display:flex; gap:1rem;">
+        <div style="display:flex; gap:1rem; align-items:center;">
           <a href="index.html" class="btn btn-outline">ยกเลิก</a>
-          <button type="submit" class="btn btn-primary" style="padding:0.75rem 2rem; font-size:1.05rem;">
+          <button type="submit" class="btn btn-primary" style="padding:0.75rem 2.2rem; font-size:1.02rem;">
             <span>▲ ยืนยันบันทึกบรรจุพนักงาน (CONFIRM ONBOARDING)</span>
           </button>
         </div>
@@ -1226,7 +1500,7 @@
   </main>
 
   <!-- ==========================================
-       ONBOARDING CONFIRMATION MODAL (แจ้งเตือนยืนยัน)
+       ONBOARDING CONFIRMATION MODAL
        ========================================== -->
   <div class="confirm-modal-overlay" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
     <div class="confirm-modal-card">
@@ -1256,16 +1530,20 @@
             <span class="summary-val" id="modal-agent-name">-</span>
           </div>
           <div class="summary-row">
+            <span class="summary-label">รหัสประจำตัว (ID Code):</span>
+            <span class="summary-val" id="modal-agent-id" style="color:#70a4ff;">-</span>
+          </div>
+          <div class="summary-row">
             <span class="summary-label">ตำแหน่ง (Title):</span>
             <span class="summary-val" id="modal-agent-title">-</span>
           </div>
           <div class="summary-row">
-            <span class="summary-label">สถานะภาพ (Standing):</span>
+            <span class="summary-label">สถานภาพ (Standing):</span>
             <span class="summary-val" id="modal-agent-standing">-</span>
           </div>
           <div class="summary-row">
             <span class="summary-label">พลัง Anomaly:</span>
-            <span class="summary-val" id="modal-agent-anomaly" style="color:var(--accent-red);">-</span>
+            <span class="summary-val" id="modal-agent-anomaly" style="color:var(--accent-blue);">-</span>
           </div>
           <div class="summary-row">
             <span class="summary-label">ฉากหน้า Reality:</span>
@@ -1273,7 +1551,7 @@
           </div>
           <div class="summary-row">
             <span class="summary-label">ความเชี่ยวชาญ Competency:</span>
-            <span class="summary-val" id="modal-agent-competency" style="color:var(--accent-blue);">-</span>
+            <span class="summary-val" id="modal-agent-competency" style="color:var(--accent-red);">-</span>
           </div>
         </div>
 
@@ -1317,6 +1595,24 @@
 
     let uploadedAvatarBase64 = '';
 
+    // Live Badge Preview Elements
+    const inputUsername = document.getElementById('create-username');
+    const inputAgentId = document.getElementById('agent-id');
+    const previewBadgeName = document.getElementById('preview-badge-name');
+    const previewBadgeId = document.getElementById('preview-badge-id');
+
+    if (inputUsername && previewBadgeName) {
+      inputUsername.addEventListener('input', (e) => {
+        previewBadgeName.textContent = e.target.value.trim() || '-';
+      });
+    }
+
+    if (inputAgentId && previewBadgeId) {
+      inputAgentId.addEventListener('input', (e) => {
+        previewBadgeId.textContent = e.target.value.trim() || 'ID-001';
+      });
+    }
+
     // Function to delete entry cards cleanly
     function removeEntryCard(btn) {
       const card = btn.closest('.relationship-entry-card') || btn.closest('.ability-entry-card');
@@ -1328,60 +1624,120 @@
       }
     }
 
-    // Render 9 Quality Assurances
+    // Render 9 Quality Assurances with Triangle SVG Pips
     function renderQAMatrix() {
       const container = document.getElementById('qa-matrix-inputs');
       container.innerHTML = '';
 
       QUALITIES_DATA.forEach(q => {
+        const val = qaRatings[q.id] || 0;
         const box = document.createElement('div');
         box.className = 'qa-item-box';
+
+        let pipsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          const isActive = i <= val;
+          pipsHtml += `
+            <button type="button" class="qa-pip-btn ${isActive ? 'active' : ''}" data-qid="${q.id}" data-idx="${i}" title="${q.name} level ${i}">
+              <svg viewBox="0 0 100 80" fill="none">
+                <polygon points="50,6 94,74 6,74"/>
+              </svg>
+            </button>
+          `;
+        }
+
         box.innerHTML = `
           <div>
             <div class="qa-box-header">
-              <span class="qa-box-name">${q.name}</span>
-              <span style="font-family:var(--font-mono); font-size:0.8rem; font-weight:700; color:var(--accent-blue);" id="qa-val-${q.id}">${qaRatings[q.id]} QA</span>
+              <div class="qa-box-title-group">
+                <input type="number" min="0" max="9" class="qa-item-max-badge" value="${val}" title="พิมพ์หรือคลิกเพื่อปรับค่า Max QA (0 - 9)" aria-label="Max QA for ${q.name}">
+                <span class="qa-box-name">${q.name}</span>
+              </div>
+              <span style="font-family:var(--font-mono); font-size:0.84rem; font-weight:700; color:var(--accent-blue);" id="qa-val-${q.id}">${val} QA</span>
             </div>
             <div class="qa-box-desc">${q.desc}</div>
           </div>
-          <div class="qa-pips-row" id="pips-row-${q.id}"></div>
+          <div class="qa-pips-row">
+            ${pipsHtml}
+          </div>
         `;
 
-        const pipsRow = box.querySelector(`#pips-row-${q.id}`);
-        for (let i = 1; i <= 5; i++) {
-          const pip = document.createElement('div');
-          pip.className = `qa-pip-box ${i <= qaRatings[q.id] ? 'active' : ''}`;
-          pip.title = `Rating ${i}`;
-          pip.addEventListener('click', () => {
-            qaRatings[q.id] = (qaRatings[q.id] === i) ? i - 1 : i;
+        // Direct typing & live updating on Max Badge in Creator Form
+        const maxInput = box.querySelector('.qa-item-max-badge');
+        if (maxInput) {
+          maxInput.addEventListener('focus', () => {
+            maxInput.select();
+          });
+
+          maxInput.addEventListener('input', (e) => {
+            let parsed = parseInt(e.target.value);
+            if (isNaN(parsed)) return;
+            if (parsed < 0) parsed = 0;
+            if (parsed > 9) parsed = 9;
+            e.target.value = parsed;
+            qaRatings[q.id] = parsed;
+            
+            box.querySelector(`#qa-val-${q.id}`).textContent = `${parsed} QA`;
+            box.querySelectorAll('.qa-pip-btn').forEach(pip => {
+              const idx = parseInt(pip.dataset.idx);
+              if (idx <= parsed) pip.classList.add('active');
+              else pip.classList.remove('active');
+            });
+          });
+
+          maxInput.addEventListener('blur', (e) => {
+            let parsed = parseInt(e.target.value);
+            if (isNaN(parsed) || parsed < 0) parsed = 0;
+            if (parsed > 9) parsed = 9;
+            qaRatings[q.id] = parsed;
             renderQAMatrix();
           });
-          pipsRow.appendChild(pip);
+
+          maxInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              maxInput.blur();
+            }
+          });
         }
+
+        box.querySelectorAll('.qa-pip-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const targetIdx = parseInt(btn.dataset.idx);
+            qaRatings[q.id] = (qaRatings[q.id] === targetIdx) ? targetIdx - 1 : targetIdx;
+            renderQAMatrix();
+          });
+        });
 
         container.appendChild(box);
       });
     }
 
-    // Photo Upload & Preview Logic
+    // Photo Upload & Preview Logic (Syncs with Lanyard Badge)
     const photoInput = document.getElementById('agent-photo-input');
     const btnBrowsePhoto = document.getElementById('btn-browse-photo');
-    const photoPreview = document.getElementById('agent-photo-preview');
-    const photoPlaceholder = document.getElementById('photo-placeholder');
+    const badgePhotoClicker = document.getElementById('badge-photo-clicker');
+    const badgeAgentPhoto = document.getElementById('badge-agent-photo');
+    const badgePhotoPlaceholder = document.getElementById('badge-photo-placeholder');
     const btnRemovePhoto = document.getElementById('btn-remove-photo');
 
-    btnBrowsePhoto.addEventListener('click', () => photoInput.click());
+    if (btnBrowsePhoto) btnBrowsePhoto.addEventListener('click', () => photoInput.click());
+    if (badgePhotoClicker) badgePhotoClicker.addEventListener('click', () => photoInput.click());
 
     photoInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
+      if (file.size > 3 * 1024 * 1024) {
+        alert('ขนาดไฟล์เกิน 3MB กรุณาเลือกไฟล์ภาพที่มีขนาดเล็กลง');
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (evt) => {
         uploadedAvatarBase64 = evt.target.result;
-        photoPreview.src = uploadedAvatarBase64;
-        photoPreview.style.display = 'block';
-        photoPlaceholder.style.display = 'none';
+        badgeAgentPhoto.src = uploadedAvatarBase64;
+        badgeAgentPhoto.style.display = 'block';
+        badgePhotoPlaceholder.style.display = 'none';
         btnRemovePhoto.style.display = 'inline-block';
       };
       reader.readAsDataURL(file);
@@ -1390,9 +1746,9 @@
     btnRemovePhoto.addEventListener('click', () => {
       uploadedAvatarBase64 = '';
       photoInput.value = '';
-      photoPreview.src = '';
-      photoPreview.style.display = 'none';
-      photoPlaceholder.style.display = 'flex';
+      badgeAgentPhoto.src = '';
+      badgeAgentPhoto.style.display = 'none';
+      badgePhotoPlaceholder.style.display = 'flex';
       btnRemovePhoto.style.display = 'none';
     });
 
@@ -1426,7 +1782,7 @@
       return selectEl.value || '';
     }
 
-    // Add Ability (มีช่อง On a Success ในเงื่อนไขพิเศษ)
+    // Add Ability
     document.getElementById('btn-add-ability').addEventListener('click', () => {
       const container = document.getElementById('abilities-container');
       const card = document.createElement('div');
@@ -1447,8 +1803,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Trigger</label>
-          <input type="text" class="input-field ab-trigger" placeholder="เมื่อคุณ...">
+          <label>Trigger <span class="sub">(เงื่อนไขการใช้งาน)</span></label>
+          <input type="text" class="input-field ab-trigger" placeholder="เมื่อคุณสัมผัสกับ...">
         </div>
         <div class="grid-3col">
           <div class="form-group" style="margin-bottom:0;">
@@ -1456,11 +1812,11 @@
             <textarea class="input-field ab-success" placeholder="ผลลัพธ์เมื่อทอยสำเร็จ..." style="min-height:60px;"></textarea>
           </div>
           <div class="form-group" style="margin-bottom:0;">
-            <label style="color:var(--accent-yellow);">▲▲ On a Success <span class="sub">(เงื่อนไขพิเศษ)</span></label>
+            <label style="color:var(--accent-yellow);">★ Special Success / Upgrade</label>
             <textarea class="input-field ab-special-success" placeholder="ผลสำเร็จเมื่อตรงเงื่อนไขพิเศษ..." style="min-height:60px;"></textarea>
           </div>
           <div class="form-group" style="margin-bottom:0;">
-            <label style="color:var(--accent-red);">✕ On a Failure</label>
+            <label style="color:var(--accent-red);">✖ On a Failure</label>
             <textarea class="input-field ab-failure" placeholder="ผลข้างเคียงเมื่อล้มเหลว..." style="min-height:60px;"></textarea>
           </div>
         </div>
@@ -1480,21 +1836,21 @@
         </div>
         <div class="grid-3col">
           <div class="form-group" style="margin-bottom:0.5rem;">
-            <label>Name</label>
-            <input type="text" class="input-field rel-name" placeholder="ชื่อบุคคล">
+            <label>Name (ชื่อบุคคล)</label>
+            <input type="text" class="input-field rel-name" placeholder="ชื่อคนรู้จัก/เพื่อนร่วมงาน">
           </div>
           <div class="form-group" style="margin-bottom:0.5rem;">
             <label>Played by / Reality</label>
-            <input type="text" class="input-field rel-played" placeholder="ผู้เล่น / บทบาท">
+            <input type="text" class="input-field rel-played" placeholder="ผู้เล่น / NPC / Reality">
           </div>
           <div class="form-group" style="margin-bottom:0.5rem;">
             <label>Connection Bonus</label>
-            <input type="text" class="input-field rel-bonus" placeholder="โบนัส">
+            <input type="text" class="input-field rel-bonus" placeholder="โบนัสความร่วมมือ">
           </div>
         </div>
         <div class="form-group" style="margin-bottom:0.5rem;">
-          <label>Description</label>
-          <input type="text" class="input-field rel-desc" placeholder="รายละเอียดความสัมพันธ์">
+          <label>Description (ลักษณะความสัมพันธ์)</label>
+          <input type="text" class="input-field rel-desc" placeholder="รายละเอียดความผูกพันหรือภูมิหลังร่วมกัน">
         </div>
       `;
       container.appendChild(card);
@@ -1510,8 +1866,9 @@
 
     function openConfirmModal(data) {
       document.getElementById('modal-agent-name').textContent = data.name;
-      document.getElementById('modal-agent-title').textContent = data.title || 'Field Agent Trainee';
-      document.getElementById('modal-agent-standing').textContent = data.standing || 'Standard Active';
+      document.getElementById('modal-agent-id').textContent = data.id || 'ID-001';
+      document.getElementById('modal-agent-title').textContent = data.title || 'Trainee Field Agent';
+      document.getElementById('modal-agent-standing').textContent = data.standing || 'Good Standing';
       document.getElementById('modal-agent-anomaly').textContent = data.arc.anomaly || 'ไม่ได้ระบุ';
       document.getElementById('modal-agent-reality').textContent = data.arc.reality || 'ไม่ได้ระบุ';
       document.getElementById('modal-agent-competency').textContent = data.arc.competency || 'ไม่ได้ระบุ';
@@ -1531,12 +1888,13 @@
       });
     }
 
-    // Handle Form Submission (Triggers Confirmation Modal)
+    // Handle Form Submission
     document.getElementById('character-creator-form').addEventListener('submit', (e) => {
       e.preventDefault();
 
       const username = document.getElementById('create-username').value.trim();
       const password = document.getElementById('create-password').value;
+      const agentId = document.getElementById('agent-id').value.trim() || 'ID-001';
 
       if (!username || !password) {
         alert('กรุณากรอก Username และ Password ของตัวแทนให้ครบถ้วน');
@@ -1549,12 +1907,16 @@
       const abilities = [];
       document.querySelectorAll('.ability-entry-card').forEach(card => {
         abilities.push({
-          name: card.querySelector('.ab-name')?.value || '',
-          quality: card.querySelector('.ab-quality')?.value || '',
-          trigger: card.querySelector('.ab-trigger')?.value || '',
-          success: card.querySelector('.ab-success')?.value || '',
-          specialSuccess: card.querySelector('.ab-special-success')?.value || '',
-          failure: card.querySelector('.ab-failure')?.value || ''
+          name: card.querySelector('.ab-name')?.value.trim() || '',
+          quality: card.querySelector('.ab-quality')?.value.trim() || '',
+          trigger: card.querySelector('.ab-trigger')?.value.trim() || '',
+          success: card.querySelector('.ab-success')?.value.trim() || '',
+          specialSuccess: card.querySelector('.ab-special-success')?.value.trim() || '',
+          failure: card.querySelector('.ab-failure')?.value.trim() || '',
+          practiced: false,
+          p1: false,
+          p2: false,
+          p3: false
         });
       });
 
@@ -1562,50 +1924,55 @@
       const relationships = [];
       document.querySelectorAll('.relationship-entry-card').forEach(card => {
         relationships.push({
-          name: card.querySelector('.rel-name')?.value || '',
-          playedBy: card.querySelector('.rel-played')?.value || '',
-          bonus: card.querySelector('.rel-bonus')?.value || '',
-          desc: card.querySelector('.rel-desc')?.value || ''
+          name: card.querySelector('.rel-name')?.value.trim() || '',
+          playedBy: card.querySelector('.rel-played')?.value.trim() || '',
+          bonus: card.querySelector('.rel-bonus')?.value.trim() || '',
+          desc: card.querySelector('.rel-desc')?.value.trim() || '',
+          level: 0,
+          active: false
         });
       });
 
       // Collect ARC & Info
       const characterData = {
-        id: 'agent-' + Date.now(),
+        id: agentId,
         name: username,
         password: password,
         avatar: uploadedAvatarBase64,
-        title: document.getElementById('agent-title').value,
-        standing: document.getElementById('agent-standing').value,
+        title: document.getElementById('agent-title').value.trim() || 'Trainee Field Agent',
+        standing: document.getElementById('agent-standing').value.trim() || 'Good Standing',
+        commendations: 0,
+        demerits: 0,
+        burnout: 0,
         arc: {
           anomaly: getARCValue('arc-anomaly', 'arc-anomaly-custom'),
-          anomalyManifestation: document.getElementById('arc-anomaly-manifest').value,
+          anomalyManifestation: document.getElementById('arc-anomaly-manifest').value.trim(),
           reality: getARCValue('arc-reality', 'arc-reality-custom'),
-          realityTrigger: document.getElementById('arc-reality-trigger').value,
+          realityTrigger: document.getElementById('arc-reality-trigger').value.trim(),
           competency: getARCValue('arc-competency', 'arc-competency-custom'),
-          primeDirective: document.getElementById('arc-prime-directive').value,
-          burnoutRelease: document.getElementById('arc-burnout-release').value,
+          primeDirective: document.getElementById('arc-prime-directive').value.trim(),
+          burnoutRelease: document.getElementById('arc-burnout-release').value.trim(),
           sanctionedBehaviors: [
-            { text: document.getElementById('sb-1').value || 'Sanctioned target 1', done: false },
-            { text: document.getElementById('sb-2').value || 'Sanctioned target 2', done: false },
-            { text: document.getElementById('sb-3').value || 'Sanctioned target 3', done: false }
+            { text: document.getElementById('sb-1').value.trim() || 'Sanctioned target 1', done: false },
+            { text: document.getElementById('sb-2').value.trim() || 'Sanctioned target 2', done: false },
+            { text: document.getElementById('sb-3').value.trim() || 'Sanctioned target 3', done: false }
           ]
         },
         qualities: {},
         abilities: abilities,
         relationships: relationships,
         questionnaire: {
-          emergencyContact: document.getElementById('q-emergency-contact').value,
-          relationship: document.getElementById('q-relationship').value,
-          salary: document.getElementById('q-salary').value,
-          q1_anomalyContact: document.getElementById('q-1').value,
-          q2_agencyFound: document.getElementById('q-2').value,
-          q3_manifestation: document.getElementById('q-3').value,
-          q4_coffee: document.getElementById('q-4').value,
-          q5_experience: document.getElementById('q-5').value,
-          q6_software: document.getElementById('q-6').value,
-          q7_teamValue: document.getElementById('q-7').value,
-          notes: document.getElementById('q-notes').value
+          emergencyContact: document.getElementById('q-emergency-contact').value.trim(),
+          relationship: document.getElementById('q-relationship').value.trim(),
+          salary: document.getElementById('q-salary').value.trim(),
+          q1_anomalyContact: document.getElementById('q-1').value.trim(),
+          q2_agencyFound: document.getElementById('q-2').value.trim(),
+          q3_manifestation: document.getElementById('q-3').value.trim(),
+          q4_coffee: document.getElementById('q-4').value.trim(),
+          q5_experience: document.getElementById('q-5').value.trim(),
+          q6_software: document.getElementById('q-6').value.trim(),
+          q7_teamValue: document.getElementById('q-7').value.trim(),
+          notes: document.getElementById('q-notes').value.trim()
         }
       };
 
@@ -1616,7 +1983,7 @@
 
       pendingCharacterData = characterData;
 
-      // Open Confirmation Modal Alert
+      // Open Confirmation Modal
       openConfirmModal(characterData);
     });
 
@@ -1628,7 +1995,7 @@
         const username = pendingCharacterData.name;
         const password = pendingCharacterData.password;
 
-        btnFinalConfirm.innerHTML = `<span>⏳ กำลังบรรจุเข้าสู่ระบบ...</span>`;
+        btnFinalConfirm.innerHTML = `<span>⏳ กำลังบรรจุเข้าสู่สารบบ...</span>`;
         btnFinalConfirm.disabled = true;
 
         // Save to Accounts & Character Storage
@@ -1645,11 +2012,11 @@
 
         setTimeout(() => {
           window.location.href = 'profile.html';
-        }, 400);
+        }, 350);
       });
     }
 
-    // Init
+    // Init on DOM load
     document.addEventListener('DOMContentLoaded', () => {
       renderQAMatrix();
     });

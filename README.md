@@ -3,9 +3,13 @@
 เว็บแอปพลิเคชันและระบบจัดการตัวละครสำหรับเกมสวมบทบาท **Triangle Agency TTRPG**
 
 ## 📂 โครงสร้างโปรเจกต์
-- `index.html` — หน้าแรก (Home) พอร์ทัลของหน่วยงาน Triangle Agency, รายละเอียดองค์กร, ภาพ Lobby, และระบบ Login / Authentication
-- `create-character.html` — ระบบ Onboarding & สร้างตัวละครตัวแทนภาคสนาม (Field Agent Dossier) ตามเอกสาร Character Organization Sheets
-- `images/` — รูปภาพและโลโก้องค์กรความละเอียดสูง
+- `main/` — โฟลเดอร์หน้าเว็บหลักของระบบ
+  - [index.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/main/index.html) — หน้าแรก (Home) พอร์ทัลของหน่วยงาน Triangle Agency, รายละเอียดองค์กร, ภาพ Lobby, และระบบ Login / Authentication
+  - [create-character.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/main/create-character.html) — ระบบ Onboarding & สร้างตัวละครตัวแทนภาคสนาม (Field Agent Dossier) ตามเอกสาร Character Organization Sheets
+  - [profile.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/main/profile.html) — หน้าระบบแฟ้มประวัติและจัดการข้อมูลตัวละคร (Agent Profile Dossier)
+  - [admin.html](file:///C:/Users/user/OneDrive/Desktop/Triangle%20Agency/main/admin.html) — หน้าพอร์ทัลผู้ดูแลระบบ (Central Directorate Management Portal)
+- `asset/` — เอกสารคู่มือ, กฎกติกา, และแผ่นชีททางการ (Official Rulebooks, Spreads, Singles & Fillable Sheets PDF)
+- `images/` — รูปภาพและโลโก้องค์กรความละเอียดสูง (Logos, Lobby Background, SVG Assets)
 
 ## 🚀 ฟีเจอร์หลัก
 1. **ธีม Dark Mysteriously Corporate**: ดีไซน์สไตล์หน่วยงานสืบสวนสิ่งเหนือธรรมชาติ
