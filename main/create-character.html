@@ -1727,18 +1727,41 @@
       const file = e.target.files[0];
       if (!file) return;
 
-      if (file.size > 3 * 1024 * 1024) {
-        alert('ขนาดไฟล์เกิน 3MB กรุณาเลือกไฟล์ภาพที่มีขนาดเล็กลง');
+      if (file.size > 8 * 1024 * 1024) {
+        alert('ขนาดไฟล์เกิน 8MB กรุณาเลือกไฟล์ภาพที่มีขนาดเล็กลง');
         return;
       }
 
       const reader = new FileReader();
       reader.onload = (evt) => {
-        uploadedAvatarBase64 = evt.target.result;
-        badgeAgentPhoto.src = uploadedAvatarBase64;
-        badgeAgentPhoto.style.display = 'block';
-        badgePhotoPlaceholder.style.display = 'none';
-        btnRemovePhoto.style.display = 'inline-block';
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const maxDim = 320;
+          let w = img.width;
+          let h = img.height;
+          if (w > h) {
+            if (w > maxDim) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            }
+          } else {
+            if (h > maxDim) {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          uploadedAvatarBase64 = canvas.toDataURL('image/jpeg', 0.85);
+          badgeAgentPhoto.src = uploadedAvatarBase64;
+          badgeAgentPhoto.style.display = 'block';
+          badgePhotoPlaceholder.style.display = 'none';
+          btnRemovePhoto.style.display = 'inline-block';
+        };
+        img.src = evt.target.result;
       };
       reader.readAsDataURL(file);
     });
@@ -1901,6 +1924,19 @@
         if (!username) document.getElementById('create-username').focus();
         else document.getElementById('create-password').focus();
         return;
+      }
+
+      if (username.toLowerCase() === 'admin') {
+        alert('ชื่อ "admin" เป็นบัญชีสงวนสำหรับฝ่ายบริหารระบบ กรุณาใช้ชื่อตัวแทนอื่น');
+        document.getElementById('create-username').focus();
+        return;
+      }
+
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      if (accounts[username]) {
+        if (!confirm(`มีตัวแทนชื่อ "${username}" อยู่ในระบบแล้ว คุณต้องการบันทึกทับข้อมูลเดิมใช่หรือไม่?`)) {
+          return;
+        }
       }
 
       // Collect Abilities

@@ -2632,6 +2632,44 @@
       { id: 'subtlety', name: 'Subtlety', desc: 'ความแนบเนียน ล่องหน ทำงานเงียบเชียบ มือเบา' }
     ];
 
+    // Ensure default master admin account exists
+    function ensureAdminAccount() {
+      const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
+      if (!accounts['admin']) {
+        accounts['admin'] = {
+          password: 'admin',
+          role: 'admin',
+          createdDate: new Date().toISOString(),
+          character: {
+            name: 'Central Overseer (Admin)',
+            title: 'General Director',
+            standing: 'Executive Standing',
+            id: 'DIR-000',
+            arc: {
+              anomaly: 'Omniscience',
+              reality: 'Directorate Office',
+              competency: 'Executive Oversight',
+              primeDirective: 'Preserve Agency Continuity',
+              burnoutRelease: 'Execute Audit Protocol',
+              sanctionedBehaviors: [
+                { text: 'Review Field Agent Dossiers', done: true },
+                { text: 'Maintain Database Security', done: true }
+              ]
+            },
+            commendations: 10,
+            demerits: 0,
+            burnout: 0,
+            qualities: {
+              attentiveness: { max: 5, current: 5 },
+              professionalism: { max: 5, current: 5 },
+              presence: { max: 5, current: 5 }
+            }
+          }
+        };
+        localStorage.setItem('triangle_accounts', JSON.stringify(accounts));
+      }
+    }
+
     let currentAgent = null;
     let currentUserKey = '';
     let editAvatarBase64 = '';
@@ -2698,6 +2736,7 @@
 
     // Load Agent Profile
     function loadAgentProfile() {
+      ensureAdminAccount();
       const accounts = JSON.parse(localStorage.getItem('triangle_accounts') || '{}');
       const loggedInUser = localStorage.getItem('triangle_current_user') || '';
 
@@ -3347,14 +3386,37 @@
       editPhotoFile.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
-          if (file.size > 3 * 1024 * 1024) {
-            alert('ขนาดไฟล์เกิน 3MB กรุณาเลือกภาพที่มีขนาดเล็กลง');
+          if (file.size > 8 * 1024 * 1024) {
+            alert('ขนาดไฟล์เกิน 8MB กรุณาเลือกภาพที่มีขนาดเล็กลง');
             return;
           }
           const reader = new FileReader();
           reader.onload = (evt) => {
-            editAvatarBase64 = evt.target.result;
-            updateEditAvatarPreview();
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const maxDim = 320;
+              let w = img.width;
+              let h = img.height;
+              if (w > h) {
+                if (w > maxDim) {
+                  h = Math.round((h * maxDim) / w);
+                  w = maxDim;
+                }
+              } else {
+                if (h > maxDim) {
+                  w = Math.round((w * maxDim) / h);
+                  h = maxDim;
+                }
+              }
+              canvas.width = w;
+              canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, w, h);
+              editAvatarBase64 = canvas.toDataURL('image/jpeg', 0.85);
+              updateEditAvatarPreview();
+            };
+            img.src = evt.target.result;
           };
           reader.readAsDataURL(file);
         }
@@ -3408,6 +3470,10 @@
       const container = document.getElementById('edit-abilities-list');
       const card = document.createElement('div');
       card.className = 'edit-item-card';
+      card.dataset.practiced = ab.practiced ? 'true' : 'false';
+      card.dataset.p1 = ab.p1 ? 'true' : 'false';
+      card.dataset.p2 = ab.p2 ? 'true' : 'false';
+      card.dataset.p3 = ab.p3 ? 'true' : 'false';
       card.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
           <strong style="color:var(--accent-blue); font-size:0.88rem;">Ability Entry</strong>
@@ -3463,6 +3529,8 @@
       const container = document.getElementById('edit-relationships-list');
       const card = document.createElement('div');
       card.className = 'edit-item-card';
+      card.dataset.level = (rel.level !== undefined) ? rel.level : 0;
+      card.dataset.active = rel.active ? 'true' : 'false';
       card.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
           <strong style="color:var(--accent-yellow); font-size:0.88rem;">Relationship Contact</strong>
@@ -3549,7 +3617,11 @@
             trigger: card.querySelector('.edit-ab-trigger')?.value.trim() || '',
             success: card.querySelector('.edit-ab-success')?.value.trim() || '',
             specialSuccess: card.querySelector('.edit-ab-special')?.value.trim() || '',
-            failure: card.querySelector('.edit-ab-failure')?.value.trim() || ''
+            failure: card.querySelector('.edit-ab-failure')?.value.trim() || '',
+            practiced: card.dataset.practiced === 'true',
+            p1: card.dataset.p1 === 'true',
+            p2: card.dataset.p2 === 'true',
+            p3: card.dataset.p3 === 'true'
           });
         });
         currentAgent.abilities = newAbilities;
@@ -3560,7 +3632,9 @@
             name: card.querySelector('.edit-rel-name')?.value.trim() || '',
             playedBy: card.querySelector('.edit-rel-played')?.value.trim() || '',
             bonus: card.querySelector('.edit-rel-bonus')?.value.trim() || '',
-            desc: card.querySelector('.edit-rel-desc')?.value.trim() || ''
+            desc: card.querySelector('.edit-rel-desc')?.value.trim() || '',
+            level: parseInt(card.dataset.level) || 0,
+            active: card.dataset.active === 'true'
           });
         });
         currentAgent.relationships = newRelationships;
