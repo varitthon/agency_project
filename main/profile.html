@@ -228,7 +228,7 @@
     }
 
     .app-layout.sidebar-collapsed .btn-floating-toggle {
-      display: flex;
+      display: flex !important;
     }
 
     /* Page View Selector Pills */
@@ -1795,9 +1795,15 @@
         left: 0;
         top: 0;
         bottom: 0;
+        z-index: 1000;
       }
-      .btn-floating-toggle {
-        display: flex;
+      .app-sidebar.collapsed {
+        transform: translateX(-100%);
+        margin-left: 0;
+        left: -100%;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
       }
       .app-main-content {
         padding: 4.5rem 1rem 3rem;
@@ -1813,7 +1819,7 @@
 </head>
 <body>
 
-  <div class="app-layout" id="app-layout">
+  <div class="app-layout sidebar-collapsed" id="app-layout">
 
     <!-- Floating Toggle Button for Collapsed Sidebar -->
     <button type="button" class="btn-floating-toggle" id="btn-floating-toggle" title="เปิดเมนูนำทาง (Expand Menu)">
@@ -1827,7 +1833,7 @@
     <!-- ==========================================
          LEFT SIDEBAR NAVIGATION
          ========================================== -->
-    <aside class="app-sidebar" id="app-sidebar" aria-label="Corporate Intranet Navigation">
+    <aside class="app-sidebar collapsed" id="app-sidebar" aria-label="Corporate Intranet Navigation">
       
       <div class="sidebar-top">
         <!-- Logo & Collapse Button -->
@@ -2684,16 +2690,15 @@
     function toggleSidebar() {
       const isCollapsed = appSidebar.classList.toggle('collapsed');
       appLayout.classList.toggle('sidebar-collapsed', isCollapsed);
-      localStorage.setItem('triangle_sidebar_collapsed', isCollapsed ? 'true' : 'false');
     }
 
     if (btnSidebarToggle) btnSidebarToggle.addEventListener('click', toggleSidebar);
     if (btnFloatingToggle) btnFloatingToggle.addEventListener('click', toggleSidebar);
 
-    if (localStorage.getItem('triangle_sidebar_collapsed') === 'true') {
-      appSidebar.classList.add('collapsed');
-      appLayout.classList.add('sidebar-collapsed');
-    }
+    // ปิด Sidebar เป็นค่าเริ่มต้นเสมอ
+    appSidebar.classList.add('collapsed');
+    appLayout.classList.add('sidebar-collapsed');
+    try { localStorage.removeItem('triangle_sidebar_collapsed'); } catch(e) {}
 
     // View Switcher (Page 1 vs Page 2 vs Dual)
     const page1Wrapper = document.getElementById('page-1-wrapper');
